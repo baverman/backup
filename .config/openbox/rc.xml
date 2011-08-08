@@ -522,6 +522,10 @@
     <desktop>1</desktop>
   </application>
 
+  <application class="Xfce4-notifyd">
+    <desktop>all</desktop>
+  </application>
+
   <application class="bmpanel">
     <desktop>all</desktop>
   </application>
