@@ -93,31 +93,22 @@ def bind_gimp_keys(wm):
 
 
 ################################################
-# Dirty workaround to fix openbox dumb behaviour
-created_windows_without_desktop = []
-
+# Workaround to fix openbox dumb behaviour
 @on_create
 def switch_to_desktop(wm):
     if not wm.startup:
         if wm.activate_window_desktop(wm.event_window) is None:
-            created_windows_without_desktop.append((time.time(), wm.event_window))
 
-@on_property_change('_NET_WM_DESKTOP')
-def desktop_change_for_created_window(wm):
-    t = time.time()
-    created_windows_without_desktop[:] = [
-        r for r in created_windows_without_desktop if t - r[0] < 1]
-
-    for t, w in created_windows_without_desktop:
-        if w.id == wm.event_window.id:
-            wm.activate_window_desktop(w)
+            @on_property_change(wm.event_window, '_NET_WM_DESKTOP')
+            def property_was_set(wm):
+                wm.activate_window_desktop(wm.event_window)
+                property_was_set.remove()
 
 
 ###################################
 # Handle window maximaze/unmaximize
 @on_property_change('_NET_WM_STATE')
 def window_maximized_state_change(wm):
-    print wm.event
     state = wm.get_window_state(wm.event_window)
 
     if state.maximized_vert and state.maximized_horz and not state.undecorated:
