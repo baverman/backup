@@ -24,11 +24,14 @@ on_key('XF86_MonBrightnessDown')(
 on_key('Mod+i')(
     spawn_or_raise('urxvtc -name weechat -e weechat-curses', name='weechat'))
 
+on_key('Mod+l')(
+    spawn_or_raise('fmd', cls='Fmd'))
+
 
 ################################
 # Handle quick apps window close
 def bind_restore_focus(wm, desktop, window):
-    @wm.on_destroy(wm.event_window)
+    @on_destroy(wm.event_window)
     def inner(wm):
         wm.set_current_desktop(desktop)
 restore_focus = {'on_create':bind_restore_focus}
@@ -41,6 +44,9 @@ on_key('Mod+n')(
 
 on_key('Ctrl+Alt+m')(
     spawn_or_raise('urxvtc -name alsamixer -e alsamixer', name='alsamixer', **restore_focus))
+
+on_key('Mod+k')(
+    spawn_or_raise('urxvtc -name rtorrent -e rtorrent-screen', name='rtorrent', **restore_focus))
 
 
 ##########################
@@ -59,8 +65,8 @@ def toggle_console(wm):
 
 @on_create(cls='URxvt')
 def bind_urxvt_keys(wm):
-    wm.bind_key(wm.event_window, 'Shift+Right')(focus_next)
-    wm.bind_key(wm.event_window, 'Shift+Left')(focus_prev)
+    on_key(wm.event_window, 'Shift+Right')(focus_next)
+    on_key(wm.event_window, 'Shift+Left')(focus_prev)
 
 
 ###################################
@@ -69,7 +75,7 @@ last_image_window = [None]
 
 @on_create(cls='Gimp', role='gimp-image-window|gimp-dock|gimp-toolbox')
 def bind_gimp_keys(wm):
-    @wm.bind_key(wm.event_window, 'Tab')
+    @on_key(wm.event_window, 'Tab')
     def toggle_gimp_toolbars(wm):
         cw = wm.current_window
         clients = wm.get_stacked_clients()
