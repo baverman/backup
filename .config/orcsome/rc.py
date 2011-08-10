@@ -1,7 +1,8 @@
-import time
-
 from orcsome.actions import *
 from orcsome.signals import *
+
+on_key('Shift+Mod+r')(
+    restart)
 
 on_key('Ctrl+Alt+x')(
     spawn('urxvtc'))
