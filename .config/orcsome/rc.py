@@ -76,8 +76,9 @@ def bind_urxvt_keys():
 # Gimp toolbar switching on Tab key
 last_image_window = [None]
 
-@wm.on_create(cls='Gimp', role='gimp-image-window|gimp-dock|gimp-toolbox')
+@wm.on_create(cls='Gimp', role='gimp-image-window|gimp-dock|gimp-toolbox$')
 def bind_gimp_keys():
+    print wm.get_window_role(wm.event_window)
     @wm.on_key(wm.event_window, 'Tab')
     def toggle_gimp_toolbars():
         cw = wm.current_window
