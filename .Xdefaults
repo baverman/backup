@@ -1,0 +1,62 @@
+Xcursor*theme:	Neutral
+
+URxvt*background:	gray6
+URxvt*foreground:	#dddddd
+
+! URxvt*color12:	RoyalBlue
+! URxvt*color4:	RoyalBlue
+
+! BLACK
+URxvt*color0: gray6
+URxvt*color8: grey7
+ ! RED
+URxvt*color1: #d54f4f
+URxvt*color9: #ef5959
+ ! GREEN
+URxvt*color2: #4fd54f
+URxvt*color10: #59f059
+ ! YELLOW
+URxvt*color3: #d5d54f
+URxvt*color11: #f0f059
+ ! BLUE
+URxvt*color4: #4f4fd5
+URxvt*color12: #5959f0
+ ! MAGENTA
+URxvt*color5: #d54fd5
+URxvt*color13: #f059f0
+ ! CYAN
+URxvt*color6: #4bcaca
+URxvt*color14: #4fd5d5
+ ! WHITE
+URxvt*color7: #dddddd
+URxvt*color15: #F8F8F2
+
+URxvt*font:	xft:Terminus:pixelsize=14,-xos4-terminus-medium-r-normal--14-140-72-72-c-80-koi8-u,xft:Monospace:antialias=false
+
+URxvt.keysym.Control-Insert:	perl:clipboard:copy
+URxvt.keysym.Shift-Down:	command:\033]721;6\007
+URxvt.keysym.Shift-Insert:	perl:clipboard:paste
+URxvt.keysym.Shift-Up:	command:\033]720;6\007
+
+urxvt*lineSpace:	1
+
+URxvt.perl-ext-common:	default,matcher,clipboard
+URxvt.matcher.button:	3
+URxvt.matcher.pattern.1:	\\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
+URxvt*urlLauncher:	opera
+
+urxvt*meta8:	false
+URxvt*saveLines:	10000
+URxvt*scrollBar_right:	true
+URxvt*scrollBar:	true
+URxvt*scrollstyle:	plain
+URxvt*shading:	20
+urxvt*termName:	xterm
+URxvt*transparent:	true
+
+Xft.rgba:	none
+
+xrenoise.display:	:0
+xrenoise.display_resource:	0x00,0x25,0x53,0x47,0x3A,0xBC,0xE9,0x67
+xrenoise.executable_path:	/usr/bin/renoise
+xrenoise.use_xcursors:	1

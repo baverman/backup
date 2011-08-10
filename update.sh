@@ -11,3 +11,4 @@ copy_files .config/bmpanel2
 copy_files .themes/Awesome
 copy_files .local/share/bmpanel2/themes/awesome
 
+cp ~/.Xdefaults ./
