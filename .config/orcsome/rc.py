@@ -1,59 +1,61 @@
+from orcsome import get_wm
 from orcsome.actions import *
-from orcsome.signals import *
 
-on_key('Shift+Mod+r')(
+wm = get_wm()
+
+wm.on_key('Shift+Mod+r')(
     restart)
 
-on_key('Ctrl+Alt+x')(
+wm.on_key('Ctrl+Alt+x')(
     spawn('urxvtc'))
 
-on_key('Mod+bracketleft')(
+wm.on_key('Mod+bracketleft')(
     spawn('mpc volume -2'))
 
-on_key('Mod+bracketright')(
+wm.on_key('Mod+bracketright')(
     spawn('mpc volume +2'))
 
-on_key('Mod+p')(
+wm.on_key('Mod+p')(
     spawn('mpc toggle'))
 
-on_key('XF86_MonBrightnessUp')(
+wm.on_key('XF86_MonBrightnessUp')(
     spawn('sudo backlight up'))
 
-on_key('XF86_MonBrightnessDown')(
+wm.on_key('XF86_MonBrightnessDown')(
     spawn('sudo backlight down'))
 
-on_key('Mod+i')(
+wm.on_key('Mod+i')(
     spawn_or_raise('urxvtc -name weechat -e weechat-curses', name='weechat'))
 
-on_key('Mod+l')(
+wm.on_key('Mod+l')(
     spawn_or_raise('fmd', cls='Fmd'))
 
 
 ################################
 # Handle quick apps window close
-def bind_restore_focus(wm, desktop, window):
-    @on_destroy(wm.event_window)
-    def inner(wm):
+def bind_restore_focus(desktop, window):
+    @wm.on_destroy(wm.event_window)
+    def inner():
         wm.set_current_desktop(desktop)
 restore_focus = {'on_create':bind_restore_focus}
 
-on_key('Ctrl+Alt+p')(
+wm.on_key('Ctrl+Alt+p')(
     spawn_or_raise('urxvtc -name ncmpcpp -e ncmpcpp', name='ncmpcpp', **restore_focus))
 
-on_key('Mod+n')(
+wm.on_key('Mod+n')(
     spawn_or_raise('urxvtc -name mutt -e mutt', name='mutt', **restore_focus))
 
-on_key('Ctrl+Alt+m')(
+wm.on_key('Ctrl+Alt+m')(
     spawn_or_raise('urxvtc -name alsamixer -e alsamixer', name='alsamixer', **restore_focus))
 
-on_key('Mod+k')(
+wm.on_key('Mod+k')(
     spawn_or_raise('urxvtc -name rtorrent -e rtorrent-screen', name='rtorrent', **restore_focus))
 
 
 ##########################
 # Terminal desktop control
-@on_key('Ctrl+Alt+c')
-def toggle_console(wm):
+@wm.on_key('Ctrl+Alt+c')
+def toggle_console():
     cd = wm.current_desktop
     if cd == 1:
         wm.set_current_desktop(0)
@@ -62,22 +64,22 @@ def toggle_console(wm):
         if clients:
             wm.set_current_desktop(1)
         else:
-            spawn('urxvtc')(wm)
+            spawn('urxvtc')()
 
-@on_create(cls='URxvt')
-def bind_urxvt_keys(wm):
-    on_key(wm.event_window, 'Shift+Right')(focus_next)
-    on_key(wm.event_window, 'Shift+Left')(focus_prev)
+@wm.on_create(cls='URxvt')
+def bind_urxvt_keys():
+    wm.on_key(wm.event_window, 'Shift+Right')(focus_next)
+    wm.on_key(wm.event_window, 'Shift+Left')(focus_prev)
 
 
 ###################################
 # Gimp toolbar switching on Tab key
 last_image_window = [None]
 
-@on_create(cls='Gimp', role='gimp-image-window|gimp-dock|gimp-toolbox')
-def bind_gimp_keys(wm):
-    @on_key(wm.event_window, 'Tab')
-    def toggle_gimp_toolbars(wm):
+@wm.on_create(cls='Gimp', role='gimp-image-window|gimp-dock|gimp-toolbox')
+def bind_gimp_keys():
+    @wm.on_key(wm.event_window, 'Tab')
+    def toggle_gimp_toolbars():
         cw = wm.current_window
         clients = wm.get_stacked_clients()
 
@@ -101,21 +103,21 @@ def bind_gimp_keys(wm):
 
 ################################################
 # Workaround to fix openbox dumb behaviour
-@on_create
-def switch_to_desktop(wm):
+@wm.on_create
+def switch_to_desktop():
     if not wm.startup:
         if wm.activate_window_desktop(wm.event_window) is None:
 
-            @on_property_change(wm.event_window, '_NET_WM_DESKTOP')
-            def property_was_set(wm):
+            @wm.on_property_change(wm.event_window, '_NET_WM_DESKTOP')
+            def property_was_set():
                 wm.activate_window_desktop(wm.event_window)
                 property_was_set.remove()
 
 
 ###################################
 # Handle window maximaze/unmaximize
-@on_property_change('_NET_WM_STATE')
-def window_maximized_state_change(wm):
+@wm.on_property_change('_NET_WM_STATE')
+def window_maximized_state_change():
     state = wm.get_window_state(wm.event_window)
 
     if state.maximized_vert and state.maximized_horz and not state.undecorated:
