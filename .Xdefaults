@@ -9,25 +9,25 @@ URxvt*foreground:	#dddddd
 ! BLACK
 URxvt*color0: gray6
 URxvt*color8: grey7
- ! RED
+! RED
 URxvt*color1: #d54f4f
 URxvt*color9: #ef5959
- ! GREEN
+! GREEN
 URxvt*color2: #4fd54f
 URxvt*color10: #59f059
- ! YELLOW
+! YELLOW
 URxvt*color3: #d5d54f
 URxvt*color11: #f0f059
- ! BLUE
+! BLUE
 URxvt*color4: #4f4fd5
 URxvt*color12: #5959f0
- ! MAGENTA
+! MAGENTA
 URxvt*color5: #d54fd5
 URxvt*color13: #f059f0
- ! CYAN
+! CYAN
 URxvt*color6: #4bcaca
 URxvt*color14: #4fd5d5
- ! WHITE
+! WHITE
 URxvt*color7: #dddddd
 URxvt*color15: #F8F8F2
 
@@ -60,3 +60,7 @@ xrenoise.display:	:0
 xrenoise.display_resource:	0x00,0x25,0x53,0x47,0x3A,0xBC,0xE9,0x67
 xrenoise.executable_path:	/usr/bin/renoise
 xrenoise.use_xcursors:	1
+
+
+dzen2.foreground: #aaaaaa
+dzen2.background: #222222
