@@ -1,9 +1,9 @@
 from time import time
-import threading
 import subprocess
 import random
 
 import orcsome
+from orcsome.utils import Timer
 
 keys = 'abcdefghijklmnopqrstuvwxyz'
 
@@ -21,23 +21,21 @@ class RsiPreventer(object):
         self.last_work = time()
         self.last_idle = 0
 
-    def idle(self, event):
-        while not event.wait(60.0):
-            self.wm.emit('get_idle')
+    def idle(self):
+        self.wm.emit('get_idle')
 
-    def check(self, event):
-        while not event.wait(10.0):
-            now = time()
+    def check(self):
+        now = time()
 
-            if self.last_idle > self.activity_time * 60:
-                self.last_rest = now
-                return
+        if self.last_idle > self.activity_time * 60:
+            self.last_rest = now
+            return
 
-            if self.working and now - self.last_rest > self.work_time*60:
-                self.wm.emit('start_rest')
+        if self.working and now - self.last_rest > self.work_time*60:
+            self.wm.emit('start_rest')
 
-            if not self.working and now - self.last_work > self.rest_time*60:
-                self.wm.emit('stop_rest')
+        if not self.working and now - self.last_work > self.rest_time*60:
+            self.wm.emit('stop_rest')
 
     def create_banner(self):
         self.banner = subprocess.Popen(['/usr/bin/env', 'dzen2', '-p', str(self.rest_time*70),
@@ -93,7 +91,6 @@ class RsiPreventer(object):
 def init(work=None, rest=None, postpone=None, activity=None):
     wm = orcsome.get_wm()
     rsi = RsiPreventer(wm, work, rest, postpone, activity)
-    cancel = threading.Event()
 
     @wm.on_signal('start_rest')
     def start_rest():
@@ -107,17 +104,16 @@ def init(work=None, rest=None, postpone=None, activity=None):
     def get_idle():
         rsi.last_idle = wm.root.get_screen_saver_info().idle / 1000.0
 
-    t1 = threading.Thread(target=rsi.check, args=(cancel,))
+    t1 = Timer(10, rsi.check)
     t1.start()
 
-    t2 = threading.Thread(target=rsi.idle, args=(cancel,))
+    t2 = Timer(60, rsi.idle)
     t2.start()
 
     @wm.on_deinit
     def deinit():
-        cancel.set()
-        t1.join()
-        t2.join()
+        t1.cancel()
+        t2.cancel()
         print 'rsi.close'
 
     return rsi
