@@ -1,6 +1,8 @@
 from orcsome import get_wm
 from orcsome.actions import *
 
+import rsi
+
 wm = get_wm()
 
 wm.on_key('Shift+Mod+r')(
@@ -78,7 +80,6 @@ last_image_window = [None]
 
 @wm.on_create(cls='Gimp', role='gimp-image-window|gimp-dock|gimp-toolbox$')
 def bind_gimp_keys():
-    print wm.get_window_role(wm.event_window)
     @wm.on_key(wm.event_window, 'Tab')
     def toggle_gimp_toolbars():
         cw = wm.current_window
@@ -125,3 +126,11 @@ def window_maximized_state_change():
         wm.decorate_window(wm.event_window, False)
     elif state.undecorated and (not state.maximized_vert or not state.maximized_horz):
         wm.decorate_window(wm.event_window)
+
+@wm.on_init
+def init():
+    r = rsi.init()
+
+    @wm.on_key('Mod+b')
+    def do_rest():
+        r.start_rest()
