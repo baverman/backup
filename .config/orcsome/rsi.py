@@ -19,25 +19,25 @@ class RsiPreventer(object):
         self.working = True
         self.last_rest = time()
         self.last_work = time()
-        self.idle = 0
+        self.last_idle = 0
 
     def idle(self, event):
         while not event.wait(60.0):
-            self.idle = self.wm.root.get_screen_saver_info().idle / 1000.0
+            self.wm.emit('get_idle')
 
     def check(self, event):
         while not event.wait(10.0):
             now = time()
 
-            if  self.idle > self.activity_time * 60:
+            if self.last_idle > self.activity_time * 60:
                 self.last_rest = now
                 return
 
             if self.working and now - self.last_rest > self.work_time*60:
-                self.start_rest()
+                self.wm.emit('start_rest')
 
             if not self.working and now - self.last_work > self.rest_time*60:
-                self.stop_rest(False)
+                self.wm.emit('stop_rest')
 
     def create_banner(self):
         self.banner = subprocess.Popen(['/usr/bin/env', 'dzen2', '-p', str(self.rest_time*70),
@@ -94,6 +94,18 @@ def init(work=None, rest=None, postpone=None, activity=None):
     wm = orcsome.get_wm()
     rsi = RsiPreventer(wm, work, rest, postpone, activity)
     cancel = threading.Event()
+
+    @wm.on_signal('start_rest')
+    def start_rest():
+        rsi.start_rest()
+
+    @wm.on_signal('stop_rest')
+    def stop_rest():
+        rsi.stop_rest(False)
+
+    @wm.on_signal('get_idle')
+    def get_idle():
+        rsi.last_idle = wm.root.get_screen_saver_info().idle / 1000.0
 
     t1 = threading.Thread(target=rsi.check, args=(cancel,))
     t1.start()
