@@ -117,7 +117,7 @@ def switch_to_desktop():
 
 
 ###################################
-# Handle window maximaze/unmaximize
+# Handle window maximize/unmaximize
 @wm.on_property_change('_NET_WM_STATE')
 def window_maximized_state_change():
     state = wm.get_window_state(wm.event_window)
