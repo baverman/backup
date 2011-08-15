@@ -127,6 +127,9 @@ def window_maximized_state_change():
     elif state.undecorated and (not state.maximized_vert or not state.maximized_horz):
         wm.decorate_window(wm.event_window)
 
+
+##########################
+# Start RSI prevent module
 @wm.on_init
 def init():
     r = rsi.init()
