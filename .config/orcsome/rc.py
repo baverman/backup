@@ -109,11 +109,10 @@ def bind_gimp_keys():
 def switch_to_desktop():
     if not wm.startup:
         if wm.activate_window_desktop(wm.event_window) is None:
-
             @wm.on_property_change(wm.event_window, '_NET_WM_DESKTOP')
             def property_was_set():
-                wm.activate_window_desktop(wm.event_window)
                 property_was_set.remove()
+                wm.activate_window_desktop(wm.event_window)
 
 
 ###################################

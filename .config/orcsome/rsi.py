@@ -79,13 +79,14 @@ class RsiPreventer(object):
 
     def stop_rest(self, postpone):
         self.working = True
-        self.destroy_banner()
         self.last_rest = time()
         if postpone:
             self.last_rest = self.last_rest - self.work_time*60 + self.postpone_time*60
 
         self.wm.ungrab_keyboard()
         self.wm.ungrab_pointer()
+
+        self.destroy_banner()
 
 
 def init(work=None, rest=None, postpone=None, activity=None):
