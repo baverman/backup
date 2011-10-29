@@ -19,6 +19,7 @@ class RsiPreventer(object):
         self.working = True
         self.last_rest = time()
         self.last_work = time()
+        self.last_check = time()
         self.last_idle = 0
 
     def idle(self):
@@ -26,8 +27,9 @@ class RsiPreventer(object):
 
     def check(self):
         now = time()
+        self.last_check, last_check = now, self.last_check
 
-        if self.last_idle > self.activity_time * 60:
+        if now - last_check > 60 or self.last_idle > self.activity_time * 60:
             self.last_rest = now
             return
 
@@ -48,8 +50,11 @@ class RsiPreventer(object):
     def destroy_banner(self):
         if self.banner:
             if not self.banner.poll():
-                self.banner.terminate()
-                self.banner.wait()
+                try:
+                    self.banner.terminate()
+                    self.banner.wait()
+                except OSError:
+                    pass
 
             self.banner = None
 

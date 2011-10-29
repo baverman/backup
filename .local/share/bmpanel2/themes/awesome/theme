@@ -13,7 +13,7 @@ desktop_switcher
 		center empty.png
 		right empty.png
 		right_corner empty.png
-		font DejaVu Sans 8
+		font DroidSans 10
 			color 170 170 170
 			offset 0 0
 			align center
@@ -24,7 +24,7 @@ desktop_switcher
 		center bg-focus.png
 		right emptyhl.png
 		right_corner emptyhl.png
-		font DejaVu Sans  8
+		font DroidSans  10
 			color 255 255 255
 			offset 0 0
 			align center
@@ -36,7 +36,7 @@ taskbar
 		left empty.png
 		center empty.png
 		right empty.png
-		font DejaVu Sans 8
+		font DroidSans 10
 			color 170 170 170
 		icon_offset 0 0
 
@@ -44,7 +44,7 @@ taskbar
 		left emptyhl.png
 		center bg-focus.png
 		right emptyhl.png
-		font DejaVu Sans 8
+		font DroidSans 10
 			color 255 255 255
 		
 	task_max_width 300

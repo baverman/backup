@@ -107,6 +107,16 @@ def bind_gimp_keys():
 # Workaround to fix openbox dumb behaviour
 @wm.on_create
 def switch_to_desktop():
+    #from Xlib.Xatom import ATOM
+    #actions = wm.get_window_property_safe(wm.event_window, '_NET_WM_ALLOWED_ACTIONS', ATOM)
+    #if actions:
+    #    try:
+    #        actions.value.remove(wm.get_atom('_NET_WM_ACTION_MINIMIZE'))
+    #    except ValueError:
+    #        pass
+    #    else:
+    #        wm.event_window.change_property(wm.get_atom('_NET_WM_ALLOWED_ACTIONS'), ATOM, 32, actions.value)
+
     if not wm.startup:
         if wm.activate_window_desktop(wm.event_window) is None:
             @wm.on_property_change(wm.event_window, '_NET_WM_DESKTOP')
