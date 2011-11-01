@@ -107,16 +107,6 @@ def bind_gimp_keys():
 # Workaround to fix openbox dumb behaviour
 @wm.on_create
 def switch_to_desktop():
-    #from Xlib.Xatom import ATOM
-    #actions = wm.get_window_property_safe(wm.event_window, '_NET_WM_ALLOWED_ACTIONS', ATOM)
-    #if actions:
-    #    try:
-    #        actions.value.remove(wm.get_atom('_NET_WM_ACTION_MINIMIZE'))
-    #    except ValueError:
-    #        pass
-    #    else:
-    #        wm.event_window.change_property(wm.get_atom('_NET_WM_ALLOWED_ACTIONS'), ATOM, 32, actions.value)
-
     if not wm.startup:
         if wm.activate_window_desktop(wm.event_window) is None:
             @wm.on_property_change(wm.event_window, '_NET_WM_DESKTOP')
@@ -135,6 +125,54 @@ def window_maximized_state_change():
         wm.decorate_window(wm.event_window, False)
     elif state.undecorated and (not state.maximized_vert or not state.maximized_horz):
         wm.decorate_window(wm.event_window)
+
+
+#####################################
+# Handle weechat urgent notifications
+def create_urgent_banner():
+    import subprocess
+    banner = subprocess.Popen(['/usr/bin/env', 'dzen2', '-p',
+        '-y', '20', '-x', '900', '-h', '24', '-bg', '#222222', '-fg', '#aaaaaa'],
+        stdin=subprocess.PIPE)
+
+    banner.stdin.write('IM message\n')
+    banner.stdin.close()
+    return banner
+
+def destroy_urgent_banner(banner):
+    if not banner.poll():
+        try:
+            banner.terminate()
+            banner.wait()
+        except OSError:
+            pass
+
+urgent_state = {}
+urgent_banner = [None]
+
+@wm.on_create(name='weechat')
+def weechat_demands_attention():
+    @wm.on_property_change(wm.event_window, '_NET_WM_STATE')
+    def state_changed():
+        old_state = urgent_state.get(wm.event_window.id, None)
+        state = wm.get_window_state(wm.event_window)
+        if state.urgent != old_state:
+            urgent_state[wm.event_window.id] = state.urgent
+            if state.urgent:
+                if not urgent_banner[0]:
+                    urgent_banner[0] = create_urgent_banner()
+            else:
+                if urgent_banner[0]:
+                    b = urgent_banner[0]
+                    urgent_banner[0] = None
+                    destroy_urgent_banner(b)
+
+    @wm.on_destroy(wm.event_window)
+    def destroy():
+        try:
+            del urgent_state[wm.event_window.id]
+        except KeyError:
+            pass
 
 
 ##########################
