@@ -1,11 +1,13 @@
 from time import time
 import subprocess
 import random
+import pynotify
 
 import orcsome
 from orcsome.utils import Timer
 
 keys = 'abcdefghijklmnopqrstuvwxyz'
+
 
 class RsiPreventer(object):
     def __init__(self, wm, work=None, rest=None, postpone=None, activity=None):
@@ -40,22 +42,13 @@ class RsiPreventer(object):
             self.wm.emit('stop_rest')
 
     def create_banner(self):
-        self.banner = subprocess.Popen(['/usr/bin/env', 'dzen2', '-p', str(self.rest_time*70),
-            '-y', '20', '-x', '850', '-h', '24', '-bg', '#222222', '-fg', '#aaaaaa'],
-            stdin=subprocess.PIPE)
-
-        self.banner.stdin.write('Take break %s\n' % self.password)
-        self.banner.stdin.close()
+        self.banner = pynotify.Notification('Take break', self.password)
+        self.banner.set_timeout(self.rest_time * 70 * 1000)
+        self.banner.show()
 
     def destroy_banner(self):
         if self.banner:
-            if not self.banner.poll():
-                try:
-                    self.banner.terminate()
-                    self.banner.wait()
-                except OSError:
-                    pass
-
+            self.banner.close()
             self.banner = None
 
     def key_handler(self, is_press, state, code):

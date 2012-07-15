@@ -1,3 +1,8 @@
+import pynotify
+
+if not pynotify.is_initted():
+    pynotify.init('orcsome')
+
 from orcsome import get_wm
 from orcsome.actions import *
 
@@ -51,7 +56,7 @@ wm.on_key('Ctrl+Alt+m')(
     spawn_or_raise('urxvtc -name alsamixer -e alsamixer', name='alsamixer', **restore_focus))
 
 wm.on_key('Mod+k')(
-    spawn_or_raise('urxvtc -name rtorrent -e rtorrent-screen', name='rtorrent', **restore_focus))
+    spawn_or_raise('urxvtc -name rtorrent -e transmission-remote-cli', name='rtorrent', **restore_focus))
 
 
 ##########################
@@ -130,22 +135,13 @@ def window_maximized_state_change():
 #####################################
 # Handle weechat urgent notifications
 def create_urgent_banner():
-    import subprocess
-    banner = subprocess.Popen(['/usr/bin/env', 'dzen2', '-p',
-        '-y', '20', '-x', '900', '-h', '24', '-bg', '#222222', '-fg', '#aaaaaa'],
-        stdin=subprocess.PIPE)
-
-    banner.stdin.write('IM message\n')
-    banner.stdin.close()
-    return banner
+    n = pynotify.Notification('IM message', '')
+    n.set_timeout(3600000)
+    n.show()
+    return n
 
 def destroy_urgent_banner(banner):
-    if not banner.poll():
-        try:
-            banner.terminate()
-            banner.wait()
-        except OSError:
-            pass
+    banner.close()
 
 urgent_state = {}
 urgent_banner = [None]
