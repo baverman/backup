@@ -1,0 +1,55 @@
+#!/usr/bin/env python2
+
+import sys, fcntl, os
+from select import select
+from os.path import exists
+
+def main(size, filename):
+    def swap(names, idx):
+        new_fname = names[idx]
+        try:
+            os.remove(filename)
+        except:
+            pass
+
+        os.symlink(new_fname, filename)
+
+        return open(new_fname, 'wb', 0), (idx + 1) % len(names)
+
+    infile = sys.stdin.fileno()
+    fl = fcntl.fcntl(infile, fcntl.F_GETFL)
+    fcntl.fcntl(infile, fcntl.F_SETFL, fl | os.O_NONBLOCK)
+
+    names = [filename + '.0', filename + '.1']
+    outfile, idx = swap(names, 0)
+    collected = 0
+    work = True
+    while work:
+        readable, _, _ = select([infile], [], [])
+        if readable:
+            f = readable[0]
+            while True:
+                try:
+                    data = os.read(f, 4096)
+                    if data == '':
+                        work = False
+                except OSError, e:
+                    if e.errno == 11:
+                        data = None
+                    else:
+                        raise
+
+                if not data:
+                    break
+
+                collected += os.write(outfile.fileno(), data)
+                if collected > size:
+                    outfile.close()
+                    outfile, idx = swap(names, idx)
+                    collected = 0
+
+                if len(data) < 4906:
+                    break
+
+if __name__ == '__main__':
+    main(int(sys.argv[1]), sys.argv[2])

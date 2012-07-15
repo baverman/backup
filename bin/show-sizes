@@ -1,0 +1,2 @@
+#!/bin/sh
+find . -maxdepth 1 -mindepth 1 -print0 | xargs -0 du -sm | sort -n

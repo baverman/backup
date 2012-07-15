@@ -1,0 +1,8 @@
+#!/bin/sh
+
+current_branch=$(git branch | grep '^\*' | cut -d ' ' -f2)
+merge_with=$(git log --decorate --oneline | grep -v 'refs/patches' | head -1 | cut -d ' ' -f1)
+
+git checkout ${1:-master}
+git merge $merge_with
+git checkout $current_branch
