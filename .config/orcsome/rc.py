@@ -136,7 +136,7 @@ def window_maximized_state_change():
 # Handle weechat urgent notifications
 def create_urgent_banner():
     n = pynotify.Notification('IM message', '')
-    n.set_timeout(3600000)
+    n.set_timeout(0)
     n.show()
     return n
 
