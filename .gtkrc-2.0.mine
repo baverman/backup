@@ -1,0 +1,57 @@
+gtk-icon-sizes = "gtk-large-toolbar=16,16:gtk-small-toolbar=16,16:gtk-button=16,16"
+
+#gtk-icon-theme-name = "hicolor"
+gtk-icon-theme-name = "elementary-mono-dark"
+#gtk-icon-theme-name = "ACYL_Icon_Theme_0.9.4"
+
+#gtk-theme-name = "Candido-Mist"
+gtk-toolbar-style   = GTK_TOOLBAR_ICONS
+gtk-font-name = "Arial 10"
+
+style "thin-scrollbar"
+{
+  GtkRange       ::slider_width      = 10
+  GtkRange       ::stepper_size      = 10
+  GtkScrollbar   ::has-forward-stepper = 0
+  GtkScrollbar   ::has-backward-stepper = 0  
+}
+
+class "GtkRange" style "thin-scrollbar"
+
+
+style "scrolled-window-without-space"
+{
+  GtkScrolledWindow ::scrollbar-spacing = 0
+}
+
+widget "SnakedWindow.*.GtkScrolledWindow" style "scrolled-window-without-space"
+
+
+style "condensed-tree-view"
+{
+  GtkTreeView::vertical-separator = 0
+  GtkTreeView::horizontal-separator = 0
+  GtkTreeView::expander-size = 12
+}
+
+class "GtkTreeView" style "condensed-tree-view"
+
+
+style "list-cb"
+{
+  #GtkComboBox::appears-as-list = 1
+  xthickness = 0
+  ythickness = 0
+}
+
+class "GtkToolItem" style "list-cb"
+
+
+style "panel-background" {
+   base[NORMAL]        = "#94BB8B"
+   base[PRELIGHT]      = "#94BB8B"
+   base[ACTIVE]        = "#94BB8B"
+   base[SELECTED]      = "#94BB8B"
+   base[INSENSITIVE]   = "#94BB8B"
+ }
+ widget_class "*Panel*" style "panel-background"
