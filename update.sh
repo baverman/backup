@@ -18,6 +18,7 @@ copy_home_files .config/orcsome '*.py'
 copy_home_files .config/bmpanel2 '*'
 copy_home_files .themes/Awesome '*'
 copy_home_files .local/share/bmpanel2/themes/awesome '*'
+copy_home_files .bash_sources '*'
 
 copy_files /etc/X11/xorg.conf
 copy_files /etc/X11/xorg.conf.d/{15,20,50}*

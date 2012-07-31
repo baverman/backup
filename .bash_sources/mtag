@@ -1,0 +1,81 @@
+_mtag()
+{
+    local prev cur cmd commands
+
+    COMPREPLY=()
+    _get_comp_words_by_ref cur prev
+
+	commands=(${COMP_WORDS[@]:0:$COMP_CWORD})
+	commands=(${commands[@]##-*})
+    cmd=${commands[1]}
+
+	case "$cmd" in
+		add)
+			if [ "$prev" == '-i' ]; then
+				COMPREPLY=( $( compgen -f -W "current playlist" -- "$cur" ) )
+				return 0			
+			else
+				compopt -o nospace
+				COMPREPLY=( $( compgen -W "`mtag show alltags`" -- "$cur" ) )
+				return 0			
+			fi
+			;;
+		del)
+			if [ "$prev" == '-i' ]; then
+				COMPREPLY=( $( compgen -f -W "current playlist" -- "$cur" ) )
+				return 0			
+			else
+				COMPREPLY=( $( compgen -W "`mtag show alltags`" -- "$cur" ) )
+				return 0			
+			fi
+			;;
+		set)
+			if [ "$prev" == '-i' ]; then
+				COMPREPLY=( $( compgen -f -W "current playlist" -- "$cur" ) )
+				return 0			
+			else
+				compopt -o nospace
+				COMPREPLY=( $( compgen -W "`mtag show alltags`" -- "$cur" ) )
+				return 0			
+			fi
+			;;
+		show)
+			if [ "$prev" == '-i' ]; then
+				COMPREPLY=( $( compgen -f -W "current playlist" -- "$cur" ) )
+				return 0			
+			else
+				COMPREPLY=( $( compgen -W "alltags" -- "$cur" ) )
+				return 0			
+			fi
+			;;
+		find)
+			if [ "$prev" == '-o' ]; then
+				COMPREPLY=( $( compgen -W "append replace" -- "$cur" ) )
+				return 0			
+			else
+				compopt -o nospace
+				COMPREPLY=( $( compgen -W "anytag `mtag show alltags`" -- "$cur" ) )
+				return 0
+			fi			
+			;;
+		filter)
+			if [ "$prev" == '-o' ]; then
+				COMPREPLY=( $( compgen -W "replace" -- "$cur" ) )
+				return 0			
+			elif [ "$prev" == '-i' ]; then
+				COMPREPLY=( $( compgen -W "playlist" -- "$cur" ) )
+				return 0			
+			else
+				compopt -o nospace
+				COMPREPLY=( $( compgen -W "anytag `mtag show alltags`" -- "$cur" ) )
+				return 0
+			fi			
+			;;
+		*)
+		;;
+	esac
+
+    COMPREPLY=( $( compgen -W "add set del find filter show" -- "$cur" ) )
+    return 0
+} &&
+complete -F _mtag mtag
