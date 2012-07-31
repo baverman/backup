@@ -1,15 +1,26 @@
 #!/bin/sh
 
-copy_files () {
+copy_home_files () {
 	[ -d $1 ] || mkdir -p $1
 	cp -r ~/$1/$2 $1
 }
 
-copy_files .config/openbox '*'
-copy_files .config/orcsome '*.py'
-copy_files .config/bmpanel2 '*'
-copy_files .themes/Awesome '*'
-copy_files .local/share/bmpanel2/themes/awesome '*'
+copy_files () {
+  for f in $@; do
+    dir=./`dirname "$f"`
+    [ -d "$dir" ] || mkdir -p "$dir"
+    cp -r "$f" "$dir"
+  done
+}
+
+copy_home_files .config/openbox '*'
+copy_home_files .config/orcsome '*.py'
+copy_home_files .config/bmpanel2 '*'
+copy_home_files .themes/Awesome '*'
+copy_home_files .local/share/bmpanel2/themes/awesome '*'
+
+copy_files /etc/X11/xorg.conf
+copy_files /etc/X11/xorg.conf.d/{15,20,50}*
 
 for file in box-session.sh bpython colors.sh dbus-env opera pipdc rx show-sizes stg-flush title xxx check-mail git-pull-all; do
     cp ~/bin/$file bin/
