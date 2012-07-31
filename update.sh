@@ -16,3 +16,4 @@ for file in box-session.sh bpython colors.sh dbus-env opera pipdc rx show-sizes 
 done
 
 cp ~/.Xdefaults ./
+cp ~/.bashrc ~/.bash_profile ./
