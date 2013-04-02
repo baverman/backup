@@ -1,0 +1,6 @@
+#!/bin/sh
+
+top=$(stg top 2>/dev/null)
+
+stg pop -a && git push origin HEAD
+[ "$top" ] && stg goto "$top"

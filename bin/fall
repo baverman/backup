@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec find . \( -name '*.py' -or -name '*.html' -or -name '*.sh' -or -name '*.js' -or -name '*.css' \) -and -print0 | xargs -0 grep --color -n "$@"

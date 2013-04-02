@@ -1,5 +1,13 @@
 #!/bin/sh
 
 current=`git status -sb | head -1 | cut -d ' ' -f 2`
-git remote show origin -n | grep 'merges with' | awk '{print $1}' | xargs --replace=^ echo "git checkout ^ && git pull --ff-only" | sh
+
+for branch in $(git remote show origin -n | grep 'merges with' | awk '{print $1}'); do
+    git checkout $branch
+    top=$(stg top 2>/dev/null)
+    stg pop -a
+    git pull --ff-only
+    stg goto $top
+done
+
 git co $current
