@@ -31,7 +31,8 @@ URxvt*color14: #84c2b3
 URxvt*color7: #dddddd
 URxvt*color15: #F8F8F2
 
-URxvt*font:	xft:Terminus:pixelsize=14,-xos4-terminus-medium-r-normal--14-140-72-72-c-80-koi8-u,xft:Monospace:antialias=false
+URxvt*font:	xft:Terminus:pixelsize=18,-xos4-terminus-medium-r-normal--16-140-72-72-c-80-koi8-u,xft:Monospace:antialias=false
+!URxvt*font:	xft:Lucida Console:pixelsize=17
 
 URxvt.keysym.Control-Insert:	perl:clipboard:copy
 URxvt.keysym.Shift-Down:	command:\033]721;6\007
@@ -39,16 +40,17 @@ URxvt.keysym.Shift-Insert:	perl:clipboard:paste
 URxvt.keysym.Shift-Up:	command:\033]720;6\007
 
 urxvt*lineSpace:	1
+!urxvt*skipBuiltinGlyphs: true
 
 URxvt.perl-ext-common:	default,matcher,clipboard
 URxvt.matcher.button:	3
 URxvt.matcher.pattern.1:	\\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
-URxvt*urlLauncher:	opera
+URxvt*url-launcher:	firefox
 
 urxvt*meta8:	false
 URxvt*saveLines:	10000
 URxvt*scrollBar_right:	true
-URxvt*scrollBar:	true
+URxvt*scrollBar:	false
 URxvt*scrollstyle:	plain
 URxvt*shading:	20
 urxvt*termName:	xterm
@@ -77,3 +79,5 @@ xrenoise.use_xcursors:	1
 
 dzen2.foreground: #aaaaaa
 dzen2.background: #222222
+
+Emacs.FontBackend: xft

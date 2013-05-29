@@ -218,7 +218,7 @@
 
   <keybind key="W-e">
     <action name="Execute">
-      <command>awesome-menu.sh</command>
+      <command>menu.sh</command>
     </action>
   </keybind>
 
@@ -533,6 +533,21 @@
   <application class="URxvt">
     <decor>no</decor>
     <desktop>2</desktop>
+    <maximized>true</maximized>
+    <focus>yes</focus>
+  </application>
+
+  <application name="ranger">
+    <decor>true</decor>
+    <position>center</position>
+    <desktop>1</desktop>
+    <maximized>false</maximized>
+    <focus>yes</focus>
+  </application>
+
+  <application name="vial">
+    <decor>false</decor>
+    <desktop>1</desktop>
     <maximized>true</maximized>
     <focus>yes</focus>
   </application>

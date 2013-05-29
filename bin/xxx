@@ -1,3 +1,3 @@
 #/bin/sh
 
-exec xinit -- -nolisten tcp |& trout 1000000 /tmp/xsession.log
+exec startx |& trout 1000000 /tmp/xsession.log

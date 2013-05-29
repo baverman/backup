@@ -5,7 +5,7 @@ _snaked()
 
 	case "$prev" in
 		-s)
-			COMPREPLY=( $( compgen -W "`find $XDG_CONFIG_HOME/snaked -type d | xargs --replace=^ basename ^`" -- "$cur" ) )
+			COMPREPLY=( $( compgen -W "`find ${XDG_CONFIG_HOME:-$HOME/.config}/snaked -type d | xargs --replace=^ basename ^`" -- "$cur" ) )
 			return 0			
 			;;
 		*)

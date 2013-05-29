@@ -22,6 +22,24 @@ wm.on_key('Mod+bracketleft')(
 wm.on_key('Mod+bracketright')(
     spawn('mpc volume +2'))
 
+wm.on_key('Mod+period')(
+    spawn('mpc next'))
+
+wm.on_key('Mod+comma')(
+    spawn('mpc prev'))
+
+wm.on_key('Mod+slash')(
+    spawn('mpc-forward'))
+
+wm.on_key('Mod+grave')(
+    spawn('mpc-trash'))
+
+wm.on_key('Mod+apostrophe')(
+    spawn('mpc-add-tag blade'))
+
+wm.on_key('Mod+semicolon')(
+    spawn('mpc-add-tag listen'))
+
 wm.on_key('Mod+p')(
     spawn('mpc toggle'))
 
@@ -31,12 +49,17 @@ wm.on_key('XF86_MonBrightnessUp')(
 wm.on_key('XF86_MonBrightnessDown')(
     spawn('sudo backlight down'))
 
+wm.on_key('XF86_PowerOff')(
+    spawn('sudo pm-suspend'))
+
 wm.on_key('Mod+i')(
     spawn_or_raise('urxvtc -name weechat -e weechat-curses', name='weechat'))
 
-wm.on_key('Mod+l')(
-    spawn_or_raise('fmd', cls='Fmd'))
+#wm.on_key('Mod+l')(
+#    spawn_or_raise('fmd', cls='Fmd'))
 
+wm.on_key('Mod+l')(
+    spawn_or_raise('urxvtc -g 100x30 -name ranger -e ranger', name='ranger'))
 
 ################################
 # Handle quick apps window close
@@ -50,7 +73,7 @@ wm.on_key('Ctrl+Alt+p')(
     spawn_or_raise('urxvtc -name ncmpcpp -e ncmpcpp', name='ncmpcpp', **restore_focus))
 
 wm.on_key('Mod+n')(
-    spawn_or_raise('urxvtc -name mutt -e mutt', name='mutt', **restore_focus))
+    spawn_or_raise('urxvtc -name mutt -e sh -c "sleep 1; mutt"', name='mutt', **restore_focus))
 
 wm.on_key('Ctrl+Alt+m')(
     spawn_or_raise('urxvtc -name alsamixer -e alsamixer', name='alsamixer', **restore_focus))
