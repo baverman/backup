@@ -77,10 +77,11 @@ augroup mypy
 augroup END
 
 let g:vial_plugins = ['quick_open', 'python']
-nnoremap mm :VialQuickOpen<cr>
+nnoremap <esc>m :VialQuickOpen<cr>
 
 " delimitMate
 imap <c-j> <Plug>delimitMateJumpMany
+inoremap <c-l> <C-o>l
 let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 1
 
