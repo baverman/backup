@@ -76,12 +76,11 @@ augroup mypy
     au FileType python set autoindent smartindent et sts=4 sw=4 tw=80 fo=croq colorcolumn=85
 augroup END
 
-let g:vial_plugins = ['quick_open', 'python']
 nnoremap <esc>m :VialQuickOpen<cr>
 
 " delimitMate
 imap <c-j> <Plug>delimitMateJumpMany
-inoremap <c-l> <C-o>l
+inoremap <c-l> <c-o>a
 let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 1
 
@@ -104,4 +103,9 @@ if !empty($VIAL_SESSION)
     set viminfo+=n~/.vim/sessions/$VIAL_SESSION/.viminfo
     silent! source ~/.vim/sessions/$VIAL_SESSION/session.vim
     command! SaveSession mksession! ~/.vim/sessions/$VIAL_SESSION/session.vim 
+    noremap <leader>es :edit ~/.vim/sessions/$VIAL_SESSION/sessionx.vim<cr>
+    augroup save_session_on_quit
+      autocmd!
+      autocmd QuitPre * SaveSession
+    augroup END
 endif
