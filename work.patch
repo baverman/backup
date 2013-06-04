@@ -5,24 +5,24 @@ From: Anton Bobrov <a.bobrov@rambler-co.ru>
 
 ---
  .Xdefaults                            |   10 ++----
- .bash_profile                         |   10 ++++++
- .bashrc                               |   50 +++++++++++++++++++++++--------
- .config/openbox/rc.xml                |   18 +++--------
- .config/orcsome/rc.py                 |   31 +++----------------
- .gtkrc-2.0.mine                       |   17 ++++++++++-
- .mplayer/config                       |   38 +-----------------------
- .vimrc                                |   19 ++++++++++--
+ .bash_profile                         |   10 +++++-
+ .bashrc                               |   58 ++++++++++++++++++++++++++-------
+ .config/openbox/rc.xml                |   18 +++-------
+ .config/orcsome/rc.py                 |   31 +++---------------
+ .gtkrc-2.0.mine                       |   17 +++++++++-
+ .mplayer/config                       |   38 +---------------------
+ .vimrc                                |   26 +++++++++++----
  .xinitrc                              |    8 ++---
  bin/box-session.sh                    |    4 ++
  bin/check-mail                        |    2 +
- bin/git-pull-all                      |   10 ++++++
+ bin/git-pull-all                      |   10 +++++-
  bin/rx                                |    2 +
  bin/xxx                               |    2 +
- etc/X11/xorg.conf.d/50-joystick.conf  |    6 ++++
- etc/X11/xorg.conf.d/50-synaptics.conf |   53 ++++++++++++++++++++++++++++-----
+ etc/X11/xorg.conf.d/50-joystick.conf  |    6 +++
+ etc/X11/xorg.conf.d/50-synaptics.conf |   53 ++++++++++++++++++++++++++----
  etc/X11/xorg.conf.d/50-vmmouse.conf   |    7 ++++
- etc/asound.conf                       |   17 ++++-------
- 18 files changed, 174 insertions(+), 130 deletions(-)
+ etc/asound.conf                       |   17 +++-------
+ 18 files changed, 186 insertions(+), 133 deletions(-)
  create mode 100644 etc/X11/xorg.conf.d/50-joystick.conf
  create mode 100644 etc/X11/xorg.conf.d/50-vmmouse.conf
 
@@ -89,10 +89,10 @@ index 1092a9c..d273957 100644
 +    logout
 +fi
 diff --git a/.bashrc b/.bashrc
-index 07ffd5d..7edc70a 100644
+index 07ffd5d..ef2b105 100644
 --- a/.bashrc
 +++ b/.bashrc
-@@ -10,8 +10,31 @@ alias ls='ls --color=auto'
+@@ -10,8 +10,39 @@ alias ls='ls --color=auto'
  alias ll='ls -la'
  alias mc='mc -u'
  alias vimdiff=meld
@@ -122,10 +122,18 @@ index 07ffd5d..7edc70a 100644
 +    return 0
 +} &&
 +complete -F __fab_tasks fab
++
++__svial() {
++    local prev cur
++    _get_comp_words_by_ref cur prev
++    COMPREPLY=( $( compgen -W "`find $HOME/.vim/sessions -mindepth 1 -type d | xargs --replace=^ basename ^`" -- "$cur"  ) )
++    return 0
++}
++complete -F __svial svial
  
  export PATH=$HOME/bin:$PATH
  export PROMPT_COMMAND=
-@@ -22,22 +45,23 @@ shopt -s histappend
+@@ -22,22 +53,23 @@ shopt -s histappend
  
  export PAGER=most
  export EDITOR=vim
@@ -352,7 +360,7 @@ index 8f5eed6..21cf775 100644
 -[gnome-mplayer]
 -msglevel=all=5
 diff --git a/.vimrc b/.vimrc
-index 6e6c262..480212a 100644
+index abaf181..e629a97 100644
 --- a/.vimrc
 +++ b/.vimrc
 @@ -3,7 +3,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
@@ -364,15 +372,28 @@ index 6e6c262..480212a 100644
  set nocompatible
  set background=dark
  
-@@ -53,7 +53,6 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+@@ -41,6 +41,10 @@ set formatoptions=qrn1
+ 
+ set sessionoptions=buffers,curdir
+ 
++set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
++set spelllang=en_us,ru_ru
++set spellcapcheck=
++
+ nnoremap <leader>ev :edit $MYVIMRC<cr>
+ nnoremap <leader>sv :source $MYVIMRC<cr>
+ noremap H 0
+@@ -52,8 +56,8 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+ 
  " Bu-ga-ga
  inoremap jk <esc>
++inoremap ОЛ <esc>
  inoremap <esc> <nop>
 -
  inoremap OA <nop>
  inoremap OB <nop>
  inoremap OC <nop>
-@@ -71,11 +70,13 @@ vnoremap <Left> <nop>
+@@ -71,22 +75,32 @@ vnoremap <Left> <nop>
  vnoremap <Down> <nop>
  vnoremap <Right> <nop>
  
@@ -383,10 +404,13 @@ index 6e6c262..480212a 100644
  augroup END
  
 +" Vial
- let g:vial_plugins = ['quick_open', 'python']
- nnoremap mm :VialQuickOpen<cr>
++let g:vial_plugins = ['quick_open', 'python']
+ nnoremap <esc>m :VialQuickOpen<cr>
  
-@@ -84,9 +85,16 @@ imap <c-j> <Plug>delimitMateJumpMany
+ " delimitMate
+ imap <c-j> <Plug>delimitMateJumpMany
+-inoremap <c-l> <c-o>a
++inoremap <c-l> <C-o>a
  let delimitMate_expand_cr = 1
  let delimitMate_expand_space = 1
  
@@ -404,7 +428,7 @@ index 6e6c262..480212a 100644
      return 1
    endif
  endfunction
-@@ -96,6 +104,7 @@ augroup resCur
+@@ -96,6 +110,7 @@ augroup resCur
    autocmd BufWinEnter * call ResCur()
  augroup END
  
@@ -412,15 +436,16 @@ index 6e6c262..480212a 100644
  if !empty($VIAL_SESSION)
      if !isdirectory(expand("~/.vim/sessions/$VIAL_SESSION"))
          call mkdir(expand("~/.vim/sessions/$VIAL_SESSION"))
-@@ -103,4 +112,8 @@ if !empty($VIAL_SESSION)
+@@ -103,8 +118,7 @@ if !empty($VIAL_SESSION)
      set viminfo+=n~/.vim/sessions/$VIAL_SESSION/.viminfo
      silent! source ~/.vim/sessions/$VIAL_SESSION/session.vim
      command! SaveSession mksession! ~/.vim/sessions/$VIAL_SESSION/session.vim 
+-    noremap <leader>es :edit ~/.vim/sessions/$VIAL_SESSION/sessionx.vim<cr>
+-    augroup save_session_on_quit
 +    augroup SaveSessionOnQuit
-+      autocmd!
-+      autocmd QuitPre * SaveSession
-+    augroup END
- endif
+       autocmd!
+       autocmd QuitPre * SaveSession
+     augroup END
 diff --git a/.xinitrc b/.xinitrc
 index cc2200c..b0b85c4 100644
 --- a/.xinitrc
