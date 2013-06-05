@@ -7,6 +7,8 @@ filetype indent on
 set nocompatible
 set background=dark
 
+
+" Colors
 hi ColorColumn ctermbg=darkgrey guibg=darkgrey
 hi clear CursorLine
 hi CursorLine ctermbg=darkgrey
@@ -17,6 +19,8 @@ if !empty($VIAL)
     hi NonText ctermbg=234 guifg=#e3e0d7
 endif
 
+
+" Common settings
 set nonumber
 set numberwidth=4
 set hidden
@@ -41,6 +45,9 @@ set formatoptions=qrn1
 
 set sessionoptions=buffers,curdir
 
+
+" Common mappings
+let mapleader = ','
 nnoremap <leader>ev :edit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 noremap H 0
@@ -48,9 +55,11 @@ noremap L $
 nnoremap j gj
 nnoremap k gk
 nnoremap ; :
+noremap <space> ;
+nnoremap <c-n> :bmodified<cr>
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+inoremap <c-@> <c-x><c-o>
 
-" Bu-ga-ga
 inoremap jk <esc>
 inoremap <esc> <nop>
 
@@ -71,12 +80,18 @@ vnoremap <Left> <nop>
 vnoremap <Down> <nop>
 vnoremap <Right> <nop>
 
-augroup mypy
+
+" Filetype settings
+augroup MyFileTypeSettings
     au!
     au FileType python set autoindent smartindent et sts=4 sw=4 tw=80 fo=croq colorcolumn=85
+    au FileType python nnoremap <buffer> <silent> <leader>d :VialPythonGotoDefinition<cr>
 augroup END
 
-nnoremap <esc>m :VialQuickOpen<cr>
+
+" Vial
+nnoremap <leader>m :VialQuickOpen<cr>
+
 
 " delimitMate
 imap <c-j> <Plug>delimitMateJumpMany
@@ -84,6 +99,8 @@ inoremap <c-l> <c-o>a
 let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 1
 
+
+" Restore cursor
 function! ResCur()
   if line("'\"") <= line("$")
     normal! g`"
@@ -96,7 +113,9 @@ augroup resCur
   autocmd BufWinEnter * call ResCur()
 augroup END
 
-if !empty($VIAL_SESSION)
+
+" Session
+if !empty($VIAL_SESSION) && !exists('g:session_loaded')
     if !isdirectory(expand("~/.vim/sessions/$VIAL_SESSION"))
         call mkdir(expand("~/.vim/sessions/$VIAL_SESSION"))
     endif
@@ -108,4 +127,5 @@ if !empty($VIAL_SESSION)
       autocmd!
       autocmd QuitPre * SaveSession
     augroup END
+    let g:session_loaded = 'true'
 endif
