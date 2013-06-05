@@ -11,7 +11,7 @@ From: Anton Bobrov <a.bobrov@rambler-co.ru>
  .config/orcsome/rc.py                 |   31 +++---------------
  .gtkrc-2.0.mine                       |   17 +++++++++-
  .mplayer/config                       |   38 +---------------------
- .vimrc                                |   26 +++++++++++----
+ .vimrc                                |   22 +++++++++----
  .xinitrc                              |    8 ++---
  bin/box-session.sh                    |    4 ++
  bin/check-mail                        |    2 +
@@ -22,7 +22,7 @@ From: Anton Bobrov <a.bobrov@rambler-co.ru>
  etc/X11/xorg.conf.d/50-synaptics.conf |   53 ++++++++++++++++++++++++++----
  etc/X11/xorg.conf.d/50-vmmouse.conf   |    7 ++++
  etc/asound.conf                       |   17 +++-------
- 18 files changed, 186 insertions(+), 133 deletions(-)
+ 18 files changed, 182 insertions(+), 133 deletions(-)
  create mode 100644 etc/X11/xorg.conf.d/50-joystick.conf
  create mode 100644 etc/X11/xorg.conf.d/50-vmmouse.conf
 
@@ -360,7 +360,7 @@ index 8f5eed6..21cf775 100644
 -[gnome-mplayer]
 -msglevel=all=5
 diff --git a/.vimrc b/.vimrc
-index abaf181..e629a97 100644
+index d272c7c..950f6b8 100644
 --- a/.vimrc
 +++ b/.vimrc
 @@ -3,7 +3,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
@@ -372,7 +372,7 @@ index abaf181..e629a97 100644
  set nocompatible
  set background=dark
  
-@@ -41,6 +41,10 @@ set formatoptions=qrn1
+@@ -45,6 +45,10 @@ set formatoptions=qrn1
  
  set sessionoptions=buffers,curdir
  
@@ -380,12 +380,12 @@ index abaf181..e629a97 100644
 +set spelllang=en_us,ru_ru
 +set spellcapcheck=
 +
- nnoremap <leader>ev :edit $MYVIMRC<cr>
- nnoremap <leader>sv :source $MYVIMRC<cr>
- noremap H 0
-@@ -52,8 +56,8 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
  
- " Bu-ga-ga
+ " Common mappings
+ let mapleader = ','
+@@ -61,8 +65,8 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+ inoremap <c-@> <c-x><c-o>
+ 
  inoremap jk <esc>
 +inoremap ОЛ <esc>
  inoremap <esc> <nop>
@@ -393,19 +393,7 @@ index abaf181..e629a97 100644
  inoremap OA <nop>
  inoremap OB <nop>
  inoremap OC <nop>
-@@ -71,22 +75,32 @@ vnoremap <Left> <nop>
- vnoremap <Down> <nop>
- vnoremap <Right> <nop>
- 
-+" Settings for filetypes
- augroup mypy
-     au!
-     au FileType python set autoindent smartindent et sts=4 sw=4 tw=80 fo=croq colorcolumn=85
- augroup END
- 
-+" Vial
-+let g:vial_plugins = ['quick_open', 'python']
- nnoremap <esc>m :VialQuickOpen<cr>
+@@ -95,15 +99,22 @@ nnoremap <leader>m :VialQuickOpen<cr>
  
  " delimitMate
  imap <c-j> <Plug>delimitMateJumpMany
@@ -414,13 +402,15 @@ index abaf181..e629a97 100644
  let delimitMate_expand_cr = 1
  let delimitMate_expand_space = 1
  
+ 
 +" UltiSnips
 +" let g:UltiSnipsExpandTrigger="<tab>"
 +" let g:UltiSnipsListSnippets="<c-tab>"
 +let g:UltiSnipsJumpForwardTrigger="<tab>"
 +let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 +
-+" Restore buffer position
++
+ " Restore cursor
  function! ResCur()
    if line("'\"") <= line("$")
 -    normal! g`"
@@ -428,15 +418,7 @@ index abaf181..e629a97 100644
      return 1
    endif
  endfunction
-@@ -96,6 +110,7 @@ augroup resCur
-   autocmd BufWinEnter * call ResCur()
- augroup END
- 
-+" Sessions
- if !empty($VIAL_SESSION)
-     if !isdirectory(expand("~/.vim/sessions/$VIAL_SESSION"))
-         call mkdir(expand("~/.vim/sessions/$VIAL_SESSION"))
-@@ -103,8 +118,7 @@ if !empty($VIAL_SESSION)
+@@ -122,8 +133,7 @@ if !empty($VIAL_SESSION) && !exists('g:session_loaded')
      set viminfo+=n~/.vim/sessions/$VIAL_SESSION/.viminfo
      silent! source ~/.vim/sessions/$VIAL_SESSION/session.vim
      command! SaveSession mksession! ~/.vim/sessions/$VIAL_SESSION/session.vim 
