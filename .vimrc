@@ -3,7 +3,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
 
 syntax on
-filetype indent on
+filetype indent plugin on
 set nocompatible
 set background=dark
 
@@ -31,7 +31,6 @@ set et sts=4 sw=4
 
 " nnoremap / /\v
 " vnoremap / /\v
-nnoremap <silent> <leader>cs :noh<cr>
 set ignorecase
 set smartcase
 set gdefault
@@ -48,6 +47,7 @@ set sessionoptions=buffers,curdir
 
 " Common mappings
 let mapleader = ','
+nnoremap <silent> <leader>cs :noh<cr>
 nnoremap <leader>ev :edit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 noremap H 0
@@ -59,6 +59,8 @@ noremap <space> ;
 nnoremap <c-n> :bmodified<cr>
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 inoremap <c-@> <c-x><c-o>
+imap <c-j> jklysL
+inoremap <c-l> <c-o>a
 
 inoremap jk <esc>
 inoremap <esc> <nop>
@@ -86,18 +88,12 @@ augroup MyFileTypeSettings
     au!
     au FileType python set autoindent smartindent et sts=4 sw=4 tw=80 fo=croq colorcolumn=85
     au FileType python nnoremap <buffer> <silent> <leader>d :VialPythonGotoDefinition<cr>
+    au FileType python nnoremap <buffer> <silent> <leader>f :VialPythonOutline<cr>
 augroup END
 
 
 " Vial
 nnoremap <leader>m :VialQuickOpen<cr>
-
-
-" delimitMate
-imap <c-j> <Plug>delimitMateJumpMany
-inoremap <c-l> <c-o>a
-let delimitMate_expand_cr = 1
-let delimitMate_expand_space = 1
 
 
 " Restore cursor
