@@ -11,7 +11,7 @@ From: Anton Bobrov <a.bobrov@rambler-co.ru>
  .config/orcsome/rc.py                 |   31 +++---------------
  .gtkrc-2.0.mine                       |   17 +++++++++-
  .mplayer/config                       |   38 +---------------------
- .vimrc                                |   22 +++++++++----
+ .vimrc                                |   17 +++++++---
  .xinitrc                              |    8 ++---
  bin/box-session.sh                    |    4 ++
  bin/check-mail                        |    2 +
@@ -22,7 +22,7 @@ From: Anton Bobrov <a.bobrov@rambler-co.ru>
  etc/X11/xorg.conf.d/50-synaptics.conf |   53 ++++++++++++++++++++++++++----
  etc/X11/xorg.conf.d/50-vmmouse.conf   |    7 ++++
  etc/asound.conf                       |   17 +++-------
- 18 files changed, 182 insertions(+), 133 deletions(-)
+ 18 files changed, 179 insertions(+), 131 deletions(-)
  create mode 100644 etc/X11/xorg.conf.d/50-joystick.conf
  create mode 100644 etc/X11/xorg.conf.d/50-vmmouse.conf
 
@@ -360,19 +360,18 @@ index 8f5eed6..21cf775 100644
 -[gnome-mplayer]
 -msglevel=all=5
 diff --git a/.vimrc b/.vimrc
-index d272c7c..950f6b8 100644
+index 1bc675d..dc9893e 100644
 --- a/.vimrc
 +++ b/.vimrc
-@@ -3,7 +3,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
- execute pathogen#infect()
+@@ -4,6 +4,7 @@ execute pathogen#infect()
  
  syntax on
--filetype indent on
-+filetype plugin indent on
+ filetype indent plugin on
++
  set nocompatible
  set background=dark
  
-@@ -45,6 +45,10 @@ set formatoptions=qrn1
+@@ -44,6 +45,10 @@ set formatoptions=qrn1
  
  set sessionoptions=buffers,curdir
  
@@ -383,8 +382,8 @@ index d272c7c..950f6b8 100644
  
  " Common mappings
  let mapleader = ','
-@@ -61,8 +65,8 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
- inoremap <c-@> <c-x><c-o>
+@@ -63,8 +68,8 @@ imap <c-j> jklysL
+ inoremap <c-l> <c-o>a
  
  inoremap jk <esc>
 +inoremap ОЛ <esc>
@@ -393,19 +392,11 @@ index d272c7c..950f6b8 100644
  inoremap OA <nop>
  inoremap OB <nop>
  inoremap OC <nop>
-@@ -95,15 +99,22 @@ nnoremap <leader>m :VialQuickOpen<cr>
- 
- " delimitMate
- imap <c-j> <Plug>delimitMateJumpMany
--inoremap <c-l> <c-o>a
-+inoremap <c-l> <C-o>a
- let delimitMate_expand_cr = 1
- let delimitMate_expand_space = 1
+@@ -96,10 +101,15 @@ augroup END
+ nnoremap <leader>m :VialQuickOpen<cr>
  
  
 +" UltiSnips
-+" let g:UltiSnipsExpandTrigger="<tab>"
-+" let g:UltiSnipsListSnippets="<c-tab>"
 +let g:UltiSnipsJumpForwardTrigger="<tab>"
 +let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 +
@@ -418,7 +409,7 @@ index d272c7c..950f6b8 100644
      return 1
    endif
  endfunction
-@@ -122,8 +133,7 @@ if !empty($VIAL_SESSION) && !exists('g:session_loaded')
+@@ -118,8 +128,7 @@ if !empty($VIAL_SESSION) && !exists('g:session_loaded')
      set viminfo+=n~/.vim/sessions/$VIAL_SESSION/.viminfo
      silent! source ~/.vim/sessions/$VIAL_SESSION/session.vim
      command! SaveSession mksession! ~/.vim/sessions/$VIAL_SESSION/session.vim 
