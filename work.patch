@@ -11,7 +11,7 @@ From: Anton Bobrov <a.bobrov@rambler-co.ru>
  .config/orcsome/rc.py                 |   31 +++---------------
  .gtkrc-2.0.mine                       |   17 +++++++++-
  .mplayer/config                       |   38 +---------------------
- .vimrc                                |   17 +++++++---
+ .vimrc                                |   14 +++++++-
  .xinitrc                              |    8 ++---
  bin/box-session.sh                    |    4 ++
  bin/check-mail                        |    2 +
@@ -22,7 +22,7 @@ From: Anton Bobrov <a.bobrov@rambler-co.ru>
  etc/X11/xorg.conf.d/50-synaptics.conf |   53 ++++++++++++++++++++++++++----
  etc/X11/xorg.conf.d/50-vmmouse.conf   |    7 ++++
  etc/asound.conf                       |   17 +++-------
- 18 files changed, 179 insertions(+), 131 deletions(-)
+ 18 files changed, 178 insertions(+), 129 deletions(-)
  create mode 100644 etc/X11/xorg.conf.d/50-joystick.conf
  create mode 100644 etc/X11/xorg.conf.d/50-vmmouse.conf
 
@@ -360,7 +360,7 @@ index 8f5eed6..21cf775 100644
 -[gnome-mplayer]
 -msglevel=all=5
 diff --git a/.vimrc b/.vimrc
-index 1bc675d..dc9893e 100644
+index 1bc675d..33b0acf 100644
 --- a/.vimrc
 +++ b/.vimrc
 @@ -4,6 +4,7 @@ execute pathogen#infect()
@@ -409,16 +409,6 @@ index 1bc675d..dc9893e 100644
      return 1
    endif
  endfunction
-@@ -118,8 +128,7 @@ if !empty($VIAL_SESSION) && !exists('g:session_loaded')
-     set viminfo+=n~/.vim/sessions/$VIAL_SESSION/.viminfo
-     silent! source ~/.vim/sessions/$VIAL_SESSION/session.vim
-     command! SaveSession mksession! ~/.vim/sessions/$VIAL_SESSION/session.vim 
--    noremap <leader>es :edit ~/.vim/sessions/$VIAL_SESSION/sessionx.vim<cr>
--    augroup save_session_on_quit
-+    augroup SaveSessionOnQuit
-       autocmd!
-       autocmd QuitPre * SaveSession
-     augroup END
 diff --git a/.xinitrc b/.xinitrc
 index cc2200c..b0b85c4 100644
 --- a/.xinitrc
