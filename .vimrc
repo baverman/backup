@@ -1,11 +1,14 @@
-filetype off
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-execute pathogen#infect()
+if !exists("g:loaded_pathogen")
+    filetype off
+    runtime bundle/vim-pathogen/autoload/pathogen.vim
+    execute pathogen#infect()
 
-syntax on
-filetype indent plugin on
-set nocompatible
-set background=dark
+    syntax on
+    filetype plugin on
+
+    set nocompatible
+    set background=dark
+endif
 
 
 " Colors
@@ -28,6 +31,9 @@ set wildmenu
 set wildmode=list:longest
 set ttyfast
 set et sts=4 sw=4
+set autoindent
+set smartindent
+set nocindent
 
 " nnoremap / /\v
 " vnoremap / /\v
@@ -43,6 +49,11 @@ set textwidth=79
 set formatoptions=qrn1
 
 set sessionoptions=buffers,curdir
+set directory=~/tmp/vim//
+
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
+set spelllang=en_us,ru_ru
+set spellcapcheck=
 
 
 " Common mappings
@@ -60,15 +71,13 @@ nnoremap <c-n> :bmodified<cr>
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 inoremap <c-@> <c-x><c-o>
 imap <c-j> jklysL
+imap <c-k> jklys
 inoremap <c-l> <c-o>a
+nnoremap Y y$
 
 inoremap jk <esc>
+inoremap ОЛ <esc>
 inoremap <esc> <nop>
-
-inoremap OA <nop>
-inoremap OB <nop>
-inoremap OC <nop>
-inoremap OD <nop>
 inoremap <Up> <nop>
 inoremap <Left> <nop>
 inoremap <Down> <nop>
@@ -86,20 +95,31 @@ vnoremap <Right> <nop>
 " Filetype settings
 augroup MyFileTypeSettings
     au!
-    au FileType python set autoindent smartindent et sts=4 sw=4 tw=80 fo=croq colorcolumn=85
     au FileType python nnoremap <buffer> <silent> <leader>d :VialPythonGotoDefinition<cr>
     au FileType python nnoremap <buffer> <silent> <leader>f :VialPythonOutline<cr>
+    au FileType python setlocal et sts=4 sw=4 tw=80 fo=croq colorcolumn=85 cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 augroup END
 
 
 " Vial
 nnoremap <leader>m :VialQuickOpen<cr>
+nnoremap <silent> <esc><esc> :VialEscape<cr>
+nmap <leader>g <Plug>VialGrep
+vmap <leader>g <Plug>VialGrep
+nnoremap <leader>l :VialPythonLint<cr>
+nnoremap <leader>la :VialPythonLintAll<cr>
+
+" Other plugs
+let g:AutoPairsMapCR = 0
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+nnoremap <leader>v :Bufferlist<cr>
 
 
 " Restore cursor
 function! ResCur()
   if line("'\"") <= line("$")
-    normal! g`"
+    normal! g`"zz
     return 1
   endif
 endfunction
@@ -119,6 +139,7 @@ if !empty($VIAL_SESSION) && !exists('g:session_loaded')
     silent! source ~/.vim/sessions/$VIAL_SESSION/session.vim
     command! SaveSession mksession! ~/.vim/sessions/$VIAL_SESSION/session.vim 
     noremap <leader>es :edit ~/.vim/sessions/$VIAL_SESSION/sessionx.vim<cr>
+    noremap <leader>eV :edit ~/.vim/sessions/$VIAL_SESSION/sessionv.vim<cr>
     augroup save_session_on_quit
       autocmd!
       autocmd QuitPre * SaveSession
