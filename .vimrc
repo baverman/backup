@@ -67,13 +67,15 @@ nnoremap j gj
 nnoremap k gk
 nnoremap ; :
 noremap <space> ;
-nnoremap <c-n> :bmodified<cr>
+nnoremap <esc>n :bmodified<cr>
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 inoremap <c-@> <c-x><c-o>
 imap <c-j> jklysL
 imap <c-k> jklys
 inoremap <c-l> <c-o>a
 nnoremap Y y$
+nnoremap <c-n> :cn<cr>
+nnoremap <c-p> :cp<cr>
 
 inoremap jk <esc>
 inoremap ОЛ <esc>
