@@ -76,10 +76,13 @@ inoremap <c-l> <c-o>a
 nnoremap Y y$
 nnoremap <c-n> :cn<cr>
 nnoremap <c-p> :cp<cr>
+noremap <cr><cr> o<esc>k
+noremap <cr>' O<esc>j
 
 inoremap jk <esc>
 inoremap ОЛ <esc>
 inoremap <esc> <nop>
+
 inoremap <Up> <nop>
 inoremap <Left> <nop>
 inoremap <Down> <nop>
@@ -105,6 +108,7 @@ augroup END
 
 " Vial
 nnoremap <leader>m :VialQuickOpen<cr>
+nnoremap <c-p> :VialPythonShowSignature<cr>
 nnoremap <silent> <esc><esc> :VialEscape<cr>
 nmap <leader>g <Plug>VialGrep
 vmap <leader>g <Plug>VialGrep
