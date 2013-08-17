@@ -36,8 +36,25 @@ for fname in ~/.bash_sources/*; do
     . $fname
 done
 
+__fab_tasks() {
+    local prev cur
+    _get_comp_words_by_ref cur prev
+    COMPREPLY=( $( compgen -W "`fab -l -F short`" -- "$cur" ) )
+    return 0
+} &&
+complete -F __fab_tasks fab
+
+__svial() {
+    local prev cur
+    _get_comp_words_by_ref cur prev
+    COMPREPLY=( $( compgen -W "`find $HOME/.vim/sessions -mindepth 1 -type d | xargs --replace=^ basename ^`" -- "$cur"  ) )
+    return 0
+}
+complete -F __svial svial
+
 export SDL_AUDIODRIVER=alsa
 
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
+export PYTHONSTARTUP="$HOME/work/python-shell-enhancement/pythonstartup.py"
 
 . /usr/bin/virtualenvwrapper.sh
