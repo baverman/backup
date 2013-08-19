@@ -4,25 +4,24 @@ From: Anton Bobrov <a.bobrov@rambler-co.ru>
 
 
 ---
- .Xdefaults                            |   10 ++----
- .bash_profile                         |   10 +++++-
- .bashrc                               |   58 ++++++++++++++++++++++++++-------
+ .Xdefaults                            |   10 ++---
+ .bash_profile                         |   10 +++++
+ .bashrc                               |   62 +++++++++++++++++++++------------
  .config/openbox/rc.xml                |   18 +++-------
- .config/orcsome/rc.py                 |   31 +++---------------
- .gtkrc-2.0.mine                       |   17 +++++++++-
- .mplayer/config                       |   38 +---------------------
- .vimrc                                |   14 +++++++-
- .xinitrc                              |    8 ++---
+ .config/orcsome/rc.py                 |   31 +++--------------
+ .gtkrc-2.0.mine                       |   17 +++++++++
+ .mplayer/config                       |   38 +-------------------
+ .xinitrc                              |    8 ++--
  bin/box-session.sh                    |    4 ++
  bin/check-mail                        |    2 +
- bin/git-pull-all                      |   10 +++++-
+ bin/git-pull-all                      |   10 +++++
  bin/rx                                |    2 +
  bin/xxx                               |    2 +
  etc/X11/xorg.conf.d/50-joystick.conf  |    6 +++
- etc/X11/xorg.conf.d/50-synaptics.conf |   53 ++++++++++++++++++++++++++----
+ etc/X11/xorg.conf.d/50-synaptics.conf |   53 ++++++++++++++++++++++++----
  etc/X11/xorg.conf.d/50-vmmouse.conf   |    7 ++++
- etc/asound.conf                       |   17 +++-------
- 18 files changed, 178 insertions(+), 129 deletions(-)
+ etc/asound.conf                       |   17 +++------
+ 17 files changed, 160 insertions(+), 137 deletions(-)
  create mode 100644 etc/X11/xorg.conf.d/50-joystick.conf
  create mode 100644 etc/X11/xorg.conf.d/50-vmmouse.conf
 
@@ -89,10 +88,10 @@ index 1092a9c..d273957 100644
 +    logout
 +fi
 diff --git a/.bashrc b/.bashrc
-index 07ffd5d..ef2b105 100644
+index 4d96e2d..f91876f 100644
 --- a/.bashrc
 +++ b/.bashrc
-@@ -10,8 +10,39 @@ alias ls='ls --color=auto'
+@@ -10,31 +10,23 @@ alias ls='ls --color=auto'
  alias ll='ls -la'
  alias mc='mc -u'
  alias vimdiff=meld
@@ -100,13 +99,34 @@ index 07ffd5d..ef2b105 100644
 +alias sc='sudo systemctl'
  
 -PS1='\[\033[01;34m\]\w\[\033[31m\]$(__git_ps1 "[%s]")\[\033[01;32m\]$(__prompt_stgit)\[\033[01;34m\]$\[\033[00m\] '
+-
+-export PATH=$HOME/bin:$PATH
+-export PROMPT_COMMAND=
+-export HISTCONTROL=ignoredups
+-export HISTFILESIZE=5000
+-export HISTSIZE=5000
+-shopt -s histappend
+-
+-export PAGER=most
+-export EDITOR=vim
 +function __mercurial_qtop() {
 +    qtop=`hg qtop 2>/dev/null`
 +    [ -z "$qtop" ] || echo -n "($qtop)"
 +}
-+
+ 
+-export TERM=xterm-256color
 +PS1='\[\033[01;34m\]\w\[\033[31m\]$(__git_ps1 "[%s]")\[\033[01;32m\]$(__prompt_stgit)$(__mercurial_qtop)\[\033[01;34m\]$\[\033[00m\] '
-+
+ 
+-export PIP_DOWNLOAD_CACHE=~/.cache/pip
+-export MPD_HOST=~/.mpd/socket
+-
+-export GIT_PS1_SHOWDIRTYSTATE=1
+-export GIT_PS1_SHOWUNTRACKEDFILES=1
+-
+-_xfunc git __git_ps1 &>/dev/null
+-for fname in ~/.bash_sources/*; do
+-    . $fname
+-done
 +__qrefresh_to() {
 +    local prev cur
 +    _get_comp_words_by_ref cur prev
@@ -114,49 +134,32 @@ index 07ffd5d..ef2b105 100644
 +    return 0
 +} &&
 +complete -F __qrefresh_to qrefresh-to
-+
-+__fab_tasks() {
-+    local prev cur
-+    _get_comp_words_by_ref cur prev
-+    COMPREPLY=( $( compgen -W "`fab -l -F short`" -- "$cur" ) )
-+    return 0
-+} &&
-+complete -F __fab_tasks fab
-+
-+__svial() {
-+    local prev cur
-+    _get_comp_words_by_ref cur prev
-+    COMPREPLY=( $( compgen -W "`find $HOME/.vim/sessions -mindepth 1 -type d | xargs --replace=^ basename ^`" -- "$cur"  ) )
-+    return 0
-+}
-+complete -F __svial svial
  
- export PATH=$HOME/bin:$PATH
- export PROMPT_COMMAND=
-@@ -22,22 +53,23 @@ shopt -s histappend
+ __fab_tasks() {
+     local prev cur
+@@ -52,9 +44,33 @@ __svial() {
+ }
+ complete -F __svial svial
  
- export PAGER=most
- export EDITOR=vim
--
--export TERM=xterm-256color
--
--export PIP_DOWNLOAD_CACHE=~/.cache/pip
--export MPD_HOST=~/.mpd/socket
--
- export GIT_PS1_SHOWDIRTYSTATE=1
- export GIT_PS1_SHOWUNTRACKEDFILES=1
+-export SDL_AUDIODRIVER=alsa
++export PATH=$HOME/bin:$PATH
++export PROMPT_COMMAND=
++export HISTCONTROL=ignoredups
++export HISTFILESIZE=5000
++export HISTSIZE=5000
++shopt -s histappend
++
++export PAGER=most
++export EDITOR=vim
++export GIT_PS1_SHOWDIRTYSTATE=1
++export GIT_PS1_SHOWUNTRACKEDFILES=1
 +export TERM=xterm-256color
  
--_xfunc git __git_ps1 &>/dev/null
--for fname in ~/.bash_sources/*; do
--    . $fname
--done
--
--export SDL_AUDIODRIVER=alsa
 +export PIP_DOWNLOAD_CACHE=~/.cache/pip
- 
++
 +export LOGIBOX_SSH_KEY=/home/bobrov/.ssh/lb_rsa
  export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
+ export PYTHONSTARTUP="$HOME/work/python-shell-enhancement/pythonstartup.py"
  
 +#_xfunc git __git_ps1 &>/dev/null
 +
@@ -359,56 +362,6 @@ index 8f5eed6..21cf775 100644
 -
 -[gnome-mplayer]
 -msglevel=all=5
-diff --git a/.vimrc b/.vimrc
-index 1bc675d..33b0acf 100644
---- a/.vimrc
-+++ b/.vimrc
-@@ -4,6 +4,7 @@ execute pathogen#infect()
- 
- syntax on
- filetype indent plugin on
-+
- set nocompatible
- set background=dark
- 
-@@ -44,6 +45,10 @@ set formatoptions=qrn1
- 
- set sessionoptions=buffers,curdir
- 
-+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
-+set spelllang=en_us,ru_ru
-+set spellcapcheck=
-+
- 
- " Common mappings
- let mapleader = ','
-@@ -63,8 +68,8 @@ imap <c-j> jklysL
- inoremap <c-l> <c-o>a
- 
- inoremap jk <esc>
-+inoremap ОЛ <esc>
- inoremap <esc> <nop>
--
- inoremap OA <nop>
- inoremap OB <nop>
- inoremap OC <nop>
-@@ -96,10 +101,15 @@ augroup END
- nnoremap <leader>m :VialQuickOpen<cr>
- 
- 
-+" UltiSnips
-+let g:UltiSnipsJumpForwardTrigger="<tab>"
-+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-+
-+
- " Restore cursor
- function! ResCur()
-   if line("'\"") <= line("$")
--    normal! g`"
-+    normal! g`"zz
-     return 1
-   endif
- endfunction
 diff --git a/.xinitrc b/.xinitrc
 index cc2200c..b0b85c4 100644
 --- a/.xinitrc
