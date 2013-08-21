@@ -1,0 +1,6 @@
+#!/bin/bash
+
+idle=$(xprintidle)
+max_idle=$(($1*1000))
+shift
+[ "$idle" -ge "$max_idle" ] && "$@"
