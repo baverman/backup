@@ -96,6 +96,8 @@ vnoremap <Left> <nop>
 vnoremap <Down> <nop>
 vnoremap <Right> <nop>
 
+cmap w!! w !sudo tee > /dev/null %
+
 
 " Filetype settings
 augroup MyFileTypeSettings
