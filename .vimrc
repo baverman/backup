@@ -76,8 +76,8 @@ inoremap <c-l> <c-o>a
 nnoremap Y y$
 nnoremap <c-n> :cn<cr>
 nnoremap <c-p> :cp<cr>
-noremap <cr><cr> o<esc>k
-noremap <cr>' O<esc>j
+noremap <leader>o o<esc>k
+noremap <leader>O O<esc>j
 
 inoremap jk <esc>
 inoremap ОЛ <esc>
@@ -116,6 +116,7 @@ nmap <leader>g <Plug>VialGrep
 vmap <leader>g <Plug>VialGrep
 nnoremap <leader>l :VialPythonLint<cr>
 nnoremap <leader>la :VialPythonLintAll<cr>
+nnoremap <leader>vg :VialGrep 
 
 " Other plugs
 let g:AutoPairsMapCR = 0
@@ -154,3 +155,5 @@ if !empty($VIAL_SESSION) && !exists('g:session_loaded')
     augroup END
     let g:session_loaded = 'true'
 endif
+
+" echom synIDattr(synID(line("."), col("."), 0), "name")
