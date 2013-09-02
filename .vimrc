@@ -54,6 +54,8 @@ set directory=~/tmp/vim//
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 set spelllang=en_us,ru_ru
 set spellcapcheck=
+set clipboard=unnamedplus,exclude:cons\|linux
+let g:hardtime_default_on = 1
 
 
 " Common mappings
@@ -117,6 +119,7 @@ vmap <leader>g <Plug>VialGrep
 nnoremap <leader>l :VialPythonLint<cr>
 nnoremap <leader>la :VialPythonLintAll<cr>
 nnoremap <leader>vg :VialGrep 
+nnoremap <leader>om :VialPythonOpenModule 
 
 " Other plugs
 let g:AutoPairsMapCR = 0
