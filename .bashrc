@@ -23,7 +23,7 @@ shopt -s histappend
 export PAGER=most
 export EDITOR=vim
 
-export TERM=xterm-256color
+# export TERM=xterm-256color
 
 export PIP_DOWNLOAD_CACHE=~/.cache/pip
 export MPD_HOST=~/.mpd/socket

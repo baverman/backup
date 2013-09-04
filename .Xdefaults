@@ -53,7 +53,6 @@ URxvt*scrollBar_right:	true
 URxvt*scrollBar:	false
 URxvt*scrollstyle:	plain
 URxvt*shading:	20
-urxvt*termName:	xterm
 URxvt*transparent:	true
 
 !Xft.rgba:	none

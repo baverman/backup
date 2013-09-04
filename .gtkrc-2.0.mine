@@ -55,3 +55,9 @@ style "panel-background" {
    base[INSENSITIVE]   = "#94BB8B"
  }
  widget_class "*Panel*" style "panel-background"
+
+
+style "gvim" {
+    bg[NORMAL] = "#000000"
+}
+widget "vim-main-window.*GtkForm" style "gvim" 

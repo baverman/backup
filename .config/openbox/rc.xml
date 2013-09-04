@@ -558,21 +558,6 @@
     <focus>yes</focus>
   </application>
 
-  <application class="Gimp" role="gimp-image-window">
-    <decor>no</decor>
-    <maximized>true</maximized>
-    <focus>yes</focus>
-  </application>
-
-  <application class="Gimp" role="gimp-dock">
-    <skip_taskbar>yes</skip_taskbar>
-  </application>
-
-  <application class="Gimp" role="gimp-toolbox">
-    <skip_taskbar>yes</skip_taskbar>
-  </application>
-
-
 <!--
   # this is an example with comments through out. use these to make your
   # own rules, but without the comments of course.

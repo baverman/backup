@@ -1,12 +1,9 @@
-import pynotify
-
-if not pynotify.is_initted():
-    pynotify.init('orcsome')
-
 from orcsome import get_wm
 from orcsome.actions import *
 
 import rsi
+
+TERMINAL = 'urxvtc -title terminal'
 
 wm = get_wm()
 
@@ -14,7 +11,7 @@ wm.on_key('Shift+Mod+r')(
     restart)
 
 wm.on_key('Ctrl+Alt+x')(
-    spawn('urxvtc'))
+    spawn(TERMINAL))
 
 wm.on_key('Mod+bracketleft')(
     spawn('mpc volume -2'))
@@ -35,10 +32,10 @@ wm.on_key('Mod+grave')(
     spawn('mpc-trash'))
 
 wm.on_key('Mod+apostrophe')(
-    spawn('mpc-add-tag blade'))
+    spawn('mpc-add-tag -D trash listen -A blade'))
 
 wm.on_key('Mod+semicolon')(
-    spawn('mpc-add-tag listen'))
+    spawn('mpc-add-tag -D trash blade -A listen'))
 
 wm.on_key('Mod+p')(
     spawn('mpc toggle'))
@@ -73,7 +70,7 @@ wm.on_key('Ctrl+Alt+p')(
     spawn_or_raise('urxvtc -name ncmpcpp -e ncmpcpp', name='ncmpcpp', **restore_focus))
 
 wm.on_key('Mod+n')(
-    spawn_or_raise('urxvtc -name mutt -e sh -c "sleep 1; mutt"', name='mutt', **restore_focus))
+    spawn_or_raise('urxvtc -title mutt -name mutt -e startmutt.sh', name='mutt', **restore_focus))
 
 wm.on_key('Ctrl+Alt+m')(
     spawn_or_raise('urxvtc -name alsamixer -e alsamixer', name='alsamixer', **restore_focus))
@@ -94,41 +91,12 @@ def toggle_console():
         if clients:
             wm.set_current_desktop(1)
         else:
-            spawn('urxvtc')()
+            spawn(TERMINAL)()
 
 @wm.on_create(cls='URxvt')
 def bind_urxvt_keys():
     wm.on_key(wm.event_window, 'Shift+Right')(focus_next)
     wm.on_key(wm.event_window, 'Shift+Left')(focus_prev)
-
-
-###################################
-# Gimp toolbar switching on Tab key
-last_image_window = [None]
-
-@wm.on_create(cls='Gimp', role='gimp-image-window|gimp-dock|gimp-toolbox$')
-def bind_gimp_keys():
-    @wm.on_key(wm.event_window, 'Tab')
-    def toggle_gimp_toolbars():
-        cw = wm.current_window
-        clients = wm.get_stacked_clients()
-
-        if wm.is_match(cw, role='gimp-image-window'):
-            gimp_windows = wm.find_clients(clients,
-                cls='Gimp', role='gimp-image-window|gimp-dock|gimp-toolbox')
-
-            if cw.id == gimp_windows[-1].id:
-                last_image_window[0] = cw
-
-                for c in wm.find_clients(clients, cls='Gimp', role='gimp-dock|gimp-toolbox'):
-                    wm.place_window_above(c)
-            else:
-                wm.place_window_above(cw)
-
-        else:
-            w = last_image_window[0] or wm.find_client(clients, cls='Gimp', role='gimp-image-window')
-            if w:
-                wm.focus_and_raise(w)
 
 
 ################################################

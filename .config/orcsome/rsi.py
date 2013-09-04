@@ -1,12 +1,54 @@
-from time import time
-import subprocess
 import random
-import pynotify
+import logging
+
+from time import time
+from subprocess import Popen, PIPE
 
 import orcsome
 from orcsome.utils import Timer
 
+logger = logging.getLogger('rsi')
+
 keys = 'abcdefghijklmnopqrstuvwxyz'
+
+def notify(title, body=None, timeout=-1):
+    cmd = [
+        'dbus-send',
+        '--type=method_call',
+        '--print-reply=literal',
+        '--dest=org.freedesktop.Notifications',
+        '/org/freedesktop/Notifications',
+        'org.freedesktop.Notifications.Notify',
+        'string:{}'.format('orcsome-rsi'),
+        'uint32:0',
+        'string:""',
+        'string:{}'.format(title),
+        'string:{}'.format(body),
+        'array:string:""',
+        'dict:string:string:"",""',
+        'int32:{}'.format(timeout),
+    ]
+
+    out, err = Popen(cmd, stdout=PIPE, stderr=PIPE).communicate()
+    if err:
+        raise Exception(err)
+
+    return int(out.strip().split()[1])
+
+def close_notify(nid):
+    cmd = [
+        'dbus-send',
+        '--type=method_call',
+        '--print-reply',
+        '--dest=org.freedesktop.Notifications',
+        '/org/freedesktop/Notifications',
+        'org.freedesktop.Notifications.CloseNotification',
+        'int32:{}'.format(nid),
+    ]
+
+    out, err = Popen(cmd, stdout=PIPE, stderr=PIPE).communicate()
+    if err:
+        raise Exception(err)
 
 
 class RsiPreventer(object):
@@ -23,6 +65,8 @@ class RsiPreventer(object):
         self.last_work = time()
         self.last_check = time()
         self.last_idle = 0
+
+        self.banner = 0
 
     def idle(self):
         self.wm.emit('get_idle')
@@ -42,14 +86,12 @@ class RsiPreventer(object):
             self.wm.emit('stop_rest')
 
     def create_banner(self):
-        self.banner = pynotify.Notification('Take break', self.password)
-        self.banner.set_timeout(self.rest_time * 70 * 1000)
-        self.banner.show()
+        self.banner = notify('Take break', self.password, self.rest_time * 70 * 1000)
 
     def destroy_banner(self):
         if self.banner:
-            self.banner.close()
-            self.banner = None
+            close_notify(self.banner)
+            self.banner = 0
 
     def key_handler(self, is_press, state, code):
         if is_press:
