@@ -77,8 +77,9 @@ inoremap <c-l> <c-o>a
 nnoremap Y y$
 nnoremap <c-n> :cn<cr>
 nnoremap <c-p> :cp<cr>
-noremap <leader>o o<esc>k
-noremap <leader>O O<esc>j
+nnoremap <leader>o o<esc>k
+nnoremap <leader>O O<esc>j
+nnoremap K i<cr><esc>
 
 inoremap jk <esc>
 inoremap ОЛ <esc>
