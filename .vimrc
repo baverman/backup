@@ -73,7 +73,7 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 inoremap <c-@> <c-x><c-o>
 imap <c-j> jklysL
 imap <c-k> jklys
-inoremap <c-l> <c-o>a
+imap <c-l> <Plug>VialCrampSkip
 nnoremap Y y$
 nnoremap <c-n> :cn<cr>
 nnoremap <c-p> :cp<cr>
@@ -81,8 +81,8 @@ nnoremap <leader>o o<esc>k
 nnoremap <leader>O O<esc>j
 nnoremap K i<cr><esc>
 
-inoremap jk <esc>
-inoremap ОЛ <esc>
+imap jk <Plug>VialCrampLeave
+imap ОЛ <Plug>VialCrampLeave
 inoremap <esc> <nop>
 
 inoremap <Up> <nop>
