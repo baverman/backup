@@ -80,6 +80,7 @@ nnoremap <c-p> :cp<cr>
 nnoremap <leader>o o<esc>k
 nnoremap <leader>O O<esc>j
 nnoremap K i<cr><esc>
+nnoremap <leader>ss :syntax sync fromstart<cr>
 
 imap jk <Plug>VialCrampLeave
 imap ОЛ <Plug>VialCrampLeave
