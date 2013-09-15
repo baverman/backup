@@ -32,8 +32,10 @@ set wildmode=list:longest
 set ttyfast
 set et sts=4 sw=4
 set autoindent
-set smartindent
+set nosmartindent
 set nocindent
+set indentexpr=VialIndent()
+set indentkeys=o
 
 " nnoremap / /\v
 " vnoremap / /\v
@@ -108,7 +110,7 @@ augroup MyFileTypeSettings
     au!
     au FileType python nnoremap <buffer> <silent> <leader>d :VialPythonGotoDefinition<cr>
     au FileType python nnoremap <buffer> <silent> <leader>f :VialPythonOutline<cr>
-    au FileType python setlocal et sts=4 sw=4 tw=80 fo=croq colorcolumn=85 cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+    au FileType python setlocal et sts=4 sw=4 tw=80 fo=croq colorcolumn=85
 augroup END
 
 
