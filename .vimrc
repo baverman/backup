@@ -123,7 +123,7 @@ vmap <leader>g <Plug>VialGrep
 nnoremap <leader>l :VialPythonLint<cr>
 nnoremap <leader>la :VialPythonLintAll<cr>
 nnoremap <leader>vg :VialGrep 
-nnoremap <leader>om :VialPythonOpenModule 
+nnoremap gom :VialPythonOpenModule 
 
 " Other plugs
 let g:AutoPairsMapCR = 0
