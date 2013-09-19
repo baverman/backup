@@ -63,7 +63,6 @@ set spellcapcheck=
 let mapleader = ','
 nnoremap <silent> <leader>cs :noh<cr>
 nnoremap <leader>ev :edit $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
 noremap H 0
 noremap L $
 nnoremap j gj
@@ -116,6 +115,7 @@ augroup END
 
 " Vial
 nnoremap <leader>m :VialQuickOpen<cr>
+nnoremap <silent> <leader>t :VialSearchOutline<cr>
 nnoremap <esc>p :VialPythonShowSignature<cr>
 nnoremap <silent> <esc><esc> :VialEscape<cr>
 nmap <leader>g <Plug>VialGrep
