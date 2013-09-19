@@ -1,0 +1,11 @@
+[Colors]
+Foreground=#000000000000
+Background=#ffffffffffff
+I/O wait=#ffff0000162a
+Min frequency=#0000ffff0000
+Max frequency=#ffff00000000
+Min temperature=#00000000ffff
+Max temperature=#ffff00000000
+
+[Options]
+Transparent background=true

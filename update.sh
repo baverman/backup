@@ -34,3 +34,4 @@ cp ~/.Xdefaults ./
 cp ~/.bashrc ~/.bash_profile ./
 cp ~/.xinitrc ~/.gtkrc-2.0 ~/.gtkrc-2.0.mine ./
 cp ~/.vimrc ./
+cp ~/.config/gatotrayrc ./.config
