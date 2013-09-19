@@ -1,0 +1,2 @@
+#!/bin/sh
+VIAL_SESSION=$1 vial
