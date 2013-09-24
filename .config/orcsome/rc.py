@@ -41,10 +41,10 @@ wm.on_key('Mod+p')(
     spawn('mpc toggle'))
 
 wm.on_key('XF86_MonBrightnessUp')(
-    spawn('sudo backlight up'))
+    spawn('xbacklight -inc 15'))
 
 wm.on_key('XF86_MonBrightnessDown')(
-    spawn('sudo backlight down'))
+    spawn('xbacklight -dec 1'))
 
 wm.on_key('XF86_PowerOff')(
     spawn('sudo pm-suspend'))
