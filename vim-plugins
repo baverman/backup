@@ -7,6 +7,7 @@ git@github.com:baverman/vial-python.git
 git@github.com:baverman/vial-quick-open.git
 https://github.com/MarcWeber/vim-addon-mw-utils.git
 git://github.com/Lokaltog/vim-easymotion.git
+https://github.com/tpope/vim-fugitive.git
 https://github.com/takac/vim-hardtime.git
 git://github.com/digitaltoad/vim-jade.git
 https://github.com/tpope/vim-pathogen/
