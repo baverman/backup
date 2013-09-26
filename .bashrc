@@ -58,3 +58,7 @@ export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
 export PYTHONSTARTUP="$HOME/work/python-shell-enhancement/pythonstartup.py"
 
 . /usr/bin/virtualenvwrapper.sh
+
+# bash vi mode
+set -o vi
+bind -m vi-insert '"jk": vi-movement-mode'
