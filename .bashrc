@@ -62,3 +62,4 @@ export PYTHONSTARTUP="$HOME/work/python-shell-enhancement/pythonstartup.py"
 # bash vi mode
 set -o vi
 bind -m vi-insert '"jk": vi-movement-mode'
+bind '"\e.": yank-last-arg'

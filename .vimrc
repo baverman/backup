@@ -112,6 +112,7 @@ augroup MyFileTypeSettings
     au FileType python nnoremap <buffer> <silent> <leader>d :VialPythonGotoDefinition<cr>
     au FileType python nnoremap <buffer> <silent> <leader>f :VialPythonOutline<cr>
     au FileType python setlocal et sts=4 sw=4 tw=80 fo=croq colorcolumn=85
+    au FileType javascript setlocal colorcolumn=85
     au FileType qf wincmd J
 augroup END
 
