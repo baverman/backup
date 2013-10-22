@@ -57,7 +57,12 @@ set directory=~/tmp/vim//
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 set spelllang=en_us,ru_ru
 set spellcapcheck=
-" let g:hardtime_default_on = 1
+
+syntax sync minlines=256
+set synmaxcol=256
+
+set nojoinspaces
+set noshowmatch
 
 
 " Common mappings
