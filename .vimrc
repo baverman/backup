@@ -63,6 +63,7 @@ set synmaxcol=256
 
 set nojoinspaces
 set noshowmatch
+set scrolloff=5
 
 
 " Common mappings
