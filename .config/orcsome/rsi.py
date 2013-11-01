@@ -13,37 +13,37 @@ keys = 'abcdefghijklmnopqrstuvwxyz'
 
 def notify(title, body=None, timeout=-1):
     cmd = [
-        'dbus-send',
-        '--type=method_call',
-        '--print-reply=literal',
+        'gdbus',
+        'call',
+        '--session',
         '--dest=org.freedesktop.Notifications',
-        '/org/freedesktop/Notifications',
-        'org.freedesktop.Notifications.Notify',
-        'string:{}'.format('orcsome-rsi'),
-        'uint32:0',
-        'string:""',
-        'string:{}'.format(title),
-        'string:{}'.format(body),
-        'array:string:""',
-        'dict:string:string:"",""',
-        'int32:{}'.format(timeout),
+        '--object-path=/org/freedesktop/Notifications',
+        '--method=org.freedesktop.Notifications.Notify',
+        'orcsome-rsi',
+        '0',
+        '',
+        title,
+        body,
+        '[]',
+        '{}',
+        '{}'.format(timeout),
     ]
 
     out, err = Popen(cmd, stdout=PIPE, stderr=PIPE).communicate()
     if err:
         raise Exception(err)
 
-    return int(out.strip().split()[1])
+    return int(out.strip().split()[1].rstrip(',)'))
 
 def close_notify(nid):
     cmd = [
-        'dbus-send',
-        '--type=method_call',
-        '--print-reply',
+        'gdbus',
+        'call',
+        '--session',
         '--dest=org.freedesktop.Notifications',
-        '/org/freedesktop/Notifications',
-        'org.freedesktop.Notifications.CloseNotification',
-        'int32:{}'.format(nid),
+        '--object-path=/org/freedesktop/Notifications',
+        '--method=org.freedesktop.Notifications.CloseNotification',
+        '{}'.format(nid),
     ]
 
     out, err = Popen(cmd, stdout=PIPE, stderr=PIPE).communicate()
