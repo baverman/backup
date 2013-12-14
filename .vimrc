@@ -91,6 +91,7 @@ nnoremap <leader>O O<esc>j
 nnoremap K i<cr><esc>
 nnoremap <leader>ss :syntax sync fromstart<cr>
 nnoremap <leader><space> s<space><c-r>-<space><esc>h
+nnoremap <leader>x *``cgn
 
 imap jk <Plug>VialCrampLeave
 imap ОЛ <Plug>VialCrampLeave
