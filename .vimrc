@@ -22,6 +22,7 @@ if !empty($VIAL)
     hi NonText ctermbg=234 guifg=#e3e0d7
 endif
 
+hi ExtraWhitespace ctermbg=red guibg=red
 
 " Common settings
 set autoread
@@ -92,6 +93,9 @@ nnoremap K i<cr><esc>
 nnoremap <leader>ss :syntax sync fromstart<cr>
 nnoremap <leader><space> s<space><c-r>-<space><esc>h
 nnoremap <leader>x *``cgn
+nmap <esc>d viw<esc>bhxysw]lysw'f]
+nmap <esc>p viw<esc>bi.jkds'ds]
+nmap <esc>g cs])i.getjk
 
 imap jk <Plug>VialCrampLeave
 imap ОЛ <Plug>VialCrampLeave
@@ -119,6 +123,7 @@ augroup MyFileTypeSettings
     au FileType python nnoremap <buffer> <silent> <leader>d :VialPythonGotoDefinition<cr>
     au FileType python nnoremap <buffer> <silent> <leader>f :VialPythonOutline<cr>
     au FileType python setlocal et sts=4 sw=4 tw=80 fo=croq colorcolumn=85
+    au FileType python match ExtraWhitespace /\s\+$/
     au FileType javascript setlocal colorcolumn=85
     au FileType qf wincmd J
 augroup END
@@ -127,7 +132,7 @@ augroup END
 " Vial
 nnoremap <leader>m :VialQuickOpen<cr>
 nnoremap <silent> <leader>t :VialSearchOutline<cr>
-nnoremap <esc>p :VialPythonShowSignature<cr>
+" nnoremap <esc>p :VialPythonShowSignature<cr>
 nnoremap <silent> <esc><esc> :VialEscape<cr>
 nmap <leader>g <Plug>VialGrep
 vmap <leader>g <Plug>VialGrep
@@ -156,6 +161,7 @@ augroup resCur
   autocmd BufWinEnter * call ResCur()
 augroup END
 
+command! FormatXml silent %!xmllint --encode UTF-8 --format -
 
 " Session
 if !empty($VIAL_SESSION) && !exists('g:session_loaded')
