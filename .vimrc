@@ -118,12 +118,23 @@ cmap w!! w !sudo tee > /dev/null %
 
 
 " Filetype settings
+function! InitPythonBuf()
+    nnoremap <buffer> <silent> <leader>d :VialPythonGotoDefinition<cr>
+    nnoremap <buffer> <silent> <leader>f :VialPythonOutline<cr>
+    setlocal et sts=4 sw=4 tw=80 fo=croq colorcolumn=85
+    match ExtraWhitespace /\s\+$/
+
+    syntax keyword pythonSelf self
+    if empty($VIAL)
+        hi pythonSelf ctermfg=red
+    else
+        hi pythonSelf ctermfg=216
+    endif
+endfunction
+
 augroup MyFileTypeSettings
     au!
-    au FileType python nnoremap <buffer> <silent> <leader>d :VialPythonGotoDefinition<cr>
-    au FileType python nnoremap <buffer> <silent> <leader>f :VialPythonOutline<cr>
-    au FileType python setlocal et sts=4 sw=4 tw=80 fo=croq colorcolumn=85
-    au FileType python match ExtraWhitespace /\s\+$/
+    au FileType python call InitPythonBuf()
     au FileType javascript setlocal colorcolumn=85
     au FileType qf wincmd J
 augroup END
