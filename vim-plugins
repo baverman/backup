@@ -5,6 +5,7 @@ git@github.com:baverman/vial-cramp.git
 git@github.com:baverman/vial.git
 git@github.com:baverman/vial-python.git
 git@github.com:baverman/vial-quick-open.git
+https://github.com/tpope/vim-abolish.git
 https://github.com/MarcWeber/vim-addon-mw-utils.git
 git://github.com/Lokaltog/vim-easymotion.git
 https://github.com/tpope/vim-fugitive.git
