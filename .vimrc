@@ -22,8 +22,8 @@ if !empty($VIAL)
     hi NonText ctermbg=234 guifg=#e3e0d7
 endif
 
-match ExtraWhitespace /\s\+$/
 hi ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
 
 " Common settings
 set autoread
@@ -97,6 +97,8 @@ nnoremap <leader>x *``cgn
 nmap <esc>d viw<esc>bhxysw]lysw'f]
 nmap <esc>p viw<esc>bi.jkds'ds]
 nmap <esc>g cs])i.getjk
+map <silent> <leader>aa :Tab /=<cr>
+map <silent> <leader>ac :Tab /:\zs/l0l1<cr>
 
 imap jk <Plug>VialCrampLeave
 imap ОЛ <Plug>VialCrampLeave
