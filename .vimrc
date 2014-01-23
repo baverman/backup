@@ -115,6 +115,7 @@ vnoremap <Down> <nop>
 vnoremap <Right> <nop>
 
 cmap w!! w !sudo tee > /dev/null %
+cmap %/ <c-r>=expand('%:p:h')<cr>/
 
 
 " Filetype settings
@@ -151,6 +152,8 @@ nnoremap <leader>l :VialPythonLint<cr>
 nnoremap <leader>la :VialPythonLintAll<cr>
 nnoremap <leader>vg :VialGrep 
 nnoremap gom :VialPythonOpenModule 
+nnoremap <esc>k :VialBufHistPrev<cr>
+nnoremap <esc>j :VialBufHistNext<cr>
 
 " Other plugs
 let g:AutoPairsMapCR = 0
