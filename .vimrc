@@ -22,6 +22,7 @@ if !empty($VIAL)
     hi NonText ctermbg=234 guifg=#e3e0d7
 endif
 
+match ExtraWhitespace /\s\+$/
 hi ExtraWhitespace ctermbg=red guibg=red
 
 " Common settings
@@ -123,7 +124,6 @@ function! InitPythonBuf()
     nnoremap <buffer> <silent> <leader>d :VialPythonGotoDefinition<cr>
     nnoremap <buffer> <silent> <leader>f :VialPythonOutline<cr>
     setlocal et sts=4 sw=4 tw=80 fo=croq colorcolumn=85
-    match ExtraWhitespace /\s\+$/
 
     syntax keyword pythonSelf self
     if empty($VIAL)
