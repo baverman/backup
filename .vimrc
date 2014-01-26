@@ -17,9 +17,7 @@ hi clear CursorLine
 hi CursorLine ctermbg=darkgrey
 
 if !empty($VIAL)
-    colorscheme wombat256mod
-    hi ColorColumn ctermbg=235 guibg=#32322e
-    hi NonText ctermbg=234 guifg=#e3e0d7
+    colorscheme babymate256
 endif
 
 hi ExtraWhitespace ctermbg=red guibg=red

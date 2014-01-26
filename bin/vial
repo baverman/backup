@@ -1,4 +1,2 @@
 #!/bin/sh
-VIAL=1 urxvtc -fn 'xft:Inconsolata LGC:pixelsize=20' -lsp 0 -bg '#1c1c1c' +tr -name vial -e vim "$@"
-# VIAL=1 urxvtc -fn 'xft:Meslo LG M:pixelsize=20' -lsp 0 -bg '#1c1c1c' +tr -name vial -e vim "$@"
-# urxvtc -fn 'xft:Inconsolata LGC:pixelsize=20' -lsp 0 -name vial -e vim "$@"
+VIAL=1 urxvtc -name vial -e vim-term-fix "$@"

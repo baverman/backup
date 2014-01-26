@@ -68,7 +68,7 @@ Xft.hintstyle:  hintfull
 Xft.hinting: 1
 Xft.antialias: 1
 Xft.dpi: 96
-Xft.rgba: none 
+Xft.rgba: none
 
 xrenoise.display:	:0
 xrenoise.display_resource:	0x00,0x25,0x53,0x47,0x3A,0xBC,0xE9,0x67
@@ -80,3 +80,8 @@ dzen2.foreground: #aaaaaa
 dzen2.background: #222222
 
 Emacs.FontBackend: xft
+
+vial*font: xft:Inconsolata LGC:pixelsize=20
+vial*lineSpace: 0
+vial*background: #222429
+vial*transparent: false
