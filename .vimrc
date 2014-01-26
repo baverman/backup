@@ -97,6 +97,7 @@ nmap <esc>p viw<esc>bi.jkds'ds]
 nmap <esc>g cs])i.getjk
 map <silent> <leader>aa :Tab /=<cr>
 map <silent> <leader>ac :Tab /:\zs/l0l1<cr>
+nnoremap ,si :echom synIDattr(synID(line("."), col("."), 0), "name")<cr>
 
 imap jk <Plug>VialCrampLeave
 imap ОЛ <Plug>VialCrampLeave
@@ -125,12 +126,13 @@ function! InitPythonBuf()
     nnoremap <buffer> <silent> <leader>f :VialPythonOutline<cr>
     setlocal et sts=4 sw=4 tw=80 fo=croq colorcolumn=85
 
-    syntax keyword pythonSelf self
-    if empty($VIAL)
-        hi pythonSelf ctermfg=red
-    else
-        hi pythonSelf ctermfg=216
-    endif
+    syntax keyword pythonBuiltin self
+    syntax keyword pythonKeyword print None
+    " if empty($VIAL)
+    "     hi pythonSelf ctermfg=red
+    " else
+    "     hi pythonSelf ctermfg=216
+    " endif
 endfunction
 
 augroup MyFileTypeSettings
@@ -194,4 +196,3 @@ if !empty($VIAL_SESSION) && !exists('g:session_loaded')
     let g:session_loaded = 'true'
 endif
 
-" echom synIDattr(synID(line("."), col("."), 0), "name")
