@@ -99,6 +99,10 @@ map <silent> <leader>aa :Tab /=<cr>
 map <silent> <leader>ac :Tab /:\zs/l0l1<cr>
 nnoremap ,si :echom synIDattr(synID(line("."), col("."), 0), "name")<cr>
 
+nnoremap ,cc ciw<c-r>=system('/usr/bin/python2 ~/bin/colorpicker <c-r>-')<cr><esc>
+inoremap <c-x>c <c-r>=system('/usr/bin/python2 ~/bin/colorpicker "#fff"')<cr>
+inoremap <c-x>C <c-r>=system('/usr/bin/python2 ~/bin/colorpicker fff')<cr>
+
 imap jk <Plug>VialCrampLeave
 imap ОЛ <Plug>VialCrampLeave
 inoremap <esc> <nop>
@@ -154,8 +158,8 @@ nnoremap <leader>l :VialPythonLint<cr>
 nnoremap <leader>la :VialPythonLintAll<cr>
 nnoremap <leader>vg :VialGrep 
 nnoremap gom :VialPythonOpenModule 
-nnoremap <esc>k :VialBufHistPrev<cr>
-nnoremap <esc>j :VialBufHistNext<cr>
+nnoremap <c-k> :VialBufHistPrev<cr>
+nnoremap <c-j> :VialBufHistNext<cr>
 
 " Other plugs
 let g:AutoPairsMapCR = 0
