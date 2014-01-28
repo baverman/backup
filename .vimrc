@@ -21,7 +21,9 @@ if !empty($VIAL)
 endif
 
 hi ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
+hi RightMargin ctermbg=red guibg=red
+match RightMargin /.\%85v/
+2match ExtraWhitespace /\s\+$/
 
 " Common settings
 set autoread
@@ -128,21 +130,15 @@ cmap %/ <c-r>=expand('%:p:h')<cr>/
 function! InitPythonBuf()
     nnoremap <buffer> <silent> <leader>d :VialPythonGotoDefinition<cr>
     nnoremap <buffer> <silent> <leader>f :VialPythonOutline<cr>
-    setlocal et sts=4 sw=4 tw=80 fo=croq colorcolumn=85
+    setlocal et sts=4 sw=4 tw=80 fo=croq
 
     syntax keyword pythonBuiltin self
     syntax keyword pythonKeyword print None
-    " if empty($VIAL)
-    "     hi pythonSelf ctermfg=red
-    " else
-    "     hi pythonSelf ctermfg=216
-    " endif
 endfunction
 
 augroup MyFileTypeSettings
     au!
     au FileType python call InitPythonBuf()
-    au FileType javascript setlocal colorcolumn=85
     au FileType qf wincmd J
 augroup END
 
