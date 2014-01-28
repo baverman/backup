@@ -1,0 +1,24 @@
+[alias]
+	st = status
+	co = checkout
+	br = branch
+	ci = commit
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+[github]
+	user = baverman
+	token = 7c48d68173b3b466864f05e0e3768c78
+[user]
+	name = Anton Bobrov
+	email = bobrov@vl.ru
+
+[push]
+	default = simple
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[difftool "vimdiff"]
+	path = vial-wait
