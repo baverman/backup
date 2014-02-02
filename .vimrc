@@ -22,8 +22,8 @@ endif
 
 hi ExtraWhitespace ctermbg=red guibg=red
 hi RightMargin ctermbg=red guibg=red
-match RightMargin /.\%85v/
-2match ExtraWhitespace /\s\+$/
+call matchadd('RightMargin', '.\%85v')
+call matchadd('ExtraWhitespace', '\s\+$')
 
 " Common settings
 set autoread
@@ -154,8 +154,8 @@ nnoremap <leader>l :VialPythonLint<cr>
 nnoremap <leader>la :VialPythonLintAll<cr>
 nnoremap <leader>vg :VialGrep 
 nnoremap gom :VialPythonOpenModule 
-nnoremap <c-k> :VialBufHistPrev<cr>
-nnoremap <c-j> :VialBufHistNext<cr>
+nmap <c-k> <Plug>VialBufHistPrev
+nmap <c-j> <Plug>VialBufHistNext
 
 " Other plugs
 let g:AutoPairsMapCR = 0
