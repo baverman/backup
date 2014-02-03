@@ -67,6 +67,8 @@ set nojoinspaces
 set noshowmatch
 set scrolloff=5
 
+set updatetime=2000
+
 
 " Common mappings
 let mapleader = ','
@@ -140,6 +142,7 @@ augroup MyFileTypeSettings
     au!
     au FileType python call InitPythonBuf()
     au FileType qf wincmd J
+    au CursorHold * checktime
 augroup END
 
 
