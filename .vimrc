@@ -87,7 +87,7 @@ imap <c-j> jklysL
 imap <c-k> jklys
 imap <c-l> <Plug>VialCrampSkip
 nnoremap Y y$
-nnoremap S ddko
+nnoremap S cc
 nnoremap <c-n> :cn<cr>
 nnoremap <c-p> :cp<cr>
 nnoremap <leader>o o<esc>k
@@ -189,7 +189,7 @@ if !empty($VIAL_SESSION) && !exists('g:session_loaded')
     endif
     set viminfo+=n~/.vim/sessions/$VIAL_SESSION/.viminfo
     silent! source ~/.vim/sessions/$VIAL_SESSION/session.vim
-    command! SaveSession mksession! ~/.vim/sessions/$VIAL_SESSION/session.vim 
+    command! SaveSession mksession! ~/.vim/sessions/$VIAL_SESSION/session.vim
     noremap <leader>es :edit ~/.vim/sessions/$VIAL_SESSION/sessionx.vim<cr>
     noremap <leader>eV :edit ~/.vim/sessions/$VIAL_SESSION/sessionv.vim<cr>
     augroup save_session_on_quit
@@ -198,4 +198,3 @@ if !empty($VIAL_SESSION) && !exists('g:session_loaded')
     augroup END
     let g:session_loaded = 'true'
 endif
-
