@@ -100,7 +100,8 @@ nmap <esc>d viw<esc>bhxysw]lysw'f]
 nmap <esc>p viw<esc>bi.jkds'ds]
 nmap <esc>g cs])i.getjk
 map <silent> <leader>aa :Tab /=<cr>
-map <silent> <leader>ac :Tab /:\zs/l0l1<cr>
+map <silent> <leader>a: :Tab /:\zs/l0l1<cr>
+map <silent> <leader>a, :Tab /,\zs/l0l1<cr>
 nnoremap ,si :echom synIDattr(synID(line("."), col("."), 0), "name")<cr>
 
 nnoremap ,cc ciw<c-r>=system('/usr/bin/python2 ~/bin/colorpicker <c-r>-')<cr><esc>
@@ -136,6 +137,7 @@ function! InitPythonBuf()
 
     syntax keyword pythonBuiltin self
     syntax keyword pythonKeyword print None
+    syntax match pythonDotExpr "\.\w\+" contains=pythonKeyword
 endfunction
 
 augroup MyFileTypeSettings
