@@ -1,7 +1,9 @@
 git@github.com:baverman/vial-cramp.git
 git@github.com:baverman/vial.git
+git@github.com:baverman/vial-pytest.git
 git@github.com:baverman/vial-python.git
 git@github.com:baverman/vial-quick-open.git
+git@github.com:baverman/vim-babymate256.git
 git://github.com/digitaltoad/vim-jade.git
 git://github.com/Lokaltog/vim-easymotion.git
 https://github.com/garbas/vim-snipmate.git
