@@ -39,7 +39,7 @@
 
     # show age of message if message is older than show_age_threshold seconds.
     # set to -1 to disable
-    show_age_threshold = 60
+    show_age_threshold = 240
 
     # split notifications into multiple lines if they don't fit into geometry
     word_wrap = yes
@@ -87,7 +87,7 @@
 
     # should a notification popped up from history be sticky or
     # timeout as if it would normally do.
-    sticky_history = yes
+    sticky_history = false
 
     # The height of a single line. If the height is smaller than the font height,
     # it will get raised to the font height.
@@ -151,12 +151,12 @@
     # Otherwise the '#' and following  would be interpreted as a comment.
     background = "#222222"
     foreground = "#888888"
-    timeout = 0
+    timeout = 5
 
 [urgency_normal]
     background = "#285577"
     foreground = "#ffffff"
-    timeout = 0
+    timeout = 10
 
 [urgency_critical]
     background = "#900000"
