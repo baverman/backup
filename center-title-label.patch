@@ -1,0 +1,12 @@
+diff -aur package.orig/openbox/framerender.c package.new/openbox/framerender.c
+--- package.orig/openbox/framerender.c	2014-03-11 02:58:24.086188745 +0400
++++ package.new/openbox/framerender.c	2014-03-11 03:04:39.866199093 +0400
+@@ -353,7 +353,7 @@
+     if (!self->label_on) return;
+     /* set the texture's text! */
+     a->texture[0].data.text.string = self->client->title;
+-    RrPaint(a, self->label, self->label_width, ob_rr_theme->label_height);
++    RrPaint(a, self->label, self->label_width, ob_rr_theme->label_height + 1);
+ }
+ 
+ static void framerender_icon(ObFrame *self, RrAppearance *a)
