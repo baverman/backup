@@ -520,6 +520,10 @@
 <applications>
   <application class="*">
     <desktop>1</desktop>
+    <position>
+      <x>center</x>
+      <y>center</y>
+    </position>
   </application>
 
   <application class="Subtitler.py">
@@ -539,10 +543,6 @@
 
   <application name="ranger">
     <decor>true</decor>
-    <position>
-      <x>center</x>
-      <y>center</y>
-    </position>
     <desktop>1</desktop>
     <maximized>false</maximized>
     <focus>yes</focus>
