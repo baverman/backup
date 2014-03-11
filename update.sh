@@ -27,7 +27,7 @@ copy_files /etc/X11/xorg.conf
 copy_files /etc/X11/xorg.conf.d/{15,20,50}*
 copy_files /etc/asound.conf
 
-for file in box-session.sh bpython colors.sh dbus-env opera pipdc rx show-sizes stg-flush title xxx check-mail git-pull-all urxvt-clipboard fall stg-push-current menu.sh menu.lst dmenu_path startmutt.sh vial svial; do
+for file in box-session.sh bpython colors.sh dbus-env opera pipdc rx show-sizes stg-flush title xxx check-mail git-pull-all urxvt-clipboard fall stg-push-current menu.sh menu.lst dmenu_path startmutt.sh vial svial external-monitor; do
     cp ~/bin/$file bin/
 done
 

@@ -1,18 +1,7 @@
-#/bin/sh
+#!/bin/sh
 
-IN="LVDS1"
-EXT="HDMI1"
-
-if (xrandr | grep "$EXT disconnected"); then
-    xgamma -bgamma 0.74 -ggamma 0.95 -rgamma 1.05 &
-    xrandr --output $EXT --off --output $IN --auto
-    feh --bg-center wallpapers/story.png
-else
-    xrandr --output $IN --off --output $EXT --auto
-    feh --bg-center wallpapers/story-1080.png
-    # xinput disable "AT Translated Set 2 keyboard"
-fi
-
+xgamma -bgamma 0.74 -ggamma 0.95 -rgamma 1.05 &
+feh --bg-center wallpapers/story.png
 xinput set-button-map "ETPS/2 Elantech Touchpad" 2 1 3
 
 xrdb -merge ~/.Xdefaults
