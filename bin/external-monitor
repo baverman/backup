@@ -6,8 +6,8 @@ EXT="HDMI1"
 if [[ "$1" == "off" ]]; then
     # xgamma -bgamma 0.74 -ggamma 0.95 -rgamma 1.05 &
     xrandr --output $EXT --off --output $IN --auto --gamma 1.05:0.95:0.74
-    feh --bg-center wallpapers/story.png
+    feh --bg-center ~/wallpapers/story.png
 else
     xrandr --output $IN --off --output $EXT --auto --gamma 1.0:1.0:1.0
-    feh --bg-center wallpapers/story-1080.png
+    feh --bg-center ~/wallpapers/story-1080.png
 fi
