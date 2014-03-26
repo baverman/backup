@@ -520,17 +520,20 @@
 <applications>
   <application class="*">
     <desktop>1</desktop>
+  </application>
+
+  <application class="*" type="normal">
     <position>
       <x>center</x>
       <y>center</y>
     </position>
   </application>
 
-  <application class="Subtitler.py">
+  <application class="bmpanel">
     <desktop>all</desktop>
   </application>
 
-  <application class="bmpanel">
+  <application class="Subtitler.py">
     <desktop>all</desktop>
   </application>
 
@@ -564,7 +567,6 @@
   <application name="pinentry" class="Pinentry">
     <desktop>all</desktop>
   </application>
-
 </applications>
 
 </openbox_config>

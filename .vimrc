@@ -149,6 +149,7 @@ augroup END
 
 
 " Vial
+let g:vial_plugins = ['vial.plugins.grep', 'vial.plugins.misc', 'vial.plugins.bufhist']
 nnoremap <leader>m :VialQuickOpen<cr>
 nnoremap <silent> <leader>t :VialSearchOutline<cr>
 " nnoremap <esc>p :VialPythonShowSignature<cr>

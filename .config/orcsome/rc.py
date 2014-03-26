@@ -10,6 +10,9 @@ wm = get_wm()
 wm.on_key('Shift+Mod+r')(
     restart)
 
+wm.on_key('Shift+Mod+e')(
+    spawn('external-monitor'))
+
 wm.on_key('Ctrl+Alt+x')(
     spawn(TERMINAL))
 
