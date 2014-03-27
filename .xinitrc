@@ -1,7 +1,12 @@
 #!/bin/sh
 
-xgamma -bgamma 0.74 -ggamma 0.95 -rgamma 1.05 &
-feh --bg-center wallpapers/story.png
+if xrandr | grep 'HDMI1 connected'; then
+    external-monitor
+else
+    xgamma -bgamma 0.74 -ggamma 0.95 -rgamma 1.05 &
+    feh --bg-center wallpapers/story.png
+fi
+
 xinput set-button-map "ETPS/2 Elantech Touchpad" 2 1 3
 
 xrdb -merge ~/.Xdefaults
