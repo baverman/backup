@@ -1,0 +1,44 @@
+diff -aur bmpanel2-2.1pre1.orig/xutil.c bmpanel2-2.1pre1.new/xutil.c
+--- bmpanel2-2.1pre1.orig/xutil.c	2014-04-21 12:14:29.119528731 +0400
++++ bmpanel2-2.1pre1.new/xutil.c	2014-04-21 16:23:11.749939657 +0400
+@@ -53,7 +53,9 @@
+ 	"_XROOTPMAP_ID",
+ 	"XdndAware",
+ 	"XdndPosition",
+-	"XdndStatus"
++	"XdndStatus",
++        "_ORCSOME_STATE",
++        "_ORCSOME_SKIP_TASKBAR"
+ };
+ 
+ void *x_get_prop_data(struct x_connection *c, Window win, Atom prop, 
+@@ -272,6 +274,17 @@
+ 			ret = 1;
+ 	}
+ 	XFree(data);
++
++	data = x_get_prop_data(c, win, c->atoms[XATOM_ORCSOME_STATE], XA_ATOM, &num);
++	if (!data)
++		return 0;
++
++	while (num) {
++		num--;
++		if (data[num] == c->atoms[XATOM_ORCSOME_SKIP_TASKBAR])
++			ret = 1;
++	}
++	XFree(data);
+ 
+ 	return ret;
+ }
+diff -aur bmpanel2-2.1pre1.orig/xutil.h bmpanel2-2.1pre1.new/xutil.h
+--- bmpanel2-2.1pre1.orig/xutil.h	2014-04-21 12:14:29.119528731 +0400
++++ bmpanel2-2.1pre1.new/xutil.h	2014-04-21 16:20:37.539935410 +0400
+@@ -42,6 +42,8 @@
+ 	XATOM_XDND_AWARE,
+ 	XATOM_XDND_POSITION,
+ 	XATOM_XDND_STATUS,
++        XATOM_ORCSOME_STATE,
++        XATOM_ORCSOME_SKIP_TASKBAR,
+ 	XATOM_COUNT
+ };
+ 
