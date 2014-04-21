@@ -143,7 +143,7 @@ def init(work=None, rest=None, postpone=None, activity=None):
 
     @wm.on_signal('get_idle')
     def get_idle():
-        rsi.last_idle = wm.root.get_screen_saver_info().idle / 1000.0
+        rsi.last_idle = wm.get_screen_saver_info().idle / 1000.0
 
     t1 = Timer(10, rsi.check)
     t1.start()

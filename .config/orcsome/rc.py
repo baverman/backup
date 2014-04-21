@@ -121,9 +121,9 @@ def window_maximized_state_change():
     state = wm.get_window_state(wm.event_window)
 
     if state.maximized_vert and state.maximized_horz and not state.undecorated:
-        wm.decorate_window(wm.event_window, False)
+        wm.set_window_state(wm.event_window, otaskbar=True, decorate=False)
     elif state.undecorated and (not state.maximized_vert or not state.maximized_horz):
-        wm.decorate_window(wm.event_window)
+        wm.set_window_state(wm.event_window, otaskbar=False, decorate=True)
 
 
 #####################################
