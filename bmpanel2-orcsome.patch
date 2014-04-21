@@ -1,3 +1,15 @@
+diff -aur bmpanel2-2.1pre1.orig/widget-taskbar.c bmpanel2-2.1pre1.new/widget-taskbar.c
+--- bmpanel2-2.1pre1.orig/widget-taskbar.c	2014-04-21 12:14:29.119528731 +0400
++++ bmpanel2-2.1pre1.new/widget-taskbar.c	2014-04-21 21:31:12.370448560 +0400
+@@ -578,7 +578,7 @@
+ 		}
+ 	}
+ 
+-	if (e->atom == c->atoms[XATOM_NET_WM_STATE]) {
++	if (e->atom == c->atoms[XATOM_NET_WM_STATE] || e->atom == c->atoms[XATOM_ORCSOME_STATE]) {
+ 		struct taskbar_task *t = &tw->tasks[ti];
+ 		if (x_is_window_hidden(c, t->win))
+ 			remove_task(tw, ti);
 diff -aur bmpanel2-2.1pre1.orig/xutil.c bmpanel2-2.1pre1.new/xutil.c
 --- bmpanel2-2.1pre1.orig/xutil.c	2014-04-21 12:14:29.119528731 +0400
 +++ bmpanel2-2.1pre1.new/xutil.c	2014-04-21 16:23:11.749939657 +0400
