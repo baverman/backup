@@ -4,4 +4,4 @@ DEFAULT_TITLE=`basename $PWD`
 TITLE=${1:-${DEFAULT_TITLE}}
 
 
-echo -ne "\033]2;$TITLE\007"
+echo -ne "\033]0;$TITLE\007"

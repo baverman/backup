@@ -1,20 +1,21 @@
-diff -aur bmpanel2-2.1pre1.orig/widget-taskbar.c bmpanel2-2.1pre1.new/widget-taskbar.c
---- bmpanel2-2.1pre1.orig/widget-taskbar.c	2014-04-21 12:14:29.119528731 +0400
-+++ bmpanel2-2.1pre1.new/widget-taskbar.c	2014-04-21 21:31:12.370448560 +0400
-@@ -578,7 +578,7 @@
- 		}
+diff -aur bmpanel2-master/widget-taskbar.c bmpanel2-master.new/widget-taskbar.c
+--- bmpanel2-master/widget-taskbar.c	2011-12-07 18:07:31.000000000 +0400
++++ bmpanel2-master.new/widget-taskbar.c	2014-04-22 12:31:11.775318243 +0400
+@@ -647,7 +647,8 @@
  	}
  
--	if (e->atom == c->atoms[XATOM_NET_WM_STATE]) {
-+	if (e->atom == c->atoms[XATOM_NET_WM_STATE] || e->atom == c->atoms[XATOM_ORCSOME_STATE]) {
+ 	if (e->atom == c->atoms[XATOM_NET_WM_STATE] ||
+-	    e->atom == c->atoms[XATOM_WM_STATE]) {
++	    e->atom == c->atoms[XATOM_WM_STATE] ||
++            e->atom == c->atoms[XATOM_ORCSOME_STATE]) {
  		struct taskbar_task *t = &tw->tasks[ti];
- 		if (x_is_window_hidden(c, t->win))
+ 		if (!x_is_window_visible_on_panel(c, t->win))
  			remove_task(tw, ti);
-diff -aur bmpanel2-2.1pre1.orig/xutil.c bmpanel2-2.1pre1.new/xutil.c
---- bmpanel2-2.1pre1.orig/xutil.c	2014-04-21 12:14:29.119528731 +0400
-+++ bmpanel2-2.1pre1.new/xutil.c	2014-04-21 16:23:11.749939657 +0400
-@@ -53,7 +53,9 @@
- 	"_XROOTPMAP_ID",
+diff -aur bmpanel2-master/xutil.c bmpanel2-master.new/xutil.c
+--- bmpanel2-master/xutil.c	2011-12-07 18:07:31.000000000 +0400
++++ bmpanel2-master.new/xutil.c	2014-04-22 13:03:22.625306905 +0400
+@@ -57,7 +57,9 @@
+ 	"ESETROOT_PMAP_ID",
  	"XdndAware",
  	"XdndPosition",
 -	"XdndStatus"
@@ -23,29 +24,38 @@ diff -aur bmpanel2-2.1pre1.orig/xutil.c bmpanel2-2.1pre1.new/xutil.c
 +        "_ORCSOME_SKIP_TASKBAR"
  };
  
- void *x_get_prop_data(struct x_connection *c, Window win, Atom prop, 
-@@ -272,6 +274,17 @@
- 			ret = 1;
+ void *x_get_prop_data(struct x_connection *c, Window win, Atom prop,
+@@ -376,15 +378,23 @@
+ 	}
+ 
+ 	data = x_get_prop_data(c, win, c->atoms[XATOM_NET_WM_STATE], XA_ATOM, &num);
+-	if (!data)
+-		return 1;
+-
++	if (!data) return 1;
+ 	while (num) {
+ 		num--;
+ 		if (data[num] == c->atoms[XATOM_NET_WM_STATE_SKIP_TASKBAR])
+ 			ret = 0;
  	}
  	XFree(data);
++        if (!ret) return ret;
 +
 +	data = x_get_prop_data(c, win, c->atoms[XATOM_ORCSOME_STATE], XA_ATOM, &num);
-+	if (!data)
-+		return 0;
-+
++	if (!data) return 1;
 +	while (num) {
 +		num--;
 +		if (data[num] == c->atoms[XATOM_ORCSOME_SKIP_TASKBAR])
-+			ret = 1;
++			ret = 0;
 +	}
 +	XFree(data);
  
  	return ret;
  }
-diff -aur bmpanel2-2.1pre1.orig/xutil.h bmpanel2-2.1pre1.new/xutil.h
---- bmpanel2-2.1pre1.orig/xutil.h	2014-04-21 12:14:29.119528731 +0400
-+++ bmpanel2-2.1pre1.new/xutil.h	2014-04-21 16:20:37.539935410 +0400
-@@ -42,6 +42,8 @@
+diff -aur bmpanel2-master/xutil.h bmpanel2-master.new/xutil.h
+--- bmpanel2-master/xutil.h	2011-12-07 18:07:31.000000000 +0400
++++ bmpanel2-master.new/xutil.h	2014-04-22 12:29:01.265319009 +0400
+@@ -55,6 +55,8 @@
  	XATOM_XDND_AWARE,
  	XATOM_XDND_POSITION,
  	XATOM_XDND_STATUS,
