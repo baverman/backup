@@ -13,7 +13,7 @@ xrdb -merge ~/.Xdefaults
 xset r rate 200 40
 urxvtd -q -f -o
 
-setxkbmap -model pc104 -layout us,ru -variant winkeys -option grp:caps_toggle,grp_led:caps,compose:ralt
+setxkbmap -model pc104 -layout us,ru -variant winkeys -option grp:caps_toggle,grp_led:scroll,compose:ralt
 
 kbdd
 xbacklight -set 80
