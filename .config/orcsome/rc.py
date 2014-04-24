@@ -10,11 +10,17 @@ wm = get_wm()
 wm.on_key('Shift+Mod+r')(
     restart)
 
+wm.on_key('Shift+Mod+c')(
+    close)
+
 wm.on_key('Shift+Mod+e')(
     spawn('external-monitor'))
 
 wm.on_key('Ctrl+Alt+x')(
     spawn(TERMINAL))
+
+wm.on_key('Mod+e')(
+    spawn('menu.sh'))
 
 wm.on_key('Mod+bracketleft')(
     spawn('mpc volume -2'))
@@ -55,8 +61,14 @@ wm.on_key('XF86_PowerOff')(
 wm.on_key('Mod+i')(
     spawn_or_raise('urxvtc -name weechat -e weechat-curses', name='weechat'))
 
-#wm.on_key('Mod+l')(
-#    spawn_or_raise('fmd', cls='Fmd'))
+@wm.on_key('Ctrl+Mod+space')
+def maximize_window():
+    cw = wm.current_window
+    state = wm.get_window_state(cw)
+    if state.maximized_vert and state.maximized_horz:
+        wm.set_window_state(cw, vmax=False, hmax=False)
+    else:
+        wm.set_window_state(cw, vmax=True, hmax=True)
 
 wm.on_key('Mod+l')(
     spawn_or_raise('urxvtc -g 100x30 -name ranger -e ranger', name='ranger'))
