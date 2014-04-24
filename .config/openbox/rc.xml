@@ -299,10 +299,6 @@
 </menu>
 
 <applications>
-  <application class="*">
-    <desktop>1</desktop>
-  </application>
-
   <application class="*" type="normal">
     <position>
       <x>center</x>
@@ -311,41 +307,6 @@
   </application>
 
   <application class="bmpanel">
-    <desktop>all</desktop>
-  </application>
-
-  <application class="Subtitler.py">
-    <desktop>all</desktop>
-  </application>
-
-  <application class="URxvt">
-    <decor>no</decor>
-    <desktop>2</desktop>
-    <maximized>true</maximized>
-    <focus>yes</focus>
-  </application>
-
-  <application name="ranger">
-    <decor>true</decor>
-    <desktop>1</desktop>
-    <maximized>false</maximized>
-    <focus>yes</focus>
-  </application>
-
-  <application name="vial">
-    <decor>false</decor>
-    <desktop>1</desktop>
-    <maximized>true</maximized>
-    <focus>yes</focus>
-  </application>
-
-  <application class="Opera" role="browser">
-    <decor>no</decor>
-    <maximized>true</maximized>
-    <focus>yes</focus>
-  </application>
-
-  <application name="pinentry" class="Pinentry">
     <desktop>all</desktop>
   </application>
 </applications>

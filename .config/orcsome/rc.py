@@ -66,9 +66,9 @@ def maximize_window():
     cw = wm.current_window
     state = wm.get_window_state(cw)
     if state.maximized_vert and state.maximized_horz:
-        wm.set_window_state(cw, vmax=False, hmax=False)
+        wm.set_window_state(cw, vmax=False, hmax=False, decorate=True, otaskbar=False)
     else:
-        wm.set_window_state(cw, vmax=True, hmax=True)
+        wm.set_window_state(cw, vmax=True, hmax=True, decorate=False, otaskbar=True)
 
 wm.on_key('Mod+l')(
     spawn_or_raise('urxvtc -g 100x30 -name ranger -e ranger', name='ranger'))
@@ -108,73 +108,62 @@ def toggle_console():
         else:
             spawn(TERMINAL)()
 
+
 @wm.on_create(cls='URxvt')
 def bind_urxvt_keys():
     wm.on_key(wm.event_window, 'Shift+Right')(focus_next)
     wm.on_key(wm.event_window, 'Shift+Left')(focus_prev)
 
 
-################################################
-# Workaround to fix openbox dumb behaviour
+def app_rules(w):
+    desktop = 0
+    decorate = None
+    maximize = None
+    otaskbar = None
+
+    if wm.is_match(w, name='vial'):
+        maximize = True
+        decorate = False
+    elif wm.is_match(w, name='ranger'):
+        otaskbar = False
+    elif wm.is_match(w, name='Navigator', cls='Firefox'):
+        decorate = False
+    elif wm.is_match(w, cls='URxvt'):
+        desktop = 1
+        decorate = False
+        maximize = True
+    elif wm.is_match(w, name='pinentry', cls='Pinentry'):
+        desktop = -1
+    elif wm.is_match(w, cls='bmpanel'):
+        return
+
+    wm.change_window_desktop(w, desktop)
+
+    if decorate is not None or maximize is not None or otaskbar is not None:
+        wm.set_window_state(w, vmax=maximize, hmax=maximize,
+            decorate=decorate, otaskbar=otaskbar)
+
+    cd = wm.current_desktop
+    if desktop >=0 and desktop != cd:
+        wm.set_current_desktop(desktop)
+
+
+#########################
+# Apply application rules
 @wm.on_create
-def switch_to_desktop():
-    if not wm.startup:
-        if wm.activate_window_desktop(wm.event_window) is None:
-            @wm.on_property_change(wm.event_window, '_NET_WM_DESKTOP')
-            def property_was_set():
-                property_was_set.remove()
-                wm.activate_window_desktop(wm.event_window)
+def on_create():
+    if wm.startup:
+        return
 
-
-###################################
-# Handle window maximize/unmaximize
-@wm.on_property_change('_NET_WM_STATE')
-def window_maximized_state_change():
-    state = wm.get_window_state(wm.event_window)
-
-    if state.maximized_vert and state.maximized_horz and not state.undecorated:
-        wm.set_window_state(wm.event_window, otaskbar=True, decorate=False)
-    elif state.undecorated and (not state.maximized_vert or not state.maximized_horz):
-        wm.set_window_state(wm.event_window, otaskbar=False, decorate=True)
-
-
-#####################################
-# Handle weechat urgent notifications
-def create_urgent_banner():
-    n = pynotify.Notification('IM message', '')
-    n.set_timeout(0)
-    n.show()
-    return n
-
-def destroy_urgent_banner(banner):
-    banner.close()
-
-urgent_state = {}
-urgent_banner = [None]
-
-@wm.on_create(name='weechat')
-def weechat_demands_attention():
-    @wm.on_property_change(wm.event_window, '_NET_WM_STATE')
-    def state_changed():
-        old_state = urgent_state.get(wm.event_window.id, None)
-        state = wm.get_window_state(wm.event_window)
-        if state.urgent != old_state:
-            urgent_state[wm.event_window.id] = state.urgent
-            if state.urgent:
-                if not urgent_banner[0]:
-                    urgent_banner[0] = create_urgent_banner()
-            else:
-                if urgent_banner[0]:
-                    b = urgent_banner[0]
-                    urgent_banner[0] = None
-                    destroy_urgent_banner(b)
-
-    @wm.on_destroy(wm.event_window)
-    def destroy():
-        try:
-            del urgent_state[wm.event_window.id]
-        except KeyError:
-            pass
+    w = wm.event_window
+    wd = wm.get_window_desktop(w)
+    if wd is None:
+        @wm.on_property_change(w, '_NET_WM_DESKTOP')
+        def property_was_set():
+            property_was_set.remove()
+            app_rules(w)
+    else:
+        app_rules(w)
 
 
 ##########################
