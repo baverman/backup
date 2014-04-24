@@ -87,6 +87,15 @@ imap <c-j> jklysL
 imap <c-k> jklys
 imap <c-l> <Plug>VialCrampSkip
 nnoremap Y y$
+nnoremap <leader>P "+P
+vnoremap <leader>P "+P
+nnoremap <leader>p "+p
+vnoremap <leader>p "+p
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>Y "+Y
+vnoremap <leader>Y "+Y
+nnoremap <leader>u :put +<cr>
 nnoremap S cc
 nnoremap <c-n> :cn<cr>
 nnoremap <c-p> :cp<cr>
