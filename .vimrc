@@ -93,8 +93,8 @@ nnoremap <leader>p "+p
 vnoremap <leader>p "+p
 nnoremap <leader>y "+y
 vnoremap <leader>y "+y
-nnoremap <leader>Y "+Y
-vnoremap <leader>Y "+Y
+nnoremap <leader>Y "+y$
+vnoremap <leader>Y "+y$
 nnoremap <leader>u :put +<cr>
 nnoremap S cc
 nnoremap <c-n> :cn<cr>
