@@ -55,6 +55,7 @@ set formatoptions=qrn1
 
 set sessionoptions=buffers,curdir
 set directory=~/tmp/vim//
+set iconstring=%f%(\ %M%R%H%)
 
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчняж;abcdefghijklmnopqrstuvwxyz:
 set spelllang=en_us,ru_ru
