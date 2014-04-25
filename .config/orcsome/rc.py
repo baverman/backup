@@ -124,7 +124,7 @@ def on_create():
         @wm.on_property_change(w, '_NET_WM_DESKTOP')
         def property_was_set():
             property_was_set.remove()
-            app_rules(w)
+            app_rules(wm.event_window)
     else:
         app_rules(w)
 
