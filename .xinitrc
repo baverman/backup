@@ -19,6 +19,6 @@ kbdd
 xbacklight -set 80
 devmon &> /tmp/devmon.log &
 
-exec dbus-launch --exit-with-session ~/bin/box-session.sh
+exec dbus-launch --exit-with-session openbox --startup ~/bin/box-session.sh
 #exec ck-launch-session /usr/bin/fvwm2
 #exec ck-launch-session /usr/bin/fluxbox -log /tmp/fb.log -verbose
