@@ -1,0 +1,137 @@
+diff -aur gatotray.orig/gatotray.c gatotray.new/gatotray.c
+--- gatotray.orig/gatotray.c	2014-05-06 03:05:35.288708482 +0400
++++ gatotray.new/gatotray.c	2014-05-06 03:21:16.178673881 +0400
+@@ -40,8 +40,6 @@
+ 
+ typedef struct {
+     CPU_Usage cpu;
+-    int freq;
+-    int temp;
+ } CPUstatus;
+ 
+ CPUstatus* history = NULL;
+@@ -58,29 +56,15 @@
+ }
+ 
+ GdkGC *gc = NULL;
+-GdkPoint Termometer[] = {{2,16},{2,2},{3,1},{4,1},{5,2},{5,16},{6,17},{6,19},{5,20},
+-    {2,20},{1,19},{1,17},{2,16}};
+-#define Termometer_tube_size 6 /* first points are the 'tube' */
+-#define Termometer_tube_start 2
+-#define Termometer_tube_end 16
+-#define Termometer_scale 22
+-GdkPoint termometer_tube[Termometer_tube_size];
+-GdkPoint termometer[sizeof(Termometer)/sizeof(*Termometer)];
+ 
+ void redraw(void)
+ {
+     gdk_gc_set_rgb_fg_color(gc, &bg_color);
+     gdk_draw_rectangle(pixmap, gc, TRUE, 0, 0, width, width);
+-    
++
+     for(int i=0; i<width; i++)
+     {
+         CPUstatus* h = &history[width-1-i];
+-        unsigned shade = h->freq * 99 / SCALE;
+-
+-        /* Or shade by temperature:
+-        shade = h->temp > 0 ? (h->temp < 100 ? h->temp : 99) : 0;
+-        gdk_gc_set_rgb_fg_color(gc, &temp_gradient[shade]);
+-        */
+ 
+         /* Bottom blue strip for i/o waiting cycles: */
+         int iow_size = h->cpu.iowait*width/SCALE;
+@@ -90,31 +74,10 @@
+             gdk_draw_line(pixmap, gc, i, bottom, i, width);
+         }
+ 
+-        gdk_gc_set_rgb_fg_color(gc, &freq_gradient[shade]);
++        gdk_gc_set_rgb_fg_color(gc, &freq_gradient[0]);
+         gdk_draw_line(pixmap, gc, i, bottom-(h->cpu.usage*width/SCALE), i, bottom);
+     }
+ 
+-    int T = history[0].temp;
+-    if(T) /* Hide if 0, meaning it could not be read */
+-    if( T<85 || (timer&1) ) /* Blink when hot! */
+-    {
+-        /* scale temp from 5~105 degrees Celsius to 0~100*/
+-        T = (T-5)*100/100;
+-        if(T<0) T=0;
+-        if(T>99) T=99;
+-        gdk_gc_set_rgb_fg_color(gc, &temp_gradient[T]);
+-        gdk_draw_polygon(pixmap, gc, TRUE, termometer, sizeof(termometer)/sizeof(*termometer));
+-        if( T<99 )
+-        {
+-            termometer_tube[0].y = (T*termometer[1].y+(99-T)*termometer[0].y)/99;
+-            termometer_tube[Termometer_tube_size-1].y = termometer_tube[0].y;
+-            gdk_gc_set_rgb_fg_color(gc, &bg_color);
+-            gdk_draw_polygon(pixmap, gc, TRUE, termometer_tube, Termometer_tube_size);
+-        }
+-        gdk_gc_set_rgb_fg_color(gc, &fg_color);
+-        gdk_draw_lines(pixmap, gc, termometer, sizeof(termometer)/sizeof(*termometer));
+-    }
+-
+     GdkPixbuf *pixbuf =
+     gdk_pixbuf_get_from_drawable(NULL, pixmap, NULL, 0, 0, 0, 0, width, width);
+     if(pref_transparent) {
+@@ -140,21 +103,11 @@
+ 
+     if(pixmap) g_object_unref(pixmap);
+     pixmap = gdk_pixmap_new(NULL, width, width, 24);
+-    
++
+     if(gc)  g_object_unref(gc);
+     gc = gdk_gc_new(pixmap);
+     gdk_gc_set_line_attributes(gc, 1, GDK_LINE_SOLID, GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
+ 
+-    for(int i=0; i<sizeof(termometer)/sizeof(*termometer); i++)
+-    {
+-        termometer[i].x = Termometer[i].x*newsize/Termometer_scale;
+-        termometer[i].y = Termometer[i].y*newsize/Termometer_scale;
+-        if(i<Termometer_tube_size) {
+-            termometer_tube[i].x = termometer[i].x;
+-            termometer_tube[i].y = termometer[i].y;
+-        }
+-    }
+-    
+     redraw();
+     return TRUE;
+ }
+@@ -174,26 +127,16 @@
+ 
+         smear(history[i].cpu.usage, history[i-1].cpu.usage);
+         smear(history[i].cpu.iowait, history[i-1].cpu.iowait);
+-        smear(history[i].freq, history[i-1].freq);
+-        smear(history[i].temp, history[i-1].temp);
+-
+         #undef smear
+         i--;
+     }
+     history[0].cpu = cpu_usage(SCALE);
+-    int freq = cpu_freq();
+-    history[0].freq = (freq - scaling_min_freq) * SCALE /
+-                        (scaling_max_freq-scaling_min_freq);
+-    history[0].temp = cpu_temperature();
+ 
+     redraw();
+ 
+     gchar* tip =
+-    g_strdup_printf("CPU %d%% busy @ %d MHz, %d%%wa\n"
+-                    "Temperature: %d C\n"
+-                    "(click for 'top')"
+-                    , history[0].cpu.usage*100/SCALE, freq/1000, history[0].cpu.iowait*100/SCALE
+-                    , history[0].temp);
++    g_strdup_printf("CPU %d%% busy, %d%%wa\n", history[0].cpu.usage*100/SCALE,
++        history[0].cpu.iowait*100/SCALE);
+     gtk_status_icon_set_tooltip(app_icon, tip);
+     g_free(tip);
+ 
+@@ -253,8 +196,6 @@
+     
+     history = g_malloc(sizeof(*history));
+     history[0].cpu = cpu_usage(SCALE);
+-    history[0].freq = 0;
+-    history[0].temp = cpu_temperature();
+     hist_size = width = 1;
+ 
+     app_icon = gtk_status_icon_new();
