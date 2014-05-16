@@ -155,6 +155,6 @@ def init(work=None, rest=None, postpone=None, activity=None):
     def deinit():
         t1.cancel()
         t2.cancel()
-        print 'rsi.close'
+        logger.info('rsi.close')
 
     return rsi
