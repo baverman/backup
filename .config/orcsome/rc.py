@@ -129,8 +129,5 @@ def on_create():
 # Start RSI prevent module
 @wm.on_init
 def init():
-    r = rsi.init()
-
-    @wm.on_key('Mod+b')
-    def do_rest():
-        r.start_rest()
+    r = rsi.init(wm)
+    wm.on_key('Mod+b').do(r.start_rest)

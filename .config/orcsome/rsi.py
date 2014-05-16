@@ -1,15 +1,11 @@
 import random
 import logging
 
-from time import time
 from subprocess import Popen, PIPE
 
-import orcsome
-from orcsome.utils import Timer
-
 logger = logging.getLogger('rsi')
+KEYS = 'abcdefghijklmnopqrstuvwxyz'
 
-keys = 'abcdefghijklmnopqrstuvwxyz'
 
 def notify(title, body=None, timeout=-1):
     cmd = [
@@ -26,7 +22,7 @@ def notify(title, body=None, timeout=-1):
         body,
         '[]',
         '{}',
-        '{}'.format(timeout),
+        '{}'.format(int(timeout)),
     ]
 
     out, err = Popen(cmd, stdout=PIPE, stderr=PIPE).communicate()
@@ -34,6 +30,7 @@ def notify(title, body=None, timeout=-1):
         raise Exception(err)
 
     return int(out.strip().split()[1].rstrip(',)'))
+
 
 def close_notify(nid):
     cmd = [
@@ -51,110 +48,88 @@ def close_notify(nid):
         raise Exception(err)
 
 
-class RsiPreventer(object):
-    def __init__(self, wm, work=None, rest=None, postpone=None, activity=None):
-        self.wm = wm
+def init(wm, work=None, rest=None, postpone=None, activity=None):
+    work_time = (work or 55) * 60
+    rest_time = (rest or 5) * 60
+    postpone_time = (postpone or 5) * 60
+    activity_time = (activity or 10) * 60
 
-        self.work_time = work or 55
-        self.rest_time = rest or 5
-        self.postpone_time = postpone or 5
-        self.activity_time = activity or 10
-
-        self.working = True
-        self.last_rest = time()
-        self.last_work = time()
-        self.last_check = time()
-        self.last_idle = 0
-
-        self.banner = 0
-
-    def idle(self):
-        self.wm.emit('get_idle')
-
-    def check(self):
-        now = time()
-        self.last_check, last_check = now, self.last_check
-
-        if now - last_check > 60 or self.last_idle > self.activity_time * 60:
-            self.last_rest = now
-            return
-
-        if self.working and now - self.last_rest > self.work_time*60:
-            self.wm.emit('start_rest')
-
-        if not self.working and now - self.last_work > self.rest_time*60:
-            self.wm.emit('stop_rest')
-
-    def create_banner(self):
-        self.banner = notify('Take break', self.password, self.rest_time * 70 * 1000)
-
-    def destroy_banner(self):
-        if self.banner:
-            close_notify(self.banner)
+    class Rsi(object):
+        def __init__(self):
             self.banner = 0
 
-    def key_handler(self, is_press, state, code):
-        if is_press:
-            if self.password_idx >= len(self.password):
-                if self.wm.keycode('Return') == code:
-                    self.stop_rest(True)
+        def create_banner(self):
+            self.banner = notify('Take break', self.password, rest_time * 1.1 * 1000)
+
+        def destroy_banner(self):
+            if self.banner:
+                close_notify(self.banner)
+                self.banner = 0
+
+        def key_handler(self, is_press, state, code):
+            if is_press:
+                if self.password_idx >= len(self.password):
+                    if wm.keycode('Return') == code:
+                        self.stop_rest(True)
+                    else:
+                        self.password_idx = 0
+                elif wm.keycode(self.password[self.password_idx]) == code:
+                    self.password_idx += 1
                 else:
                     self.password_idx = 0
-            elif self.wm.keycode(self.password[self.password_idx]) == code:
-                self.password_idx += 1
-            else:
+
+        def start_rest(self):
+            if wm.grab_pointer(True) and wm.grab_keyboard(self.key_handler):
+                self.password = ''.join(random.choice(KEYS) for _ in range(10))
                 self.password_idx = 0
 
-    def start_rest(self):
-        if self.wm.grab_pointer(True) and self.wm.grab_keyboard(self.key_handler):
-            self.password = ''.join(random.choice(keys) for _ in range(10))
-            self.password_idx = 0
+                self.create_banner()
 
-            self.create_banner()
-            self.working = False
-            self.last_work = time()
-        else:
-            self.wm.ungrab_keyboard()
-            self.wm.ungrab_pointer()
+                work_timer.stop()
+                idle_timer.stop()
+                postpone_timer.stop()
+                rest_timer.again()
+            else:
+                wm.ungrab_keyboard()
+                wm.ungrab_pointer()
 
-    def stop_rest(self, postpone):
-        self.working = True
-        self.last_rest = time()
-        if postpone:
-            self.last_rest = self.last_rest - self.work_time*60 + self.postpone_time*60
+        def stop_rest(self, postpone=False):
+            rest_timer.stop()
 
-        self.wm.ungrab_keyboard()
-        self.wm.ungrab_pointer()
+            if postpone:
+                postpone_timer.again()
+            else:
+                postpone_timer.stop()
+                work_timer.again()
+                idle_timer.again()
 
-        self.destroy_banner()
+            wm.ungrab_keyboard()
+            wm.ungrab_pointer()
+            self.destroy_banner()
 
+    rsi = Rsi()
 
-def init(work=None, rest=None, postpone=None, activity=None):
-    wm = orcsome.get_wm()
-    rsi = RsiPreventer(wm, work, rest, postpone, activity)
-
-    @wm.on_signal('start_rest')
-    def start_rest():
+    @wm.on_timer(work_time)
+    def work_timer():
+        logger.info('Work timer')
         rsi.start_rest()
 
-    @wm.on_signal('stop_rest')
-    def stop_rest():
-        rsi.stop_rest(False)
+    @wm.on_timer(60)
+    def idle_timer():
+        if wm.get_screen_saver_info().idle / 1000.0 > activity_time:
+            logger.info('Idle timer')
+            work_timer.again()
 
-    @wm.on_signal('get_idle')
-    def get_idle():
-        rsi.last_idle = wm.get_screen_saver_info().idle / 1000.0
+    @wm.on_timer(rest_time)
+    def rest_timer():
+        logger.info('Rest timer')
+        rsi.stop_rest()
 
-    t1 = Timer(10, rsi.check)
-    t1.start()
+    @wm.on_timer(postpone_time)
+    def postpone_timer():
+        logger.info('Postpone timer')
+        rsi.start_rest()
 
-    t2 = Timer(60, rsi.idle)
-    t2.start()
-
-    @wm.on_deinit
-    def deinit():
-        t1.cancel()
-        t2.cancel()
-        logger.info('rsi.close')
-
+    work_timer.start()
+    idle_timer.start()
     return rsi

@@ -83,5 +83,4 @@ Emacs.FontBackend: xft
 
 vial*font: xft:Inconsolata LGC:pixelsize=20
 vial*lineSpace: 0
-vial*background: #222429
 vial*transparent: false
