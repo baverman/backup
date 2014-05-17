@@ -31,6 +31,8 @@ export MPD_HOST=~/.mpd/socket
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 
+source ~/.settings.local
+
 _xfunc git __git_ps1 &>/dev/null
 for fname in ~/.bash_sources/*; do
     . $fname
