@@ -1,52 +1,10 @@
 import random
 import logging
 
-from subprocess import Popen, PIPE
+from orcsome import notify
 
 logger = logging.getLogger('rsi')
 KEYS = 'abcdefghijklmnopqrstuvwxyz'
-
-
-def notify(title, body=None, timeout=-1):
-    cmd = [
-        'gdbus',
-        'call',
-        '--session',
-        '--dest=org.freedesktop.Notifications',
-        '--object-path=/org/freedesktop/Notifications',
-        '--method=org.freedesktop.Notifications.Notify',
-        'orcsome-rsi',
-        '0',
-        '',
-        title,
-        body,
-        '[]',
-        '{}',
-        '{}'.format(int(timeout)),
-    ]
-
-    out, err = Popen(cmd, stdout=PIPE, stderr=PIPE).communicate()
-    if err:
-        raise Exception(err)
-
-    return int(out.strip().split()[1].rstrip(',)'))
-
-
-def close_notify(nid):
-    cmd = [
-        'gdbus',
-        'call',
-        '--session',
-        '--dest=org.freedesktop.Notifications',
-        '--object-path=/org/freedesktop/Notifications',
-        '--method=org.freedesktop.Notifications.CloseNotification',
-        '{}'.format(nid),
-    ]
-
-    out, err = Popen(cmd, stdout=PIPE, stderr=PIPE).communicate()
-    if err:
-        raise Exception(err)
-
 
 def init(wm, work=None, rest=None, postpone=None, activity=None):
     work_time = (work or 55) * 60
@@ -56,15 +14,15 @@ def init(wm, work=None, rest=None, postpone=None, activity=None):
 
     class Rsi(object):
         def __init__(self):
-            self.banner = 0
+            self.banner = None
 
         def create_banner(self):
-            self.banner = notify('Take break', self.password, rest_time * 1.1 * 1000)
+            self.banner = notify.notify('Take break', self.password, rest_time * 1.1)
 
         def destroy_banner(self):
             if self.banner:
-                close_notify(self.banner)
-                self.banner = 0
+                self.banner.close()
+                self.banner = None
 
         def key_handler(self, is_press, state, code):
             if is_press:

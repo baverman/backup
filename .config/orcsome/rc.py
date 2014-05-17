@@ -1,6 +1,8 @@
+import sys
 from orcsome import get_wm
 from orcsome.actions import spawn
 
+sys.modules.pop('rsi', None)
 import rsi
 
 TERMINAL = 'urxvtc -title terminal'
