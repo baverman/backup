@@ -69,23 +69,19 @@ def init(wm, work=None, rest=None, postpone=None, activity=None):
 
     @wm.on_timer(work_time)
     def work_timer():
-        logger.info('Work timer')
         rsi.start_rest()
 
     @wm.on_timer(60)
     def idle_timer():
         if wm.get_screen_saver_info().idle / 1000.0 > activity_time:
-            logger.info('Idle timer')
             work_timer.again()
 
     @wm.on_timer(rest_time)
     def rest_timer():
-        logger.info('Rest timer')
         rsi.stop_rest()
 
     @wm.on_timer(postpone_time)
     def postpone_timer():
-        logger.info('Postpone timer')
         rsi.start_rest()
 
     work_timer.start()

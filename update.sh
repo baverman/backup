@@ -23,11 +23,9 @@ copy_home_files .mplayer config
 copy_home_files .mplayer input.conf
 copy_home_files .config/dunst '*'
 
-copy_files /etc/X11/xorg.conf
-copy_files /etc/X11/xorg.conf.d/{15,20,50}*
 copy_files /etc/asound.conf
 
-for file in box-session.sh bpython colors.sh dbus-env opera pipdc rx show-sizes stg-flush title xxx check-mail git-pull-all urxvt-clipboard fall stg-push-current menu.sh menu.lst dmenu_path startmutt.sh svial external-monitor ff-flash-reset-dpms.sh; do
+for file in box-session.sh bpython colors.sh dbus-env opera pipdc rx show-sizes stg-flush title xxx check-mail git-pull-all urxvt-clipboard fall stg-push-current menu.sh menu.lst dmenu_path startmutt.sh svial external-monitor; do
     cp ~/bin/$file bin/
 done
 
