@@ -1,0 +1,5 @@
+# Write your default config options here!
+
+fullscreen=yes
+use-filedir-conf=yes
+

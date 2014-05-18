@@ -1,0 +1,14 @@
+.bash_profile
+.bashrc
+.bash_sources/*
+bin/*
+.config/*
+.gitconfig
+.gtkrc-2.0
+.gtkrc-2.0.mine
+.local/share/*
+.mpv/*
+.themes/*
+.vimrc
+.Xdefaults
+.xinitrc

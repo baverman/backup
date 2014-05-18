@@ -1,2 +1,0 @@
-#!/bin/sh
-VIAL=1 urxvtc -name vial -e vim-term-fix "$@"

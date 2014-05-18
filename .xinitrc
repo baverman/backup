@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source ~/work/backup/xinit.$MYROLE
+source ~/backup/xinit.$MYROLE
 
 set_kbd_map() {
     setxkbmap -model pc104 -layout us,ru -variant winkeys -option grp:caps_toggle,grp_led:$kbd_indicator,compose:ralt
