@@ -1,0 +1,24 @@
+defaults
+tls on
+tls_starttls on
+
+account bobrov@vl.ru
+from {mail.bobrov.efrom}
+auth on
+host smtp.vl.ru
+user {mail.bobrov.user}
+password {mail.bobrov.pwd}
+port 2525
+tls_fingerprint 6F:E5:5A:39:58:5E:07:6F:6B:C5:14:1F:73:06:70:92:9A:A4:86:84
+
+account baverman
+from {mail.baverman.efrom}
+auth on
+host smtp.gmail.com
+user {mail.baverman.user}
+password {mail.baverman.pwd}
+port 587
+tls_fingerprint 10:75:E1:8C:DF:93:15:3B:A1:8F:CD:FE:D3:11:79:D5:16:43:77:BC
+
+account default : bobrov@vl.ru
+

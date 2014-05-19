@@ -5,11 +5,21 @@ import filecmp
 
 from os import readlink, makedirs, unlink, symlink
 from glob import glob
-from shutil import rmtree
+from shutil import rmtree, copymode
 from os.path import dirname, join, islink, isdir, realpath, abspath, isfile, \
-    exists, relpath, commonprefix
+    exists, relpath, commonprefix, expanduser
 
 ignore_regex = re.compile(r'.+\.pyc$')
+
+
+_vars = None
+def get_vars():
+    global _vars
+    if not _vars:
+        _vars = {}
+        execfile(expanduser('~/.config/vars'), _vars)
+
+    return _vars
 
 
 def expand_sources(sources):
@@ -43,7 +53,7 @@ def can_be_unrolled(source, dest):
         dfiles = dcmp.diff_files
 
         if afiles or dfiles:
-            print '{}: {} {}'.format(source, afiles, dfiles)
+            print 'dirs are different {}: new {}, chg {}'.format(source, afiles, dfiles)
             return False
 
         return True
@@ -51,10 +61,10 @@ def can_be_unrolled(source, dest):
         if filecmp.cmp(source, dest):
             return True
 
-        print '{} not the same with {}'.format(source, dest)
+        print 'files are different {} {}'.format(source, dest)
         return False
     else:
-        print 'Unknown case: {} {}'.format(source, dest)
+        print 'unknown case {} {}'.format(source, dest)
 
 
 def chk_makedirs(path, cache=set()):
@@ -63,19 +73,24 @@ def chk_makedirs(path, cache=set()):
 
     cache.add(path)
     if not exists(path):
+        print 'creating', path
         makedirs(path)
 
 
-def unroll(source, dest):
-    print 'link {} -> {}'.format(source, dest)
+def clean_dest(dest):
     destdir = dirname(dest)
     chk_makedirs(destdir)
 
     if isfile(dest) or islink(dest):
+        print 'removing', dest
         unlink(dest)
     elif isdir(dest):
+        print 'removing', dest
         rmtree(dest)
 
+
+def unroll_source(source, dest):
+    print 'link {} -> {}'.format(source, dest)
     source = abspath(source)
     if len(commonprefix([source, dest])) > 1:
         source = relpath(source, destdir)
@@ -83,15 +98,29 @@ def unroll(source, dest):
     symlink(source, dest)
 
 
-def main(sources, root):
+def unroll_template(source, dest):
+    print 'template {} -> {}'.format(source, dest)
+    with open(dest, 'w') as f:
+        f.write(open(source).read().format(**get_vars()))
+
+    copymode(source, dest)
+
+
+def unroll(sources, root):
     sources = expand_sources(sources)
     for source in sources:
-        dest = join(root, source)
-        if can_be_unrolled(source, dest):
-            unroll(source, dest)
+        if source.endswith(':tpl'):
+            dest = join(root, source[:-4])
+            clean_dest(dest)
+            unroll_template(source, dest)
+        else:
+            dest = join(root, source)
+            if can_be_unrolled(source, dest):
+                clean_dest(dest)
+                unroll_source(source, dest)
 
 
 if __name__ == '__main__':
     source_list_fname = sys.argv[1]
     root = sys.argv[2]
-    main(open(source_list_fname), root)
+    unroll(open(source_list_fname), root)

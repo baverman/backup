@@ -5,6 +5,7 @@ bin/*
 .config/bmpanel2
 .config/dunst
 .config/gatotrayrc
+.config/norlessrc:tpl
 .config/openbox
 .config/orcsome
 .config/ranger/*
@@ -14,6 +15,7 @@ bin/*
 .gtkrc-2.0.mine
 .local/share/*
 .mpv/*
+.msmtprc:tpl
 .muttrc
 .mutt/*
 .themes/*
