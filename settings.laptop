@@ -1,1 +1,2 @@
 export MYROLE=laptop
+export VDPAU_DRIVER=va_gl
