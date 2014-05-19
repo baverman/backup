@@ -92,6 +92,7 @@ def clean_dest(dest):
 def unroll_source(source, dest):
     print 'link {} -> {}'.format(source, dest)
     source = abspath(source)
+    destdir = dirname(dest)
     if len(commonprefix([source, dest])) > 1:
         source = relpath(source, destdir)
 
