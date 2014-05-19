@@ -9,6 +9,7 @@ bin/*
 .config/orcsome
 .config/ranger/*
 .gitconfig
+.gnupg/*
 .gtkrc-2.0
 .gtkrc-2.0.mine
 .local/share/*

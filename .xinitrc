@@ -16,4 +16,7 @@ set_kbd_map
 kbdd
 devmon &> /tmp/devmon.log &
 
+killall gpg-agent
+eval $(gpg-agent --daemon) &
+
 exec dbus-launch --exit-with-session openbox --startup ~/bin/box-session.sh
