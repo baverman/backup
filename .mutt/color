@@ -1,0 +1,60 @@
+## Color names:
+## white black green magenta blue cyan yellow red default colorx
+
+#
+# pager-coloring
+#
+
+# color to            yellow  default  # pager header      WISH!
+# color subject       yellow  default  # pager header      WISH!
+# color cc            yellow  default  # pager header
+# color date          yellow  default  # pager header
+# color From          red     default  # pager header
+color hdrdefault    color114   default  # pager header
+# color header        blue    default  "^cc: "
+# color header        yellow  default  "^date: "
+color header        color210     default  "^from: "
+# color header        red     default  "^reply-to: "
+color header        color210     default  "^subject: "
+# color header        yellow  default  "^to: "
+# color header        magenta default  "^x-mailer: "
+# color header        default   default  "^message-id: .*pine"
+
+# color body          white   default  # pager body
+color attachment    color114   default  # pager body
+color normal        white   default  # pager body
+color quoted        color223  default  # pager body
+color quoted1       color217  default  # pager body
+color quoted2       color146  default  # pager body
+color quoted3       color114  default  # pager body
+color signature     color105    default  # pager body
+color tilde         color105    default  # pager body
+
+## Emphasis
+color bold          red    default  # ..
+color underline     yellow default  #
+
+#
+# index-coloring
+#
+
+color error         red    default  # global
+
+color indicator     color253  color238   # index
+color markers       red    default  # index
+color message       color250  default   # index
+color status        color250  color236   # index status bar default: default white
+color tree          red    default  # index
+
+# mail to myself
+# color index   green   default   '~p'
+
+color index color253 default '~A'
+color index_date color105 default
+color index_size color246 default
+color index_number color246 default
+color index_flags color222 default
+color index_subject color114 default '~C rambler-co.ru|~C mm.rambler.ru|~C c-nr.com'
+color index_subject color211 default '~C baverman@gmail.com'
+color index_author color210 default '~f bobrov@vl.ru|~f a.bobrov@rambler-co.ru|~f baverman@gmail.com|~f bobrov@c-nr.com'
+color index_subject color240 default '~D'
