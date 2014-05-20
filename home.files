@@ -18,6 +18,7 @@ bin/*
 .msmtprc:tpl
 .muttrc
 .mutt/*
+.ncmpcpp/*
 .themes/*
 .vimrc
 .Xdefaults
