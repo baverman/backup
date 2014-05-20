@@ -33,8 +33,11 @@ def init(wm, work=None, rest=None, postpone=None, activity=None):
                         self.password_idx = 0
                 elif wm.keycode(self.password[self.password_idx]) == code:
                     self.password_idx += 1
+                    self.banner.update(body='{}\n{}'.format(self.password,
+                        self.password[:self.password_idx]))
                 else:
                     self.password_idx = 0
+                    self.banner.update(body=self.password)
 
         def start_rest(self):
             if wm.grab_pointer(True) and wm.grab_keyboard(self.key_handler):
