@@ -76,17 +76,17 @@ def init(wm, work=None, rest=None, postpone=None, activity=None):
 
     @wm.on_timer(60)
     def idle_timer():
-        if wm.get_screen_saver_info().idle / 1000.0 > activity_time:
+        w = wm.current_window
+        if wm.get_screen_saver_info().idle / 1000.0 > activity_time \
+                or w.fullscreen:
             work_timer.again()
 
-    @wm.on_timer(rest_time)
+    @wm.on_timer(rest_time, start=False)
     def rest_timer():
         rsi.stop_rest()
 
-    @wm.on_timer(postpone_time)
+    @wm.on_timer(postpone_time, start=False)
     def postpone_timer():
         rsi.start_rest()
 
-    work_timer.start()
-    idle_timer.start()
     return rsi

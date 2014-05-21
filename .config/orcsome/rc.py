@@ -127,6 +127,13 @@ def on_create():
         app_rules(w)
 
 
+@wm.on_timer(120)
+def reset_dpms_for_fullscreen_windows():
+    w = wm.current_window
+    if w and w.fullscreen:
+        wm.reset_dpms()
+
+
 ##########################
 # Start RSI prevent module
 @wm.on_init
