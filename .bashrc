@@ -53,6 +53,7 @@ __svial() {
 complete -F __svial svial
 
 export SDL_AUDIODRIVER=alsa
+export PULSE_LATENCY_MSEC=60
 
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
 export PYTHONSTARTUP="$HOME/work/python-shell-enhancement/pythonstartup.py"
