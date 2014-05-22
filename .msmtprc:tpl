@@ -20,5 +20,14 @@ password {mail.baverman.pwd}
 port 587
 tls_fingerprint 10:75:E1:8C:DF:93:15:3B:A1:8F:CD:FE:D3:11:79:D5:16:43:77:BC
 
+account zvooq
+from {mail.zvooq.efrom}
+auth on
+host smtp.gmail.com
+user {mail.zvooq.user}
+password {mail.zvooq.pwd}
+port 587
+tls_fingerprint 10:75:E1:8C:DF:93:15:3B:A1:8F:CD:FE:D3:11:79:D5:16:43:77:BC
+
 account default : bobrov@vl.ru
 

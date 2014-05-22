@@ -29,6 +29,15 @@ password = {mail.baverman.pwd}
 trash = [Gmail]/Trash
 sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
 
+[account zvooq]
+from = {mail.zvooq.efrom}
+host = imap.gmail.com
+fingerprint = BC:9F:B0:9A:EB:06:53:16:C9:56:1D:0D:91:C6:8A:E8:22:26:16:01
+user = {mail.zvooq.user}
+password = {mail.zvooq.pwd}
+trash = [Gmail]/Trash
+sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
+
 [disabled account yandex]
 from = {mail.ya.efrom}
 host = imap.yandex.ru
