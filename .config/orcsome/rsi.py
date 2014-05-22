@@ -1,6 +1,7 @@
 import random
 import logging
 
+import orcsome
 from orcsome import notify
 
 logger = logging.getLogger('rsi')
@@ -48,7 +49,6 @@ def init(wm, work=None, rest=None, postpone=None, activity=None):
 
                 work_timer.stop()
                 idle_timer.stop()
-                postpone_timer.stop()
                 rest_timer.again()
             else:
                 wm.ungrab_keyboard()
@@ -58,10 +58,9 @@ def init(wm, work=None, rest=None, postpone=None, activity=None):
             rest_timer.stop()
 
             if postpone:
-                postpone_timer.again()
+                work_timer.start(postpone_time)
             else:
-                postpone_timer.stop()
-                work_timer.again()
+                work_timer.start(work_time)
                 idle_timer.again()
 
             wm.ungrab_keyboard()
@@ -70,7 +69,7 @@ def init(wm, work=None, rest=None, postpone=None, activity=None):
 
     rsi = Rsi()
 
-    @wm.on_timer(work_time)
+    @wm.on_timer(work_time, first_timeout=getattr(orcsome, 'rsi_work_timeout', None))
     def work_timer():
         rsi.start_rest()
 
@@ -85,8 +84,8 @@ def init(wm, work=None, rest=None, postpone=None, activity=None):
     def rest_timer():
         rsi.stop_rest()
 
-    @wm.on_timer(postpone_time, start=False)
-    def postpone_timer():
-        rsi.start_rest()
+    @wm.on_deinit
+    def store_work_timeout():
+        orcsome.rsi_work_timeout = work_timer.remaining()
 
     return rsi
