@@ -1,3 +1,4 @@
+git@github.com:baverman/vial-cash.git
 git@github.com:baverman/vial-cramp.git
 git@github.com:baverman/vial.git
 git@github.com:baverman/vial-pytest.git
@@ -6,9 +7,11 @@ git@github.com:baverman/vial-quick-open.git
 git@github.com:baverman/vim-babymate256.git
 git://github.com/digitaltoad/vim-jade.git
 git://github.com/Lokaltog/vim-easymotion.git
+https://github.com/AndrewRadev/linediff.vim
 https://github.com/garbas/vim-snipmate.git
 https://github.com/godlygeek/tabular.git
 https://github.com/honza/vim-snippets.git
+https://github.com/junegunn/vim-easy-align
 https://github.com/MarcWeber/vim-addon-mw-utils.git
 https://github.com/takac/vim-hardtime.git
 https://github.com/tomtom/tlib_vim.git
