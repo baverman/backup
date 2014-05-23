@@ -13,7 +13,7 @@ set menu_context=10
 set nomarkers
 
 auto_view text/html
-alternative_order text/plain
+alternative_order text/plain text/html
 
 set mbox_type=Maildir
 set folder=~/mail/

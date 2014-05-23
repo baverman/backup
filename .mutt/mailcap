@@ -1,2 +1,3 @@
+text/html; open-in-browser %s
 text/html; w3m -I %{charset} -T text/html; copiousoutput;
 application/pdf; open-in evince pdf %s
