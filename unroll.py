@@ -3,11 +3,13 @@ import re
 import sys
 import filecmp
 
-from os import readlink, makedirs, unlink, symlink
+from os import readlink, makedirs, unlink, symlink, chmod
 from glob import glob
 from shutil import rmtree, copymode
 from os.path import dirname, join, islink, isdir, realpath, abspath, isfile, \
     exists, relpath, commonprefix, expanduser
+
+from mako.template import Template
 
 ignore_regex = re.compile(r'.+\.pyc$')
 
@@ -100,11 +102,13 @@ def unroll_source(source, dest):
 
 
 def unroll_template(source, dest):
+    t = Template(filename=source)
     print 'template {} -> {}'.format(source, dest)
     with open(dest, 'w') as f:
-        f.write(open(source).read().format(**get_vars()))
+        f.write(t.render(**get_vars()))
 
-    copymode(source, dest)
+    if hasattr(t.module, 'file_mode'):
+        chmod(dest, t.module.file_mode)
 
 
 def unroll(sources, root):

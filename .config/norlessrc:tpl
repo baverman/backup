@@ -1,5 +1,8 @@
+<%!
+    file_mode = 0600
+    google_fingerprint = 'BC:9F:B0:9A:EB:06:53:16:C9:56:1D:0D:91:C6:8A:E8:22:26:16:01'
+%>
 [norless]
-replica_id = {norless.replica}
 state_dir = ~/mail
 fetch_last = 50
 timeout = 60
@@ -12,32 +15,33 @@ path = ~/mail/sent
 sync_new = yes
 
 [account bobrov@vl.ru]
-from = {mail.bobrov.efrom}
+from = ${mail.bobrov.efrom}
 host = pop.farpost.ru
 fingerprint = E0:9F:35:22:5E:71:A3:C9:3F:1B:76:AD:03:AE:94:EB:C4:30:90:29
-user = {mail.bobrov.user}
-password = {mail.bobrov.pwd}
+user = ${mail.bobrov.user}
+password = ${mail.bobrov.pwd}
 trash = Trash
 sync = INBOX -> inbox | Sent -> sent
 
 [account baverman]
-from = {mail.baverman.efrom}
+from = ${mail.baverman.efrom}
 host = imap.gmail.com
-fingerprint = BC:9F:B0:9A:EB:06:53:16:C9:56:1D:0D:91:C6:8A:E8:22:26:16:01
-user = {mail.baverman.user}
-password = {mail.baverman.pwd}
+fingerprint = ${google_fingerprint}
+user = ${mail.baverman.user}
+password = ${mail.baverman.pwd}
 trash = [Gmail]/Trash
 sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
 
 [account zvooq]
-from = {mail.zvooq.efrom}
+from = ${mail.zvooq.efrom}
 host = imap.gmail.com
-fingerprint = BC:9F:B0:9A:EB:06:53:16:C9:56:1D:0D:91:C6:8A:E8:22:26:16:01
-user = {mail.zvooq.user}
-password = {mail.zvooq.pwd}
+fingerprint = ${google_fingerprint}
+user = ${mail.zvooq.user}
+password = ${mail.zvooq.pwd}
 trash = [Gmail]/Trash
 sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
 
+<%doc>
 [disabled account yandex]
 from = {mail.ya.efrom}
 host = imap.yandex.ru
@@ -46,3 +50,4 @@ password = {mail.ya.pwd}
 trash = &BCMENAQwBDsENQQ9BD0ESwQ1-
 sync = INBOX -> inbox
 debug = 0
+</%doc>
