@@ -2,8 +2,6 @@ PATH=/home/bobrov/bin:/bin:/usr/bin
 DISPLAY=:0
 
 */3 * * * * run-if-not-idle 3600 dbus-env check-nl-mail
-*/10 * * * * run-if-idle 1800 norless -Rq
 */10 * * * * run-if-not-idle 3600 dbus-env vk-notify &> /dev/null
 */5 * * * * dbus-env battery-notify 00:15:00
-*/5 * * * * ff-flash-reset-dpms.sh
 
