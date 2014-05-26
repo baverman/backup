@@ -1,6 +1,5 @@
 import sys
 from orcsome import get_wm
-from orcsome.actions import spawn
 
 sys.modules.pop('rsi', None)
 import rsi
@@ -10,7 +9,7 @@ TERMINAL = 'urxvtc -title terminal'
 wm = get_wm()
 
 wm.on_key('Shift+Mod+r').restart()
-wm.on_key('Shift+Mod+c').close()
+wm.on_key('Shift+Mod+c').close_window()
 wm.on_key('Shift+Mod+e').spawn('external-monitor')
 wm.on_key('Ctrl+Alt+x').spawn(TERMINAL)
 wm.on_key('Mod+e').spawn('menu.sh')
@@ -72,7 +71,7 @@ def toggle_console():
         if clients:
             wm.activate_desktop(1)
         else:
-            spawn(TERMINAL)
+            wm.spawn(TERMINAL)
 
 
 @wm.on_manage(cls='URxvt')
