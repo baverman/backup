@@ -139,4 +139,4 @@ def reset_dpms_for_fullscreen_windows():
 @wm.on_init
 def init():
     r = rsi.init(wm)
-    wm.on_key('Mod+b').do(r.start_rest)
+    wm.on_key('Mod+Alt+b').do(r.start_rest)
