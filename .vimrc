@@ -48,6 +48,7 @@ set gdefault
 set incsearch
 set showmatch
 set hlsearch
+set showtabline=0
 
 set wrap
 set textwidth=79
