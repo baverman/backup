@@ -1,6 +1,5 @@
 <%!
     file_mode = 0600
-    google_fingerprint = 'F0:86:3B:C0:37:E7:D4:F1:55:FE:00:48:33:E8:08:C6:DA:89:52:F7,BC:9F:B0:9A:EB:06:53:16:C9:56:1D:0D:91:C6:8A:E8:22:26:16:01'
 %>
 [norless]
 state_dir = ~/mail
@@ -26,7 +25,7 @@ sync = INBOX -> inbox | Sent -> sent
 [account baverman]
 from = ${mail.baverman.efrom}
 host = imap.gmail.com
-fingerprint = ${google_fingerprint}
+cafile = ~/.mutt/geotrust.pem
 user = ${mail.baverman.user}
 password = ${mail.baverman.pwd}
 trash = [Gmail]/Trash
@@ -35,7 +34,7 @@ sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
 [account zvooq]
 from = ${mail.zvooq.efrom}
 host = imap.gmail.com
-fingerprint = ${google_fingerprint}
+cafile = ~/.mutt/geotrust.pem
 user = ${mail.zvooq.user}
 password = ${mail.zvooq.pwd}
 trash = [Gmail]/Trash
