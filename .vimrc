@@ -180,7 +180,7 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 nnoremap <leader>v :Bufferlist<cr>
 vnoremap <leader>ld :Linediff<cr>
-vnoremap <leader>lr :LinediffReset<cr>
+nnoremap <leader>lr :LinediffReset<cr>
 
 
 " Restore cursor
