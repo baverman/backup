@@ -13,7 +13,7 @@ alias sc='sudo systemctl'
 
 PS1='\[\033[01;34m\]\w\[\033[31m\]$(__git_ps1 "[%s]")\[\033[01;32m\]$(__prompt_stgit)\[\033[01;34m\]$\[\033[00m\] '
 
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:$HOME/.gem/ruby/2.1.0/bin:$PATH
 export PROMPT_COMMAND='history -a'
 export HISTCONTROL=ignoredups
 export HISTFILESIZE=5000

@@ -144,6 +144,7 @@ cmap %/ <c-r>=expand('%:p:h')<cr>/
 function! InitPythonBuf()
     nnoremap <buffer> <silent> <leader>d :VialPythonGotoDefinition<cr>
     nnoremap <buffer> <silent> <leader>f :VialPythonOutline<cr>
+    nnoremap <buffer> <leader>l :VialPythonLint<cr>
     setlocal et sts=4 sw=4 tw=80 fo=croq
 
     syntax keyword pythonBuiltin self
@@ -167,10 +168,10 @@ nnoremap <silent> <leader>t :VialSearchOutline<cr>
 nnoremap <silent> <esc><esc> :VialEscape<cr>
 nmap <leader>g <Plug>VialGrep
 vmap <leader>g <Plug>VialGrep
-nnoremap <leader>l :VialPythonLint<cr>
-nnoremap <leader>la :VialPythonLintAll<cr>
 nnoremap <leader>vg :VialGrep 
-nnoremap gom :VialPythonOpenModule 
+nnoremap <leader>la :VialPythonLintAll<cr>
+nnoremap <leader>om :VialPythonOpenModule 
+nnoremap <leader>cm :VialPythonCreateModule 
 nmap <c-k> <Plug>VialBufHistPrev
 nmap <c-j> <Plug>VialBufHistNext
 
