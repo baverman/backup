@@ -170,6 +170,7 @@ nmap <leader>g <Plug>VialGrep
 vmap <leader>g <Plug>VialGrep
 nnoremap <leader>vg :VialGrep 
 nnoremap <leader>la :VialPythonLintAll<cr>
+nnoremap <leader>lt :VialPytestRun<cr>
 nnoremap <leader>om :VialPythonOpenModule 
 nnoremap <leader>cm :VialPythonCreateModule 
 nmap <c-k> <Plug>VialBufHistPrev
