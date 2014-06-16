@@ -11,6 +11,8 @@ set include=yes
 set menu_scroll=yes
 set menu_context=10
 set nomarkers
+set edit_headers = yes
+set autoedit
 
 auto_view text/html
 alternative_order text/plain text/html
