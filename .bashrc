@@ -36,6 +36,16 @@ for fname in ~/.bash_sources/*; do
     . $fname
 done
 
+_complete_git() {
+  if [ -d .git ]; then
+    branches=`git branch | cut -c 3-`
+    rbranches=`git branch -r | cut -c 3-`
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${branches} ${rbranches}" -- ${cur}) )
+  fi
+}
+complete -F _complete_git git co
+
 __fab_tasks() {
     local prev cur
     _get_comp_words_by_ref cur prev
