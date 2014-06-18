@@ -11,6 +11,7 @@ https://github.com/AndrewRadev/linediff.vim
 https://github.com/garbas/vim-snipmate.git
 https://github.com/godlygeek/tabular.git
 https://github.com/honza/vim-snippets.git
+https://github.com/ivalkeen/vim-simpledb.git
 https://github.com/junegunn/vim-easy-align
 https://github.com/MarcWeber/vim-addon-mw-utils.git
 https://github.com/takac/vim-hardtime.git
@@ -23,3 +24,4 @@ https://github.com/tpope/vim-surround
 https://github.com/vim-scripts/dbext.vim
 https://github.com/vim-scripts/tComment
 https://github.com/vim-scripts/wombat256.vim
+https://github.com/wellle/targets.vim
