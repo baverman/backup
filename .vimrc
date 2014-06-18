@@ -114,6 +114,8 @@ map <silent> <leader>aa :Tab /=<cr>
 map <silent> <leader>a: :Tab /:\zs/l0l1<cr>
 map <silent> <leader>a, :Tab /,\zs/l0l1<cr>
 nnoremap ,si :echom synIDattr(synID(line("."), col("."), 0), "name")<cr>
+nnoremap <leader>bw :bw<cr>
+nnoremap <leader>bd :bd<cr>
 
 nnoremap ,cc ciw<c-r>=system('/usr/bin/python2 ~/bin/colorpicker <c-r>-')<cr><esc>
 inoremap <c-x>c <c-r>=system('/usr/bin/python2 ~/bin/colorpicker "#fff"')<cr>
