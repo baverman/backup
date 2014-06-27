@@ -31,20 +31,16 @@ export MPD_HOST=~/.mpd/socket
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 
-_xfunc git __git_ps1 &>/dev/null
 for fname in ~/.bash_sources/*; do
     . $fname
 done
 
-_complete_git() {
+_complete_git_co_my() {
   if [ -d .git ]; then
-    branches=`git branch | cut -c 3-`
-    rbranches=`git branch -r | cut -c 3-`
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${branches} ${rbranches}" -- ${cur}) )
+    git branch | cut -c 3-
+    git branch -r | cut -c 3-
   fi
 }
-complete -F _complete_git git co
 
 __fab_tasks() {
     local prev cur
