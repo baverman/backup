@@ -1,0 +1,2 @@
+kbd_indicator=caps
+xcalib .config/display.icc
