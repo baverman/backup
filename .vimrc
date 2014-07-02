@@ -63,7 +63,7 @@ set spelllang=en_us,ru_ru
 set spellcapcheck=
 
 syntax sync minlines=256
-set synmaxcol=256
+set synmaxcol=5000
 
 set nojoinspaces
 set noshowmatch
