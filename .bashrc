@@ -62,6 +62,7 @@ export SDL_AUDIODRIVER=alsa
 export PULSE_LATENCY_MSEC=60
 
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv2
 export PYTHONSTARTUP="$HOME/work/python-shell-enhancement/pythonstartup.py"
 
 . /usr/bin/virtualenvwrapper.sh
