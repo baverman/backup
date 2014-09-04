@@ -3,12 +3,12 @@
 source ~/backup/xinit.$MYROLE
 
 set_kbd_map() {
+    xset r rate 200 40
     setxkbmap -model pc104 -layout us,ru -variant winkeys -option grp:caps_toggle,grp_led:$kbd_indicator,compose:ralt
 }
 export -f set_kbd_map
 
 xrdb -merge ~/.Xdefaults
-xset r rate 200 40
 urxvtd -q -f -o
 
 set_kbd_map

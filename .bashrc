@@ -36,10 +36,8 @@ for fname in ~/.bash_sources/*; do
 done
 
 _complete_git_co_my() {
-  if [ -d .git ]; then
     git branch | cut -c 3-
     git branch -r | cut -c 3-
-  fi
 }
 
 __fab_tasks() {

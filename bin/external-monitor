@@ -1,10 +1,9 @@
 #!/bin/bash
 
-IN="LVDS1"
+IN="eDP1"
 EXT="HDMI1"
 
 if [[ "$1" == "off" ]]; then
-    # xgamma -bgamma 0.74 -ggamma 0.95 -rgamma 1.05 &
     xrandr --output $EXT --off --output $IN --auto --gamma 1.05:0.95:0.74
     feh --bg-center ~/wallpapers/story.png
 else
