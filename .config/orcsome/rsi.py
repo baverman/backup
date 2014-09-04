@@ -71,7 +71,10 @@ def init(wm, work=None, rest=None, postpone=None, activity=None):
 
     @wm.on_timer(work_time, first_timeout=getattr(orcsome, 'rsi_work_timeout', None))
     def work_timer():
-        rsi.start_rest()
+        if work_timer.overdue(15 * 60):
+            work_timer.start(work_time)
+        else:
+            rsi.start_rest()
 
     @wm.on_timer(60)
     def idle_timer():

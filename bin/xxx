@@ -1,4 +1,2 @@
 #/bin/sh
-
-exec startx
-# |& trout 1000000 /tmp/xsession.log
+exec startx -- -keeptty |& trout 1000000 /tmp/xsession.log
