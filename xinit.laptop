@@ -6,6 +6,7 @@ else
 fi
 
 xinput set-button-map "ETPS/2 Elantech Touchpad" 2 1 3
+synclient TapButton1=2 TapButton2=1 VertEdgeScroll=0 HorizEdgeScroll=0 LockedDrags=1 VertTwoFingerScroll=1 VertScrollDelta=60 LockedDragTimeout=1500
 xbacklight -set 80
 
 kbd_indicator=caps
