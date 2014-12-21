@@ -5,11 +5,13 @@ import cmd
 
 from subprocess import Popen, PIPE
 
+
 class Port(object):
     def __init__(self, name):
         self.name = name
         self.is_out = None
         self.connections = []
+
 
 def format_ports(ports):
     for name in sorted(ports):
@@ -18,6 +20,7 @@ def format_ports(ports):
             print port.name, '->' if port.is_out else '<-', ', '.join(port.connections)
         else:
             print port.name
+
 
 def get_ports():
     out, _ = Popen(['jack_lsp', '-cp'], stdout=PIPE).communicate()
@@ -39,20 +42,25 @@ def get_ports():
 
     return result
 
+
 def filter_ports(ports, prefix, is_out=None, connected=None):
     return [p.name for p in ports.itervalues()
         if (is_out is None or p.is_out == is_out)
             and (connected is None or p.connections)
             and p.name.startswith(prefix)]
 
+
 def filter_mports(ports, *p):
     return map(lambda r: filter_ports(ports, r), p)
+
 
 def connect(output, input):
     Popen(['jack_connect', output, input]).wait()
 
+
 def disconnect(output, input):
     Popen(['jack_disconnect', output, input]).wait()
+
 
 class JackCmd(cmd.Cmd):
     prompt = 'jctl: '
@@ -120,6 +128,7 @@ class JackCmd(cmd.Cmd):
     def do_EOF(self, line):
         print
         sys.exit()
+
 
 if __name__ == '__main__':
     cdelims = readline.get_completer_delims()
