@@ -2,4 +2,6 @@ external-monitor
 kbd_indicator=caps
 #xcalib .config/display.icc
 #feh --bg-center wallpapers/story-900.png
-synclient LockedDrags=1 LockedDragTimeout=1600
+feh --bg-center wallpapers/story-1080.png
+synclient LockedDrags=1 LockedDragTimeout=1600 PalmDetect=1
+xbacklight -set 60

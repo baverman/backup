@@ -1,10 +1,11 @@
 #!/bin/sh
 
 source ~/backup/xinit.$MYROLE
+KI=$kbd_indicator
 
 set_kbd_map() {
     xset r rate 200 40
-    setxkbmap -model pc104 -layout us,ru -variant winkeys -option grp:caps_toggle,grp_led:$kbd_indicator,compose:ralt
+    setxkbmap -model pc104 -layout us,ru -variant winkeys -option grp:caps_toggle,grp_led:$KI,compose:ralt
 }
 export -f set_kbd_map
 

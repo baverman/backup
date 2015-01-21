@@ -206,6 +206,9 @@
     <mousebind button="W-Right" action="Drag">
       <action name="Resize"/>
     </mousebind>
+    <mousebind button="W-S-Left" action="Drag">
+      <action name="Resize"/>
+    </mousebind>
   </context>
 
   <context name="Client">
