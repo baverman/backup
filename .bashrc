@@ -10,6 +10,7 @@ alias ls='ls --color=auto'
 alias ll='ls -la'
 alias mc='mc -u'
 alias sc='sudo systemctl'
+alias cal='cal -m'
 
 PS1='\[\033[01;34m\]\w\[\033[31m\]$(__git_ps1 "[%s]")\[\033[01;32m\]$(__prompt_stgit)\[\033[01;34m\]$\[\033[00m\] '
 
