@@ -123,7 +123,6 @@ inoremap <c-x>C <c-r>=system('/usr/bin/python2 ~/bin/colorpicker fff')<cr>
 
 imap jk <Plug>VialCrampLeave
 imap ОЛ <Plug>VialCrampLeave
-inoremap <esc> <nop>
 
 inoremap <Up> <nop>
 inoremap <Left> <nop>
