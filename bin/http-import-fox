@@ -11,7 +11,10 @@ import sqlite3
 def find_sessions(home, sessions):
     for session in sessions:
         for fname in glob.glob(os.path.join(home, '*', session + '.json')):
-            yield session, os.path.basename(os.path.dirname(fname)), fname
+            host, sep, tail = os.path.basename(os.path.dirname(fname)).rpartition('_')
+            if not sep:
+                host = tail
+            yield session, host, fname
 
 
 def get_default_cookie_file():
