@@ -26,7 +26,7 @@ export EDITOR=vim
 
 # export TERM=xterm-256color
 
-export PIP_DOWNLOAD_CACHE=~/.cache/pip
+# export PIP_DOWNLOAD_CACHE=~/.cache/pip
 export MPD_HOST=~/.mpd/socket
 
 export GIT_PS1_SHOWDIRTYSTATE=1
