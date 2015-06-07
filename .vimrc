@@ -146,6 +146,7 @@ function! InitPythonBuf()
     nnoremap <buffer> <silent> <leader>d :VialPythonGotoDefinition<cr>
     nnoremap <buffer> <silent> <leader>f :VialPythonOutline<cr>
     nnoremap <buffer> <leader>l :VialPythonLint<cr>
+    nnoremap <buffer> <leader>lf :call Flake8()<cr>
     setlocal et sts=4 sw=4 tw=80 fo=croq
 
     syntax keyword pythonBuiltin self
@@ -184,7 +185,6 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 nnoremap <leader>v :Bufferlist<cr>
 vnoremap <leader>ld :Linediff<cr>
 nnoremap <leader>lr :LinediffReset<cr>
-
 
 " Restore cursor
 function! ResCur()

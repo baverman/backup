@@ -12,6 +12,7 @@ import sqlite3
 def find_sessions(home, sessions):
     for session in sessions:
         for fname in glob.glob(os.path.join(home, '*', session + '.json')):
+            print(fname)
             host = re.sub(r'(.*)_\d+', r'\1', os.path.basename(os.path.dirname(fname)))
             yield session, host, fname
 
