@@ -55,6 +55,7 @@ set textwidth=79
 set formatoptions=qrn1
 
 set sessionoptions=buffers,curdir
+set backupdir=/tmp
 set directory=~/tmp/vim//
 set iconstring=%f%(\ %M%R%H%)
 
