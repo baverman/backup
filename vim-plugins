@@ -1,6 +1,7 @@
 git@github.com:baverman/vial-cash.git
 git@github.com:baverman/vial-cramp.git
 git@github.com:baverman/vial.git
+git@github.com:baverman/vial-http.git
 git@github.com:baverman/vial-pytest.git
 git@github.com:baverman/vial-python.git
 git@github.com:baverman/vial-quick-open.git
