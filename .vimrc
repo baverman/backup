@@ -155,10 +155,18 @@ function! InitPythonBuf()
     syntax match pythonDotExpr "\.\w\+" contains=pythonKeyword
 endfunction
 
+function! InitVialHttpBuf()
+    nnoremap <buffer> <leader><cr> :VialHttp<cr>
+    nnoremap <buffer> <leader>r :VialHttpRequest<cr>
+    nnoremap <buffer> <leader>b :VialHttpResponseBody<cr>
+    nnoremap <buffer> <leader>h :VialHttpResponseHeaders<cr>
+endfunction
+
 augroup MyFileTypeSettings
     au!
     au FileType python call InitPythonBuf()
     au FileType qf wincmd J
+    au FileType vial-http call InitVialHttpBuf()
     au CursorHold * checktime
 augroup END
 
