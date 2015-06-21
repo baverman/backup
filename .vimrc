@@ -157,9 +157,6 @@ endfunction
 
 function! InitVialHttpBuf()
     nnoremap <buffer> <leader><cr> :VialHttp<cr>
-    nnoremap <buffer> <leader>r :VialHttpRequest<cr>
-    nnoremap <buffer> <leader>b :VialHttpResponseBody<cr>
-    nnoremap <buffer> <leader>h :VialHttpResponseHeaders<cr>
 endfunction
 
 augroup MyFileTypeSettings
@@ -167,6 +164,9 @@ augroup MyFileTypeSettings
     au FileType python call InitPythonBuf()
     au FileType qf wincmd J
     au FileType vial-http call InitVialHttpBuf()
+    au BufNewFile __vial_http__ nnoremap <buffer> <silent> <c-k> :b __vial_http_req__<cr>
+    au BufNewFile __vial_http_req__ nnoremap <buffer> <silent> <c-k> :b __vial_http_hdr__<cr>
+    au BufNewFile __vial_http_hdr__ nnoremap <buffer> <silent> <c-k> :b __vial_http__<cr>
     au CursorHold * checktime
 augroup END
 
