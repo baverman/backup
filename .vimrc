@@ -58,6 +58,7 @@ set sessionoptions=buffers,curdir
 set backupdir=/tmp
 set directory=~/tmp/vim//
 set iconstring=%f%(\ %M%R%H%)
+set clipboard=exclude:cons\|linux
 
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчняж;abcdefghijklmnopqrstuvwxyz:
 set spelllang=en_us,ru_ru
