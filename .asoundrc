@@ -1,0 +1,3 @@
+defaults.pcm.!card "PCH";
+defaults.ctl.!card "PCH";
+defaults.pcm.!device 0;
