@@ -1,0 +1,5 @@
+external-monitor
+kbd_indicator=caps
+feh --bg-center wallpapers/story-1080.png
+synclient LockedDrags=1 LockedDragTimeout=1600 PalmDetect=1 PalmMinWidth=10
+xbacklight -set 60
