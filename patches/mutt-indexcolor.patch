@@ -1,6 +1,6 @@
-diff -aur orig/color.c new/color.c
---- orig/color.c	2014-05-20 02:58:36.402832826 +0400
-+++ new/color.c	2014-05-20 02:48:27.092855163 +0400
+diff -aur src/mutt/color.c new/mutt/color.c
+--- src/mutt/color.c	2015-07-10 22:59:35.656726749 +0300
++++ new/mutt/color.c	2015-07-10 22:55:54.813385340 +0300
 @@ -35,6 +35,8 @@
  COLOR_LINE *ColorHdrList = NULL;
  COLOR_LINE *ColorBodyList = NULL;
@@ -10,10 +10,10 @@ diff -aur orig/color.c new/color.c
  
  /* local to this file */
  static int ColorQuoteSize;
-@@ -93,6 +95,14 @@
-   { "bold",		MT_COLOR_BOLD },
+@@ -94,6 +96,14 @@
    { "underline",	MT_COLOR_UNDERLINE },
    { "index",		MT_COLOR_INDEX },
+   { "prompt",		MT_COLOR_PROMPT },
 +  { "index_subject",	MT_COLOR_INDEX_SUBJECT },
 +  { "index_author",	MT_COLOR_INDEX_AUTHOR },
 +  { "index_collapsed",	MT_COLOR_INDEX_COLLAPSED },
@@ -25,7 +25,7 @@ diff -aur orig/color.c new/color.c
    { NULL,		0 }
  };
  
-@@ -364,6 +374,51 @@
+@@ -365,6 +375,51 @@
    return _mutt_parse_uncolor(buf, s, data, err, 0);
  }
  
@@ -77,7 +77,7 @@ diff -aur orig/color.c new/color.c
  static int _mutt_parse_uncolor (BUFFER *buf, BUFFER *s, unsigned long data,
  				BUFFER *err, short parse_uncolor)
  {
-@@ -379,6 +434,13 @@
+@@ -380,6 +435,13 @@
      return (-1);
    }
  
@@ -91,7 +91,7 @@ diff -aur orig/color.c new/color.c
    if (mutt_strncmp (buf->data, "index", 5) == 0)
      list = &ColorIndexList;
    else if (mutt_strncmp (buf->data, "body", 4) == 0)
-@@ -422,42 +484,12 @@
+@@ -423,42 +485,12 @@
      return 0;
    }
  
@@ -140,7 +140,7 @@ diff -aur orig/color.c new/color.c
  
  
    if (do_cache && !option (OPTNOCURSES))
-@@ -698,7 +730,7 @@
+@@ -699,7 +731,7 @@
  
    /* extract a regular expression if needed */
    
@@ -149,7 +149,7 @@ diff -aur orig/color.c new/color.c
    {
      if (!MoreArgs (s))
      {
-@@ -742,6 +774,18 @@
+@@ -743,6 +775,18 @@
      r = add_pattern (&ColorIndexList, buf->data, 1, fg, bg, attr, err, 1);
      set_option (OPTFORCEREDRAWINDEX);
    }
@@ -168,7 +168,7 @@ diff -aur orig/color.c new/color.c
    else if (object == MT_COLOR_QUOTED)
    {
      if (q_level >= ColorQuoteSize)
-@@ -767,7 +811,11 @@
+@@ -768,7 +812,11 @@
        ColorQuote[q_level] = fgbgattr_to_color(fg, bg, attr);
    }
    else
@@ -180,11 +180,10 @@ diff -aur orig/color.c new/color.c
  
    return (r);
  }
-Only in new: color.c.orig
-diff -aur orig/curs_lib.c new/curs_lib.c
---- orig/curs_lib.c	2014-05-20 02:58:36.392832826 +0400
-+++ new/curs_lib.c	2014-05-20 02:48:27.092855163 +0400
-@@ -718,6 +718,7 @@
+diff -aur src/mutt/curs_lib.c new/mutt/curs_lib.c
+--- src/mutt/curs_lib.c	2015-07-10 22:59:35.620060081 +0300
++++ new/mutt/curs_lib.c	2015-07-10 22:49:35.170038145 +0300
+@@ -726,6 +726,7 @@
    size_t k, k2;
    char scratch[MB_LEN_MAX];
    mbstate_t mbstate1, mbstate2;
@@ -192,7 +191,7 @@ diff -aur orig/curs_lib.c new/curs_lib.c
  
    memset(&mbstate1, 0, sizeof (mbstate1));
    memset(&mbstate2, 0, sizeof (mbstate2));
-@@ -733,7 +734,15 @@
+@@ -741,7 +742,15 @@
        k = (k == (size_t)(-1)) ? 1 : n;
        wc = replacement_char ();
      }
@@ -209,11 +208,11 @@ diff -aur orig/curs_lib.c new/curs_lib.c
        w = 1; /* hack */
      else
      {
-Only in new: curs_lib.c.orig
-diff -aur orig/doc/manual.xml.head new/doc/manual.xml.head
---- orig/doc/manual.xml.head	2014-05-20 02:58:36.409499490 +0400
-+++ new/doc/manual.xml.head	2014-05-20 02:48:27.096188495 +0400
-@@ -2580,7 +2580,7 @@
+Only in new/mutt: curs_lib.c.orig
+diff -aur src/mutt/doc/manual.xml.head new/mutt/doc/manual.xml.head
+--- src/mutt/doc/manual.xml.head	2015-07-10 22:59:35.640060082 +0300
++++ new/mutt/doc/manual.xml.head	2015-07-10 22:49:35.176704812 +0300
+@@ -2582,7 +2582,7 @@
  
  <command>color</command>
  <arg choice="plain">
@@ -222,7 +221,7 @@ diff -aur orig/doc/manual.xml.head new/doc/manual.xml.head
  </arg>
  <arg choice="plain">
  <replaceable class="parameter">foreground</replaceable>
-@@ -2595,7 +2595,7 @@
+@@ -2597,7 +2597,7 @@
  <command>uncolor</command>
  <group choice="req">
  <arg choice="plain">
@@ -231,7 +230,7 @@ diff -aur orig/doc/manual.xml.head new/doc/manual.xml.head
  </arg>
  <arg choice="plain">
  <option>header</option>
-@@ -2638,6 +2638,14 @@
+@@ -2642,6 +2642,14 @@
  <listitem><para>bold (highlighting bold patterns in the body of messages)</para></listitem>
  <listitem><para>error (error messages printed by Mutt)</para></listitem>
  <listitem><para>hdrdefault (default color of the message header in the pager)</para></listitem>
@@ -246,10 +245,10 @@ diff -aur orig/doc/manual.xml.head new/doc/manual.xml.head
  <listitem><para>indicator (arrow or bar used to indicate the current item in a menu)</para></listitem>
  <listitem><para>markers (the <quote>+</quote> markers at the beginning of wrapped lines in the pager)</para></listitem>
  <listitem><para>message (informational messages)</para></listitem>
-Only in new/doc: manual.xml.head.orig
-diff -aur orig/hdrline.c new/hdrline.c
---- orig/hdrline.c	2014-05-20 02:58:36.392832826 +0400
-+++ new/hdrline.c	2014-05-20 02:48:27.099521829 +0400
+Only in new/mutt/doc: manual.xml.head.orig
+diff -aur src/mutt/hdrline.c new/mutt/hdrline.c
+--- src/mutt/hdrline.c	2015-07-10 22:59:35.663393416 +0300
++++ new/mutt/hdrline.c	2015-07-10 22:49:35.176704812 +0300
 @@ -103,6 +103,34 @@
    return 0;
  }
@@ -445,9 +444,9 @@ diff -aur orig/hdrline.c new/hdrline.c
  
        break;
  
-diff -aur orig/menu.c new/menu.c
---- orig/menu.c	2014-05-20 02:58:36.399499494 +0400
-+++ new/menu.c	2014-05-20 02:57:23.876168817 +0400
+diff -aur src/mutt/menu.c new/mutt/menu.c
+--- src/mutt/menu.c	2015-07-10 22:59:35.646726749 +0300
++++ new/mutt/menu.c	2015-07-10 22:49:35.176704812 +0300
 @@ -29,7 +29,30 @@
  
  char* SearchBuffers[MENU_MAX];
@@ -547,14 +546,13 @@ diff -aur orig/menu.c new/menu.c
    menu->redraw &= REDRAW_STATUS;
    NORMAL_COLOR;
  }
-Only in new: menu.c.orig
-diff -aur orig/mutt_curses.h new/mutt_curses.h
---- orig/mutt_curses.h	2014-05-20 02:58:36.392832826 +0400
-+++ new/mutt_curses.h	2014-05-20 02:48:27.146188494 +0400
-@@ -120,6 +120,16 @@
-   MT_COLOR_BOLD,
+diff -aur src/mutt/mutt_curses.h new/mutt/mutt_curses.h
+--- src/mutt/mutt_curses.h	2015-07-10 22:59:35.656726749 +0300
++++ new/mutt/mutt_curses.h	2015-07-10 22:58:14.120057103 +0300
+@@ -121,6 +121,16 @@
    MT_COLOR_UNDERLINE,
    MT_COLOR_INDEX,
+   MT_COLOR_PROMPT,
 +  /* please no non-MT_COLOR_INDEX objects after this point */
 +  MT_COLOR_INDEX_SUBJECT,
 +  MT_COLOR_INDEX_AUTHOR,
@@ -568,7 +566,7 @@ diff -aur orig/mutt_curses.h new/mutt_curses.h
    MT_COLOR_MAX
  };
  
-@@ -173,6 +183,8 @@
+@@ -174,6 +184,8 @@
  extern COLOR_LINE *ColorHdrList;
  extern COLOR_LINE *ColorBodyList;
  extern COLOR_LINE *ColorIndexList;
@@ -577,10 +575,9 @@ diff -aur orig/mutt_curses.h new/mutt_curses.h
  
  void ci_init_color (void);
  void ci_start_color (void);
-Only in new: mutt_curses.h.orig
-diff -aur orig/mutt.h new/mutt.h
---- orig/mutt.h	2014-05-20 02:58:36.392832826 +0400
-+++ new/mutt.h	2014-05-20 02:48:27.146188494 +0400
+diff -aur src/mutt/mutt.h new/mutt/mutt.h
+--- src/mutt/mutt.h	2015-07-10 22:59:35.653393416 +0300
++++ new/mutt/mutt.h	2015-07-10 22:49:35.180038146 +0300
 @@ -161,6 +161,8 @@
  #define M_TREE_MISSING		13
  #define M_TREE_MAX		14
@@ -590,9 +587,8 @@ diff -aur orig/mutt.h new/mutt.h
  #define M_THREAD_COLLAPSE	(1<<0)
  #define M_THREAD_UNCOLLAPSE	(1<<1)
  #define M_THREAD_GET_HIDDEN	(1<<2)
-Only in new: mutt.h.orig
-diff -aur orig/PATCHES new/PATCHES
---- orig/PATCHES	2014-05-20 02:58:36.412832823 +0400
-+++ new/PATCHES	2014-05-20 02:48:27.092855163 +0400
+diff -aur src/mutt/PATCHES new/mutt/PATCHES
+--- src/mutt/PATCHES	2015-07-10 22:59:35.640060082 +0300
++++ new/mutt/PATCHES	2015-07-10 22:49:35.180038146 +0300
 @@ -0,0 +1 @@
 +mutt-1.5.8-indexcolor-3

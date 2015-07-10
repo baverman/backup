@@ -1,6 +1,6 @@
-diff -aur gatotray.orig/gatotray.c gatotray.new/gatotray.c
---- gatotray.orig/gatotray.c	2014-05-06 03:05:35.288708482 +0400
-+++ gatotray.new/gatotray.c	2014-05-06 03:21:16.178673881 +0400
+diff -aur orig/gatotray-4218cadee76b/gatotray.c src/gatotray-4218cadee76b/gatotray.c
+--- orig/gatotray-4218cadee76b/gatotray.c	2014-07-31 13:06:11.000000000 +0400
++++ src/gatotray-4218cadee76b/gatotray.c	2015-07-10 23:15:37.816761899 +0300
 @@ -40,8 +40,6 @@
  
  typedef struct {
@@ -10,7 +10,7 @@ diff -aur gatotray.orig/gatotray.c gatotray.new/gatotray.c
  } CPUstatus;
  
  CPUstatus* history = NULL;
-@@ -58,29 +56,15 @@
+@@ -58,14 +56,6 @@
  }
  
  GdkGC *gc = NULL;
@@ -25,10 +25,7 @@ diff -aur gatotray.orig/gatotray.c gatotray.new/gatotray.c
  
  void redraw(void)
  {
-     gdk_gc_set_rgb_fg_color(gc, &bg_color);
-     gdk_draw_rectangle(pixmap, gc, TRUE, 0, 0, width, width);
--    
-+
+@@ -75,12 +65,6 @@
      for(int i=0; i<width; i++)
      {
          CPUstatus* h = &history[width-1-i];
@@ -52,7 +49,7 @@ diff -aur gatotray.orig/gatotray.c gatotray.new/gatotray.c
  
 -    int T = history[0].temp;
 -    if(T) /* Hide if 0, meaning it could not be read */
--    if( T<85 || (timer&1) ) /* Blink when hot! */
+-    if( T<pref_temp_alarm || (timer&1) ) /* Blink when hot! */
 -    {
 -        /* scale temp from 5~105 degrees Celsius to 0~100*/
 -        T = (T-5)*100/100;
@@ -74,13 +71,7 @@ diff -aur gatotray.orig/gatotray.c gatotray.new/gatotray.c
      GdkPixbuf *pixbuf =
      gdk_pixbuf_get_from_drawable(NULL, pixmap, NULL, 0, 0, 0, 0, width, width);
      if(pref_transparent) {
-@@ -140,21 +103,11 @@
- 
-     if(pixmap) g_object_unref(pixmap);
-     pixmap = gdk_pixmap_new(NULL, width, width, 24);
--    
-+
-     if(gc)  g_object_unref(gc);
+@@ -145,16 +108,6 @@
      gc = gdk_gc_new(pixmap);
      gdk_gc_set_line_attributes(gc, 1, GDK_LINE_SOLID, GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
  
@@ -93,41 +84,40 @@ diff -aur gatotray.orig/gatotray.c gatotray.new/gatotray.c
 -            termometer_tube[i].y = termometer[i].y;
 -        }
 -    }
--    
+-
      redraw();
      return TRUE;
  }
-@@ -174,26 +127,16 @@
+@@ -174,25 +127,17 @@
  
          smear(history[i].cpu.usage, history[i-1].cpu.usage);
          smear(history[i].cpu.iowait, history[i-1].cpu.iowait);
 -        smear(history[i].freq, history[i-1].freq);
 -        smear(history[i].temp, history[i-1].temp);
--
+ 
          #undef smear
          i--;
      }
      history[0].cpu = cpu_usage(SCALE);
 -    int freq = cpu_freq();
--    history[0].freq = (freq - scaling_min_freq) * SCALE /
--                        (scaling_max_freq-scaling_min_freq);
+-    history[0].freq = !(scaling_max_freq-scaling_min_freq) ? 0
+-                      : (freq - scaling_min_freq) * SCALE / (scaling_max_freq-scaling_min_freq);
 -    history[0].temp = cpu_temperature();
  
      redraw();
  
      gchar* tip =
--    g_strdup_printf("CPU %d%% busy @ %d MHz, %d%%wa\n"
--                    "Temperature: %d C\n"
--                    "(click for 'top')"
--                    , history[0].cpu.usage*100/SCALE, freq/1000, history[0].cpu.iowait*100/SCALE
--                    , history[0].temp);
+-    g_strdup_printf(history[0].temp? "CPU %d%% busy @ %d MHz, %d%%wa\nTemperature: %d C"
+-        : "CPU %d%% busy @ %d MHz, %d%%wa"
+-        , history[0].cpu.usage*100/SCALE, freq/1000, history[0].cpu.iowait*100/SCALE
+-        , history[0].temp);
 +    g_strdup_printf("CPU %d%% busy, %d%%wa\n", history[0].cpu.usage*100/SCALE,
 +        history[0].cpu.iowait*100/SCALE);
      gtk_status_icon_set_tooltip(app_icon, tip);
      g_free(tip);
  
-@@ -253,8 +196,6 @@
-     
+@@ -257,8 +202,6 @@
+ 
      history = g_malloc(sizeof(*history));
      history[0].cpu = cpu_usage(SCALE);
 -    history[0].freq = 0;
