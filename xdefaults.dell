@@ -1,9 +1,10 @@
+Xft.hintstyle:  hintslight
+Xft.dpi: 96
+
 URxvt*font: xft:Input:pixelsize=22:Regular
 URxvt*boldFont: xft:Input:pixelsize=22:Bold
 URxvt*intensityStyles: false
 URxvt*lineSpace: 0
 
-Xft.hintstyle:  hintslight
-Xft.dpi: 120
-vial*font: xft:Inconsolata LGC:pixelsize=24
-vial*lineSpace: 3
+vial*font: xft:Input:pixelsize=25:Regular
+vial*boldFont: xft:Input:pixelsize=25:Bold
