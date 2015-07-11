@@ -10,6 +10,8 @@ set_kbd_map() {
 export -f set_kbd_map
 
 xrdb -merge ~/.Xdefaults
+[ -f ~/backup/xdefaults.$MYROLE ] && xrdb -merge ~/backup/xdefaults.$MYROLE
+
 urxvtd -q -f -o
 
 set_kbd_map
