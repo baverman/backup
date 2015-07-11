@@ -1,0 +1,25 @@
+#!/usr/bin/env python2
+import sys
+
+from gi.repository import Gtk, Gdk
+if len(sys.argv) > 1:
+    incolor = sys.argv[1]
+    use_hash = incolor.startswith('#')
+    incolor = incolor.strip('#')
+else:
+    use_hash = True
+    incolor = 'fff'
+
+dialog = Gtk.ColorSelectionDialog()
+cs = dialog.get_color_selection()
+cs.set_current_color(Gdk.Color.parse('#' + incolor)[1])
+
+if dialog.run() == Gtk.ResponseType.OK:
+    color = cs.get_current_color()
+    outcolor = '{:x}{:x}{:x}'.format(*map(lambda r: int(round(r * 255)),
+        [color.red_float, color.green_float, color.blue_float]))
+else:
+    outcolor = incolor
+
+hash = '#' if use_hash else ''
+sys.stdout.write(hash + outcolor)
