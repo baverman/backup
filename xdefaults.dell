@@ -8,3 +8,4 @@ URxvt*lineSpace: 0
 
 vial*font: xft:Input:pixelsize=25:Regular
 vial*boldFont: xft:Input:pixelsize=25:Bold
+vial*lineSpace: 3
