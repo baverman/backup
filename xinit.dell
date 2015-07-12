@@ -1,4 +1,6 @@
 export BMPANEL_THEME=awesome-hi
+export DMENU_FONT=InputUISansCompressed-17
+
 external-monitor
 kbd_indicator=caps
 feh --bg-center wallpapers/story-1080.png
