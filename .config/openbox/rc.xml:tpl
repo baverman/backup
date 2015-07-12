@@ -149,7 +149,7 @@
      Many programs reserve space automatically, but you can use this in other
      cases. -->
 <margins>
-  <top>29</top>
+  <top>${OB_TOP_MARGIN}</top>
   <bottom>0</bottom>
   <left>0</left>
   <right>0</right>

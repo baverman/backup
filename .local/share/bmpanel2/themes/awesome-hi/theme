@@ -1,0 +1,65 @@
+theme
+	name Awesome
+	author Anton Bobrov <bobrov@vl.ru>
+
+panel
+	position top
+	background bg.png
+
+desktop_switcher
+	idle
+		left_corner empty.png
+		left empty.png
+		center empty.png
+		right empty.png
+		right_corner empty.png
+		font InputUI Sans Compressed 15
+			color 170 170 170
+			align center
+
+	pressed
+		left_corner emptyhl.png
+		left emptyhl.png
+		center bg-focus.png
+		right emptyhl.png
+		right_corner emptyhl.png
+		font InputUI Sans Compressed  15
+			color 255 255 255
+			align center
+
+decor sep.png
+
+taskbar
+	idle
+		left empty.png
+		center empty.png
+		right empty.png
+		font InputUI Sans Compressed 15
+			color 170 170 170
+		icon_offset 0 0
+
+	pressed
+		left emptyhl.png
+		center bg-focus.png
+		right emptyhl.png
+		font InputUI Sans Compressed 15
+			color 255 255 255
+
+	task_max_width 500
+
+empty 7
+
+systray
+	icon_size 22 22
+	icon_spacing 2
+
+empty 3
+
+clock
+	font InputUI Sans Compressed 15
+		color 170 170 170
+		align center
+
+	time_format %H:%M
+
+empty 3

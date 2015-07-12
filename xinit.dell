@@ -1,3 +1,4 @@
+export BMPANEL_THEME=awesome-hi
 external-monitor
 kbd_indicator=caps
 feh --bg-center wallpapers/story-1080.png

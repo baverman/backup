@@ -3,7 +3,7 @@ import re
 import sys
 import filecmp
 
-from os import readlink, makedirs, unlink, symlink, chmod
+from os import readlink, makedirs, unlink, symlink, chmod, environ
 from glob import glob
 from shutil import rmtree, copymode
 from os.path import dirname, join, islink, isdir, realpath, abspath, isfile, \
@@ -18,7 +18,7 @@ _vars = None
 def get_vars():
     global _vars
     if not _vars:
-        _vars = {}
+        _vars = dict(environ)
         execfile(expanduser('~/.config/vars'), _vars)
 
     return _vars
