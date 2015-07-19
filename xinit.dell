@@ -1,9 +1,11 @@
 export BMPANEL_THEME=awesome-hi
 export DMENU_FONT=InputUISansCompressed-17
 
-external-monitor
 kbd_indicator=caps
+
+# external-monitor
+xrandr --output eDP1 --gamma 1.0:1.0:1.0
 feh --bg-center wallpapers/story-1080.png
 synclient LockedDrags=1 LockedDragTimeout=1600 PalmDetect=0
-syndaemon -kti 1 &
+syndaemon -kti 2 &
 xbacklight -set 70
