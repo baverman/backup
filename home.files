@@ -6,7 +6,7 @@ bin/*
 .config/dunst
 .config/gatotrayrc
 .config/norlessrc:tpl
-.config/openbox
+.config/openbox/menu.xml
 .config/openbox/rc.xml:tpl
 .config/orcsome
 .config/ranger/*
