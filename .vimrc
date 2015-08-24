@@ -119,9 +119,9 @@ nnoremap ,si :echom synIDattr(synID(line("."), col("."), 0), "name")<cr>
 nnoremap <leader>bw :bw<cr>
 nnoremap <leader>bd :bd<cr>
 
-nnoremap ,cc ciw<c-r>=system('/usr/bin/python2 ~/bin/colorpicker <c-r>-')<cr><esc>
-inoremap <c-x>c <c-r>=system('/usr/bin/python2 ~/bin/colorpicker "#fff"')<cr>
-inoremap <c-x>C <c-r>=system('/usr/bin/python2 ~/bin/colorpicker fff')<cr>
+nnoremap ,cc ciw<c-r>=system('/usr/bin/python2 ~/bin/colorpicker "<c-r>-" 2> /dev/null')<cr><esc>
+inoremap <c-x>c <c-r>=system('/usr/bin/python2 ~/bin/colorpicker "#fff" 2> /dev/null')<cr>
+inoremap <c-x>C <c-r>=system('/usr/bin/python2 ~/bin/colorpicker fff 0> /dev/null')<cr>
 
 imap jk <Plug>VialCrampLeave
 imap ОЛ <Plug>VialCrampLeave
