@@ -7,5 +7,5 @@ kbd_indicator=caps
 xrandr --output eDP1 --gamma 1.0:1.0:1.0
 feh --bg-center wallpapers/story-1080.png
 synclient LockedDrags=1 LockedDragTimeout=1600 PalmDetect=0
-syndaemon -kti 2 &
+syndaemon -kti 1 &
 xbacklight -set 70

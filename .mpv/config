@@ -2,6 +2,6 @@
 
 fullscreen=yes
 use-filedir-conf=yes
-ass-use-margins=yes
-channels=2
+sub-use-margins=yes
+audio-channels=2
 

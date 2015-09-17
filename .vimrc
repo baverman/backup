@@ -156,6 +156,21 @@ function! InitPythonBuf()
     syntax match pythonDotExpr "\.\w\+" contains=pythonKeyword
 endfunction
 
+function! InitLsBuf()
+    syntax keyword Keyword require
+    syntax match Function "->\|!->\|\~>\|<-\|<\~\|-->"
+    syntax match lsAt "@"
+    syntax match lsColon ":" containedin=lsProp
+    syntax match lsDollar "\$" containedin=lsIdentifier
+    hi! link lsProp Normal
+    hi! link lsIdentifier Normal
+    hi! link lsBoolean Keyword
+    hi! link lsColon String
+    hi! link lsDollar String
+    hi! link lsAt String
+endfunction
+
+
 function! InitVialHttpBuf()
     nnoremap <buffer> <leader><cr> :VialHttp<cr>
 endfunction
@@ -163,6 +178,7 @@ endfunction
 augroup MyFileTypeSettings
     au!
     au FileType python call InitPythonBuf()
+    au FileType ls call InitLsBuf()
     au FileType qf wincmd J
     au FileType vial-http call InitVialHttpBuf()
     au BufNewFile __vial_http__ nnoremap <buffer> <silent> <c-k> :b __vial_http_req__<cr>
