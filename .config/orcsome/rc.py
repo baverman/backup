@@ -110,6 +110,7 @@ def app_rules(w):
 
     cd = wm.current_desktop
     if desktop >=0 and desktop != cd:
+        wm.focus_and_raise(w)
         wm.activate_desktop(desktop)
 
 
