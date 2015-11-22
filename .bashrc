@@ -71,4 +71,5 @@ export OB_TOP_MARGIN=19
 # bash vi mode
 set -o vi
 bind -m vi-insert '"jk": vi-movement-mode'
+bind -m vi-move '"n":"Isudo "'
 bind '"\e.": yank-last-arg'
