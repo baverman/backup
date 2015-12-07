@@ -45,7 +45,7 @@ urxvt*lineSpace:	1
 URxvt.perl-ext-common:	default,matcher,clipboard
 URxvt.matcher.button:	3
 URxvt.matcher.pattern.1:	\\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
-URxvt*url-launcher:	firefox
+URxvt*url-launcher:	opera
 
 urxvt*meta8:	false
 URxvt*saveLines:	10000
