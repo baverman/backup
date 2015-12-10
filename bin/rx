@@ -1,4 +1,4 @@
 #!/bin/sh
 CMD=`which "$1"` || exit 1
 shift
-xinit "$CMD" "$@" -- :1 -nolisten tcp
+xinit "$CMD" "$@" -- :1 -nolisten tcp vt$XDG_VTNR
