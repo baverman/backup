@@ -16,7 +16,7 @@ sync_new = yes
 [account bobrov@vl.ru]
 from = ${mail.bobrov.efrom}
 host = pop.farpost.ru
-fingerprint = E0:9F:35:22:5E:71:A3:C9:3F:1B:76:AD:03:AE:94:EB:C4:30:90:29
+fingerprint = F4:B5:18:3E:E7:58:08:01:C2:0C:3A:30:9F:80:59:9E:97:DB:7B:48
 user = ${mail.bobrov.user}
 password = ${mail.bobrov.pwd}
 trash = Trash
