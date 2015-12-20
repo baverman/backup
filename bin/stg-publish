@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+current=$(stg top)
+stg publish $current
+git push -u origin $current
+stg delete $current
+git co $current
