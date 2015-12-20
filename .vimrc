@@ -1,15 +1,37 @@
-if !exists("g:loaded_pathogen")
-    filetype off
-    runtime bundle/vim-pathogen/autoload/pathogen.vim
-    execute pathogen#infect()
+set nocompatible
+set background=dark
 
-    syntax on
-    filetype plugin on
-
-    set nocompatible
-    set background=dark
-endif
-
+call plug#begin('~/.vim/bundle')
+Plug 'git@github.com:baverman/vial.git'
+Plug 'git@github.com:baverman/vial-cash.git'
+Plug 'git@github.com:baverman/vial-cramp.git'
+Plug 'git@github.com:baverman/vial-http.git'
+Plug 'git@github.com:baverman/vial-pipe.git'
+Plug 'git@github.com:baverman/vial-pytest.git'
+Plug 'git@github.com:baverman/vial-python.git'
+Plug 'git@github.com:baverman/vial-quick-open.git'
+Plug 'git@github.com:baverman/vim-babymate256.git'
+Plug 'digitaltoad/vim-jade'
+Plug 'gkz/vim-ls'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'AndrewRadev/linediff.vim'
+Plug 'garbas/vim-snipmate'
+Plug 'godlygeek/tabular'
+Plug 'honza/vim-snippets'
+Plug 'junegunn/vim-easy-align'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'rhysd/clever-f.vim'
+Plug 'takac/vim-hardtime'
+Plug 'tomtom/tlib_vim'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'vim-scripts/tComment'
+Plug 'wavded/vim-stylus'
+Plug 'wellle/targets.vim'
+Plug 'Wolfy87/vim-enmasse'
+call plug#end()
 
 " Colors
 hi ColorColumn ctermbg=darkgrey guibg=darkgrey
