@@ -1,0 +1,1 @@
+VialAddIgnoreDirs node_modules nstatic
