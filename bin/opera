@@ -1,3 +1,2 @@
 #!/bin/sh
-
-exec /usr/bin/opera -nomail $@
+exec /usr/bin/opera --alt-high-dpi-setting=130 $@
