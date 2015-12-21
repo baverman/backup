@@ -33,6 +33,9 @@ Plug 'wellle/targets.vim'
 Plug 'Wolfy87/vim-enmasse'
 call plug#end()
 
+filetype plugin on
+filetype indent off
+
 " Colors
 hi ColorColumn ctermbg=darkgrey guibg=darkgrey
 hi clear CursorLine
