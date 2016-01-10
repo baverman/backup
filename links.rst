@@ -4,6 +4,9 @@ Some useful info
 Design
 ------
 
+* | Stop Writing Classes
+  | https://www.youtube.com/watch?v=o9pEzgHorH0
+
 * | The Clean Architecture in Python
   | https://www.youtube.com/watch?v=DJtef410XaM
 
@@ -20,9 +23,6 @@ Design
 
 Python
 ------
-
-* | Stop Writing Classes
-  | https://www.youtube.com/watch?v=o9pEzgHorH0
 
 * | Transforming Code into Beautiful, Idiomatic Python
   | https://www.youtube.com/watch?v=OSGv2VnC0go
