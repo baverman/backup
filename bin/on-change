@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+DIR="$1"
+shift
+CMD="$@"
+
+$CMD
+while inotifywait -re modify "$DIR"; do
+    $CMD
+done
