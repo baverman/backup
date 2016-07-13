@@ -10,6 +10,7 @@ Plug 'git@github.com:baverman/vial-pipe.git'
 Plug 'git@github.com:baverman/vial-pytest.git'
 Plug 'git@github.com:baverman/vial-python.git'
 Plug 'git@github.com:baverman/vial-quick-open.git'
+Plug 'git@github.com:baverman/vial-mail.git'
 Plug 'git@github.com:baverman/vim-babymate256.git'
 Plug 'digitaltoad/vim-jade'
 Plug 'gkz/vim-ls'
@@ -176,6 +177,7 @@ function! InitPythonBuf()
     nnoremap <buffer> <silent> <leader>f :VialPythonOutline<cr>
     nnoremap <buffer> <leader>l :VialPythonLint<cr>
     nnoremap <buffer> <leader>lf :call Flake8()<cr>
+    nmap <buffer> <leader><cr> <Plug>VialPipeExecuteAll
     setlocal et sts=4 sw=4 tw=80 fo=croq
 
     syntax keyword pythonBuiltin self

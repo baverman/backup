@@ -4,4 +4,6 @@ fullscreen=yes
 use-filedir-conf=yes
 sub-use-margins=yes
 audio-channels=2
+softvol=yes
+softvol-max=300
 

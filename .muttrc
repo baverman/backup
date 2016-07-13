@@ -13,6 +13,8 @@ set menu_context=10
 set nomarkers
 set edit_headers = yes
 set autoedit
+set mime_forward=yes
+set mime_forward_rest=yes
 
 auto_view text/html
 alternative_order text/plain text/html

@@ -46,6 +46,9 @@ def by_month(s):
     month = s['date'].month
     return (year, month), '{}-{}'.format(year, month)
 
+def by_none(s):
+    return 'all', 'all'
+
 
 def get_groups(stats, grouper):
     groups = defaultdict(lambda: defaultdict(lambda: [0, 0]))
@@ -69,5 +72,5 @@ def print_groups(groups):
             print '    {}\t{}\t{}\t{}'.format(author, email, added, deleted)
 
 
-groups = get_groups(get_stats(), by_month)
+groups = get_groups(get_stats(), by_none)
 print_groups(groups)

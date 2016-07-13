@@ -6,6 +6,7 @@ kbd_indicator=caps
 # external-monitor
 xrandr --output eDP1 --gamma 1.0:1.0:1.0
 feh --bg-center wallpapers/story-1080.png
-synclient LockedDrags=1 LockedDragTimeout=1600 PalmDetect=0
+synclient LockedDrags=1 LockedDragTimeout=1600 PalmDetect=0 TapButton1=1 TapButton2=2 TapButton3=3
 syndaemon -kti 1 &
 xbacklight -set 70
+sudo powertop --auto-tune
