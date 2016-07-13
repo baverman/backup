@@ -31,7 +31,8 @@ password = ${mail.baverman.pwd}
 trash = [Gmail]/Trash
 sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
 
-[account zvooq]
+<%doc>
+[disabled account zvooq]
 from = ${mail.zvooq.efrom}
 host = imap.gmail.com
 cafile = ~/.mutt/geotrust.pem
@@ -39,6 +40,7 @@ user = ${mail.zvooq.user}
 password = ${mail.zvooq.pwd}
 trash = [Gmail]/Trash
 sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
+</%doc>
 
 <%doc>
 [disabled account yandex]
