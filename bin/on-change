@@ -1,9 +1,36 @@
-#!/usr/bin/bash
-DIR="$1"
-shift
-CMD="$@"
+#!/usr/bin/env python
+from __future__ import print_function
 
-$CMD
-while inotifywait -re modify "$DIR"; do
-    $CMD
-done
+import argparse
+import fcntl
+import os
+import sys
+from time import sleep
+from subprocess import Popen, PIPE
+
+
+def run(watch_list, args):
+    wp = Popen(['inotifywait', '-m', '-r'] + watch_list, stdout=PIPE)
+    fcntl.fcntl(wp.stdout, fcntl.F_SETFL, os.O_NONBLOCK)
+    while True:
+        data = wp.stdout.read()
+        if data:
+            Popen(args).wait()
+        else:
+            sleep(0.1)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-w', dest='watch', action='append')
+    args, rest = parser.parse_known_args()
+
+    if not rest:
+        print('You should provide a command to execute on change', file=sys.stderr)
+        sys.exit(1)
+
+    if rest[0] == '--':
+        rest = rest[1:]
+
+    watch_list = args.watch or ['.']
+    run(watch_list, rest)
