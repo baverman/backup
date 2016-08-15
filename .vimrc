@@ -199,6 +199,7 @@ function! InitLsBuf()
     hi! link lsColon String
     hi! link lsDollar String
     hi! link lsAt String
+    nnoremap <buffer> <leader>l :belowright vnew<cr>:setlocal buftype=nofile<cr>:read !lsc -cp #<cr>
 endfunction
 
 

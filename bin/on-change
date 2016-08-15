@@ -5,17 +5,29 @@ import argparse
 import fcntl
 import os
 import sys
+import errno
 from time import sleep
 from subprocess import Popen, PIPE
 
 
 def run(watch_list, args):
-    wp = Popen(['inotifywait', '-m', '-r'] + watch_list, stdout=PIPE)
+    wp = Popen(['inotifywait', '-m', '-r', '-e', 'create', '-e', 'modify'] + watch_list, stdout=PIPE)
     fcntl.fcntl(wp.stdout, fcntl.F_SETFL, os.O_NONBLOCK)
+
+    def read():
+        try:
+            return wp.stdout.read()
+        except IOError as e:
+            if e.errno == errno.EAGAIN:
+                return None
+            else:
+                raise
+
+    Popen(args).wait()
     while True:
-        data = wp.stdout.read()
-        if data:
+        if read():
             Popen(args).wait()
+            read()
         else:
             sleep(0.1)
 

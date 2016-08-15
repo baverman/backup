@@ -22,6 +22,15 @@ password = ${mail.bobrov.pwd}
 trash = Trash
 sync = INBOX -> inbox | Sent -> sent
 
+[account a.bobrov@rambler-co.ru]
+from = ${mail.rambler.efrom}
+host = mail.rambler-co.ru
+user = ${mail.rambler.user}
+password = ${mail.rambler.pwd}
+cafile = ~/.mutt/rambler.pem
+trash = Deleted Items
+sync = INBOX -> inbox | Sent Items -> sent
+
 [account baverman]
 from = ${mail.baverman.efrom}
 host = imap.gmail.com
