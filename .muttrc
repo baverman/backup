@@ -38,10 +38,11 @@ bind pager k previous-line
 macro index G '<sync-mailbox><shell-escape>norless -NSC<enter><sync-mailbox>'
 
 send-hook "~f bobrov@dreamindustries.co" set signature=~/.mutt/di.sig
+send-hook "~f a.bobrov@rambler-co.ru" set signature=~/.mutt/rambler.sig
 
 macro generic "<esc>2" ":set from=bobrov@vl.ru"
 macro generic "<esc>3" ":set from=baverman@gmail.com"
-macro generic "<esc>4" ":set from=bobrov@dreamindustries.co"
+macro generic "<esc>4" ":set from=a.bobrov@rambler-co.ru"
 
 source ~/.mutt/color
 source /usr/share/doc/mutt/samples/gpg.rc

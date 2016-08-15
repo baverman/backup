@@ -24,6 +24,16 @@ port 587
 tls_certcheck on
 tls_trust_file ~/.mutt/geotrust-ex.pem
 
+account rambler
+from ${mail.rambler.efrom}
+auth on
+host mail.rambler-co.ru
+user ${mail.rambler.user}
+password ${mail.rambler.pwd}
+port 587
+tls_certcheck on
+tls_trust_file ~/.mutt/rambler.pem
+
 account zvooq
 from ${mail.zvooq.efrom}
 auth on
