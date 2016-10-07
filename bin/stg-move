@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+branch=$1
+[ -n "$branch" ] || exit 1
+shift
+
+if [ -z "$1" ]; then
+    patches=$(stg series -b $branch --noprefix)
+    [ -n "$patches" ] || exit 1
+    stg pick --unapplied -B $branch $patches
+    stg delete -b $branch $patches
+else
+    stg pick --unapplied -B $branch $@
+    stg delete -b $branch $@
+fi
