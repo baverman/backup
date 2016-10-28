@@ -7,6 +7,7 @@ import rsi
 TERMINAL = 'urxvtc -title terminal'
 
 wm = get_wm()
+wm.track_kbd_layout = True
 
 wm.on_key('Shift+Mod+r').restart()
 wm.on_key('Shift+Mod+c').close_window()

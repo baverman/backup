@@ -30,7 +30,7 @@ set use_from=yes
 set realname='Anton Bobrov'
 set envelope_from=yes
 set reverse_name
-alternates "baverman@gmail.com|bobrov@dreamindustries.co"
+alternates "baverman@gmail.com|a.bobrov@rambler-co.ru"
 
 set pager_stop
 bind pager j next-line

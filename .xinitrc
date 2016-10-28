@@ -16,7 +16,6 @@ urxvtd -q -f -o
 
 set_kbd_map
 
-kbdd
 devmon &> /tmp/devmon.log &
 
 killall gpg-agent
