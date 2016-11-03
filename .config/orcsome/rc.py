@@ -26,7 +26,7 @@ wm.on_key('Mod+p').spawn('mpc toggle')
 wm.on_key('Mod+x').spawn('lock.sh')
 # wm.on_key('XF86_MonBrightnessUp').spawn('xbacklight -inc 15')
 # wm.on_key('XF86_MonBrightnessDown').spawn('xbacklight -dec 1')
-wm.on_key('XF86_PowerOff').spawn('sudo pm-suspend')
+# wm.on_key('XF86_PowerOff').spawn('sudo pm-suspend')
 # wm.on_key('Mod+i').spawn_or_raise('urxvtc -name weechat -e weechat-curses', name='weechat')
 wm.on_key('Mod+l').spawn_or_raise('urxvtc -g 100x30 -name ranger -e ranger', name='ranger')
 
