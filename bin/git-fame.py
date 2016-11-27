@@ -72,5 +72,5 @@ def print_groups(groups):
             print '    {}\t{}\t{}\t{}'.format(author, email, added, deleted)
 
 
-groups = get_groups(get_stats(), by_none)
+groups = get_groups(get_stats(), by_week)
 print_groups(groups)
