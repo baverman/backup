@@ -1,5 +1,5 @@
 #!/bin/sh
 
-[ -z "$DBUS_SESSION_BUS_ADDRESS" ] && export DBUS_SESSION_BUS_ADDRESS=`pgrep openbox | xargs --replace=^ cat /proc/^/environ | grep -zm1 DBUS_SESSION_BUS_ADDRESS | cut -d= -f2-`
+[ -z "$DBUS_SESSION_BUS_ADDRESS" ] && export DBUS_SESSION_BUS_ADDRESS=`pgrep openbox | xargs --replace=^ cat /proc/^/environ | grep -zm1 DBUS_SESSION_BUS_ADDRESS | cut -d= -f2- | tr -d \\0`
 
 exec "$@"
