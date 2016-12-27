@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+current=$(stg top)
+git push -f origin HEAD:$current
