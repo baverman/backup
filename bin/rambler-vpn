@@ -2,4 +2,4 @@
 PIN=$(pass rambler/vpn-pin)
 SECRET=$(pass rambler/vpn-otp)
 PASSWORD=$(oathtool -b --totp $SECRET)
-echo ${PIN}${PASSWORD} | exec sudo openconnect --authgroup=User --user=a.bobrov --passwd-on-stdin vpn.rambler-co.ru
+echo ${PIN}${PASSWORD} | exec sudo openconnect --mtu 1024 --authgroup=User --user=a.bobrov --passwd-on-stdin vpn.rambler-co.ru

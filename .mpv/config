@@ -3,7 +3,7 @@
 fullscreen=yes
 use-filedir-conf=yes
 sub-use-margins=yes
-audio-device=alsa/default:CARD=broadwellrt286
+# audio-device=alsa/default:CARD=broadwellrt286
 ao=alsa
 audio-channels=2
 # softvol=yes
