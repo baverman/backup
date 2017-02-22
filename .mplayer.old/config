@@ -1,0 +1,39 @@
+[default]
+use-filedir-conf=yes
+ao=alsa
+alang=jpn
+
+#cache=16384
+#cache-min=50
+nocache=yes
+framedrop=no
+
+softvol=yes
+softvol-max=300
+volstep=1
+#af=pan=6:.32:.39:.06:.17:-.17:.33:.32:.06:.39:-.17:.17:.33
+#srate=44100
+
+#fontconfig=yes
+ass=yes
+#ass-font-scale = 1
+subcp=enca:ru:utf8
+#slang=rus
+osd-duration=3000
+#subfont-autoscale = 0
+#subfont-text-scale = 5
+#subfont-osd-scale = 30
+
+#vo=gl:backend=1:yuv=2
+vo=gl:yuv=2
+dr=yes
+noslices=yes
+#vo=xv
+#vfm=ffmpeg
+#lavdopts=fast=yes:skiploopfilter=all
+#lavdopts=threads=2:fast=yes:skiploopfilter=all
+
+fs=yes
+
+[gnome-mplayer]
+msglevel=all=5
