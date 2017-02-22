@@ -130,6 +130,8 @@ nnoremap <leader>u :put +<cr>
 nnoremap S cc
 nnoremap <c-n> :cn<cr>
 nnoremap <c-p> :cp<cr>
+nnoremap <esc>N :lnext<cr>
+nnoremap <esc>P :lprev<cr>
 nnoremap <leader>o o<esc>k
 nnoremap <leader>O O<esc>j
 nnoremap K i<cr><esc>

@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /usr/bin/opera --alt-high-dpi-setting=130 $@
+exec /usr/bin/opera $OPERA_OPTS $@
