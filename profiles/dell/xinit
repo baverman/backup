@@ -1,7 +1,3 @@
-export BMPANEL_THEME=awesome-hi
-export DMENU_FONT=InputUISansCompressed-17
-export OPERA_OPTS=--system-dpi-setting=130
-
 kbd_indicator=caps
 
 # external-monitor

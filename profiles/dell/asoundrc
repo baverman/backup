@@ -1,0 +1,9 @@
+# defaults.namehint.extended on
+
+pcm.asymed {
+   type asym
+   playback.pcm "dmix"
+   capture.pcm "dsnoop"
+}
+
+pcm.!default = pcm.asymed

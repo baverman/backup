@@ -1,6 +1,7 @@
 #!/bin/sh
 
-source ~/backup/xinit.$MYROLE
+profile=~/backup/profiles/$MYROLE
+source $profile/xinit
 KI=$kbd_indicator
 
 set_kbd_map() {
@@ -10,7 +11,7 @@ set_kbd_map() {
 export -f set_kbd_map
 
 xrdb -merge ~/.Xdefaults
-[ -f ~/backup/xdefaults.$MYROLE ] && xrdb -merge ~/backup/xdefaults.$MYROLE
+[ -f $profile/xdefaults ] && xrdb -merge $profile/xdefaults
 
 urxvtd -q -f -o
 
