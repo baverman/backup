@@ -1,0 +1,11 @@
+
+[Default Applications]
+text/html=opera.desktop
+x-scheme-handler/http=opera.desktop
+x-scheme-handler/https=opera.desktop
+x-scheme-handler/about=opera.desktop
+x-scheme-handler/unknown=opera.desktop
+x-scheme-handler/webcal=opera.desktop
+x-scheme-handler/web+tg=opera.desktop
+x-scheme-handler/magnet=add-torrent.desktop
+application/x-bittorrent=add-torrent.desktop

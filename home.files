@@ -14,7 +14,8 @@ bin/*
 .gnupg/*
 .gtkrc-2.0
 .gtkrc-2.0.mine
-.local/share/*
+.local/share/applications/*
+.local/share/bmpanel2
 .mplayer/*
 .msmtprc:tpl
 .muttrc
