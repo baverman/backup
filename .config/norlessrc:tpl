@@ -42,6 +42,15 @@ password = ${mail.baverman.pwd}
 trash = [Gmail]/Trash
 sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
 
+[account ${mail.gost.efrom}]
+from = ${mail.gost.efrom}
+host = imap.yandex.ru
+user = ${mail.gost.efrom}
+password = ${mail.gost.pwd}
+cafile = ~/.mutt/yandex.pem
+trash = &BCMENAQwBDsENQQ9BD0ESwQ1-
+sync = INBOX -> inbox | &BBgEQQRFBD4ENARPBEkEOAQ1- -> sent
+
 <%doc>
 [disabled account zvooq]
 from = ${mail.zvooq.efrom}

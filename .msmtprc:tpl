@@ -44,5 +44,16 @@ port 587
 tls_certcheck on
 tls_trust_file ~/.mutt/geotrust-ex.pem
 
+account gost
+from ${mail.gost.efrom}
+auth on
+host smtp.yandex.com
+user ${mail.gost.efrom}
+password ${mail.gost.pwd}
+port 465
+tls_certcheck on
+tls_starttls off
+tls_trust_file ~/.mutt/yandex.pem
+
 account default : bobrov@vl.ru
 

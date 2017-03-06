@@ -30,7 +30,7 @@ set use_from=yes
 set realname='Anton Bobrov'
 set envelope_from=yes
 set reverse_name
-alternates "baverman@gmail.com|a.bobrov@rambler-co.ru"
+alternates "baverman@gmail.com|anton.bobrov@gost-group.com"
 
 set pager_stop
 bind pager j next-line
@@ -42,7 +42,7 @@ send-hook "~f a.bobrov@rambler-co.ru" set signature=~/.mutt/rambler.sig
 
 macro generic "<esc>2" ":set from=bobrov@vl.ru"
 macro generic "<esc>3" ":set from=baverman@gmail.com"
-macro generic "<esc>4" ":set from=a.bobrov@rambler-co.ru"
+macro generic "<esc>4" ":set from=anton.bobrov@gost-group.com"
 
 source ~/.mutt/color
 source /usr/share/doc/mutt/samples/gpg.rc
