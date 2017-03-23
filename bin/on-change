@@ -6,11 +6,28 @@ import fcntl
 import os
 import sys
 import errno
-from time import sleep
+from time import sleep, time
 from subprocess import Popen, PIPE
 
 
-def run(watch_list, args):
+def oneshot(args, events):
+    Popen(args).wait()
+    for r in events:
+        Popen(args).wait()
+
+
+def longpoll(args, events):
+    start = time()
+    p = Popen(args)
+    for r in events:
+        if start + 1 < r:
+            p.terminate()
+            p.wait()
+            start = time()
+            p = Popen(args)
+
+
+def get_events(watch_list, timeout=0.3):
     wp = Popen(['inotifywait', '-m', '-r', '-e', 'create', '-e', 'modify'] + watch_list, stdout=PIPE)
     fcntl.fcntl(wp.stdout, fcntl.F_SETFL, os.O_NONBLOCK)
 
@@ -19,22 +36,30 @@ def run(watch_list, args):
             return wp.stdout.read()
         except IOError as e:
             if e.errno == errno.EAGAIN:
-                return None
+                return
             else:
                 raise
 
-    Popen(args).wait()
+    start = None
     while True:
-        if read():
-            Popen(args).wait()
+        data = read()
+
+        if data:
+            start = time()
+            continue
+
+        if start and time() - start > timeout:
+            start = None
+            yield time()
             read()
-        else:
-            sleep(0.1)
+
+        sleep(0.3)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-w', dest='watch', action='append')
+    parser.add_argument('-d', dest='daemon', action='store_true')
     args, rest = parser.parse_known_args()
 
     if not rest:
@@ -45,4 +70,10 @@ if __name__ == '__main__':
         rest = rest[1:]
 
     watch_list = args.watch or ['.']
-    run(watch_list, rest)
+    try:
+        if args.daemon:
+            longpoll(rest, get_events(watch_list))
+        else:
+            oneshot(rest, get_events(watch_list))
+    except KeyboardInterrupt:
+        pass
