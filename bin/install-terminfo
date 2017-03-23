@@ -1,0 +1,2 @@
+#!/usr/bin/sh
+cat /usr/share/terminfo/r/rxvt-unicode-256color | ssh $1 'mkdir -p .terminfo/r; cat > .terminfo/r/rxvt-unicode-256color'
