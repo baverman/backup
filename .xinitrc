@@ -20,7 +20,6 @@ set_kbd_map
 devmon &> /tmp/devmon.log &
 
 killall gpg-agent
-eval $(gpg-agent --daemon --enable-ssh-support) &
-ssh-add -l
+eval $(gpg-agent --daemon) &
 
 exec dbus-launch --exit-with-session openbox --startup ~/bin/box-session.sh

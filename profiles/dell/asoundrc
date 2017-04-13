@@ -1,4 +1,6 @@
 # defaults.namehint.extended on
+# defaults.pcm.dmix.rate = 44100
+# defaults.pcm.dmix.!rate 44100
 
 pcm.asymed {
    type asym
@@ -6,4 +8,14 @@ pcm.asymed {
    capture.pcm "dsnoop"
 }
 
-pcm.!default = pcm.asymed
+pcm.cnv {
+    type rate
+    slave {
+        pcm hw:0
+        rate 48000
+    }
+}
+
+pcm.!default pcm.asymed
+# pcm.!default pcm.null
+# pcm.!default pcm.cnv
