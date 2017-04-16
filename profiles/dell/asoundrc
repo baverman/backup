@@ -16,6 +16,11 @@ pcm.cnv {
     }
 }
 
-pcm.!default pcm.asymed
+# pcm.!default pcm.asymed
 # pcm.!default pcm.null
 # pcm.!default pcm.cnv
+pcm.!default {
+    @func getenv
+    vars [ ALSAPCM ]
+    default "pcm.asymed"
+}
