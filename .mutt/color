@@ -54,7 +54,7 @@ color index_date color105 default
 color index_size color246 default
 color index_number color246 default
 color index_flags color222 default
-color index_subject color114 default '~C rambler-co.ru|~C mm.rambler.ru|~C c-nr.com|~C dreamindustries.co|~C gost-group.com'
+color index_subject color114 default '~C rambler-co.ru|~C mm.rambler.ru|~C c-nr.com|~C dreamindustries.co|~C gost-group.com|~C getpatch.com'
 color index_subject color211 default '~C baverman@gmail.com'
 color index_author color210 default '~f bobrov@vl.ru|~f a.bobrov@rambler-co.ru|~f baverman@gmail.com|~f bobrov@c-nr.com|~f bobrov@dreamindustries.co|~f anton.bobrov@gost-group.com'
 color index_subject color240 default '~D'

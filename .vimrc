@@ -33,6 +33,7 @@ Plug 'vim-scripts/tComment'
 Plug 'wavded/vim-stylus'
 Plug 'wellle/targets.vim'
 Plug 'Wolfy87/vim-enmasse'
+Plug 'dhruvasagar/vim-table-mode'
 call plug#end()
 
 filetype plugin on

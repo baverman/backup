@@ -24,6 +24,16 @@ port 587
 tls_certcheck on
 tls_trust_file ~/.mutt/geotrust-ex.pem
 
+account getpatch
+from ${mail.getpatch.efrom}
+auth on
+host smtp.gmail.com
+user ${mail.getpatch.efrom}
+password ${mail.getpatch.pwd}
+port 587
+tls_certcheck on
+tls_trust_file ~/.mutt/geotrust-ex.pem
+
 account rambler
 from ${mail.rambler.efrom}
 auth on
