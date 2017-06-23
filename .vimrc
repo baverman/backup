@@ -151,6 +151,8 @@ nnoremap ,si :echom synIDattr(synID(line("."), col("."), 0), "name")<cr>
 nnoremap <leader>bw :bw<cr>
 nnoremap <leader>bd :bd<cr>
 vnoremap <leader>. :norm .<cr>
+nnoremap <leader>ee O<c-a> = <c-r>"<esc>
+nnoremap <leader>z :setlocal invspell<cr>
 
 nnoremap ,cc ciw<c-r>=system('/usr/bin/python2 ~/bin/colorpicker "<c-r>-" 2> /dev/null')<cr><esc>
 inoremap <c-x>c <c-r>=system('/usr/bin/python2 ~/bin/colorpicker "#fff" 2> /dev/null')<cr>

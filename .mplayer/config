@@ -8,3 +8,4 @@ softvol-max=300
 utf8=yes
 vo=gl
 subfont-text-scale=2.4
+subcp=enca:__:cp1251

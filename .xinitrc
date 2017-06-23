@@ -6,7 +6,7 @@ KI=$kbd_indicator
 
 set_kbd_map() {
     xset r rate 200 40
-    setxkbmap -model pc104 -layout us,ru -variant winkeys -option grp:caps_toggle,grp_led:$KI,compose:ralt
+    setxkbmap -model pc104 -layout us,ru -variant winkeys -option grp:caps_toggle,grp_led:$KI,compose:ralt,terminate:ctrl_alt_bksp
 }
 export -f set_kbd_map
 
