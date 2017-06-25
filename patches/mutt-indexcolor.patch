@@ -1,6 +1,6 @@
-diff -aur src/mutt/color.c new/mutt/color.c
---- src/mutt/color.c	2015-07-10 22:59:35.656726749 +0300
-+++ new/mutt/color.c	2015-07-10 22:55:54.813385340 +0300
+diff -aur src/mutt-1.8.3/color.c mutt-color/color.c
+--- src/mutt-1.8.3/color.c	2017-05-30 22:27:52.000000000 +0300
++++ mutt-color/color.c	2017-06-25 23:44:34.866263822 +0300
 @@ -35,6 +35,8 @@
  COLOR_LINE *ColorHdrList = NULL;
  COLOR_LINE *ColorBodyList = NULL;
@@ -10,10 +10,10 @@ diff -aur src/mutt/color.c new/mutt/color.c
  
  /* local to this file */
  static int ColorQuoteSize;
-@@ -94,6 +96,14 @@
-   { "underline",	MT_COLOR_UNDERLINE },
-   { "index",		MT_COLOR_INDEX },
-   { "prompt",		MT_COLOR_PROMPT },
+@@ -102,6 +104,14 @@
+   { "sidebar_new",	MT_COLOR_NEW },
+   { "sidebar_spoolfile",MT_COLOR_SB_SPOOLFILE },
+ #endif
 +  { "index_subject",	MT_COLOR_INDEX_SUBJECT },
 +  { "index_author",	MT_COLOR_INDEX_AUTHOR },
 +  { "index_collapsed",	MT_COLOR_INDEX_COLLAPSED },
@@ -25,7 +25,7 @@ diff -aur src/mutt/color.c new/mutt/color.c
    { NULL,		0 }
  };
  
-@@ -365,6 +375,51 @@
+@@ -395,6 +405,51 @@
    return _mutt_parse_uncolor(buf, s, data, err, 0);
  }
  
@@ -77,7 +77,7 @@ diff -aur src/mutt/color.c new/mutt/color.c
  static int _mutt_parse_uncolor (BUFFER *buf, BUFFER *s, unsigned long data,
  				BUFFER *err, short parse_uncolor)
  {
-@@ -380,6 +435,13 @@
+@@ -410,6 +465,13 @@
      return (-1);
    }
  
@@ -91,7 +91,7 @@ diff -aur src/mutt/color.c new/mutt/color.c
    if (mutt_strncmp (buf->data, "index", 5) == 0)
      list = &ColorIndexList;
    else if (mutt_strncmp (buf->data, "body", 4) == 0)
-@@ -423,42 +485,12 @@
+@@ -453,42 +515,12 @@
      return 0;
    }
  
@@ -140,7 +140,7 @@ diff -aur src/mutt/color.c new/mutt/color.c
  
  
    if (do_cache && !option (OPTNOCURSES))
-@@ -699,7 +731,7 @@
+@@ -729,7 +761,7 @@
  
    /* extract a regular expression if needed */
    
@@ -149,7 +149,7 @@ diff -aur src/mutt/color.c new/mutt/color.c
    {
      if (!MoreArgs (s))
      {
-@@ -743,6 +775,18 @@
+@@ -773,6 +805,18 @@
      r = add_pattern (&ColorIndexList, buf->data, 1, fg, bg, attr, err, 1);
      set_option (OPTFORCEREDRAWINDEX);
    }
@@ -168,7 +168,7 @@ diff -aur src/mutt/color.c new/mutt/color.c
    else if (object == MT_COLOR_QUOTED)
    {
      if (q_level >= ColorQuoteSize)
-@@ -768,7 +812,11 @@
+@@ -798,7 +842,11 @@
        ColorQuote[q_level] = fgbgattr_to_color(fg, bg, attr);
    }
    else
@@ -180,10 +180,10 @@ diff -aur src/mutt/color.c new/mutt/color.c
  
    return (r);
  }
-diff -aur src/mutt/curs_lib.c new/mutt/curs_lib.c
---- src/mutt/curs_lib.c	2015-07-10 22:59:35.620060081 +0300
-+++ new/mutt/curs_lib.c	2015-07-10 22:49:35.170038145 +0300
-@@ -726,6 +726,7 @@
+diff -aur src/mutt-1.8.3/curs_lib.c mutt-color/curs_lib.c
+--- src/mutt-1.8.3/curs_lib.c	2017-05-30 22:27:52.000000000 +0300
++++ mutt-color/curs_lib.c	2017-06-25 23:44:34.869597156 +0300
+@@ -947,6 +947,7 @@
    size_t k, k2;
    char scratch[MB_LEN_MAX];
    mbstate_t mbstate1, mbstate2;
@@ -191,28 +191,27 @@ diff -aur src/mutt/curs_lib.c new/mutt/curs_lib.c
  
    memset(&mbstate1, 0, sizeof (mbstate1));
    memset(&mbstate2, 0, sizeof (mbstate2));
-@@ -741,7 +742,15 @@
+@@ -962,7 +963,15 @@
        k = (k == (size_t)(-1)) ? 1 : n;
        wc = replacement_char ();
      }
--    if (arboreal && wc < M_TREE_MAX)
+-    if (arboreal && wc < MUTT_TREE_MAX)
 +    if (escaped) {
 +      escaped = 0;
 +      w = 0;
 +    }
-+    else if (arboreal && wc == M_SPECIAL_INDEX) {
++    else if (arboreal && wc == MUTT_SPECIAL_INDEX) {
 +      escaped = 1;
 +      w = 0;
 +    }
-+    else if (arboreal && wc < M_TREE_MAX)
++    else if (arboreal && wc < MUTT_TREE_MAX)
        w = 1; /* hack */
      else
      {
-Only in new/mutt: curs_lib.c.orig
-diff -aur src/mutt/doc/manual.xml.head new/mutt/doc/manual.xml.head
---- src/mutt/doc/manual.xml.head	2015-07-10 22:59:35.640060082 +0300
-+++ new/mutt/doc/manual.xml.head	2015-07-10 22:49:35.176704812 +0300
-@@ -2582,7 +2582,7 @@
+diff -aur src/mutt-1.8.3/doc/manual.xml.head mutt-color/doc/manual.xml.head
+--- src/mutt-1.8.3/doc/manual.xml.head	2017-05-30 22:27:52.000000000 +0300
++++ mutt-color/doc/manual.xml.head	2017-06-25 23:07:26.596273701 +0300
+@@ -2652,7 +2652,7 @@
  
  <command>color</command>
  <arg choice="plain">
@@ -221,7 +220,7 @@ diff -aur src/mutt/doc/manual.xml.head new/mutt/doc/manual.xml.head
  </arg>
  <arg choice="plain">
  <replaceable class="parameter">foreground</replaceable>
-@@ -2597,7 +2597,7 @@
+@@ -2667,7 +2667,7 @@
  <command>uncolor</command>
  <group choice="req">
  <arg choice="plain">
@@ -230,7 +229,7 @@ diff -aur src/mutt/doc/manual.xml.head new/mutt/doc/manual.xml.head
  </arg>
  <arg choice="plain">
  <option>header</option>
-@@ -2642,6 +2642,14 @@
+@@ -2712,6 +2712,14 @@
  <listitem><para>bold (highlighting bold patterns in the body of messages)</para></listitem>
  <listitem><para>error (error messages printed by Mutt)</para></listitem>
  <listitem><para>hdrdefault (default color of the message header in the pager)</para></listitem>
@@ -245,10 +244,9 @@ diff -aur src/mutt/doc/manual.xml.head new/mutt/doc/manual.xml.head
  <listitem><para>indicator (arrow or bar used to indicate the current item in a menu)</para></listitem>
  <listitem><para>markers (the <quote>+</quote> markers at the beginning of wrapped lines in the pager)</para></listitem>
  <listitem><para>message (informational messages)</para></listitem>
-Only in new/mutt/doc: manual.xml.head.orig
-diff -aur src/mutt/hdrline.c new/mutt/hdrline.c
---- src/mutt/hdrline.c	2015-07-10 22:59:35.663393416 +0300
-+++ new/mutt/hdrline.c	2015-07-10 22:49:35.176704812 +0300
+diff -aur src/mutt-1.8.3/hdrline.c mutt-color/hdrline.c
+--- src/mutt-1.8.3/hdrline.c	2017-05-30 22:26:40.000000000 +0300
++++ mutt-color/hdrline.c	2017-06-25 23:44:34.869597156 +0300
 @@ -103,6 +103,34 @@
    return 0;
  }
@@ -262,7 +260,7 @@ diff -aur src/mutt/hdrline.c new/mutt/hdrline.c
 +  int len;
 +
 +  /* only add color markers if we are operating on main index entries. */
-+  if (!(flags & M_FORMAT_INDEX))
++  if (!(flags & MUTT_FORMAT_INDEX))
 +    return 0;
 +
 +  if (color == MT_COLOR_INDEX) { /* buf might be uninitialized other cases */
@@ -274,7 +272,7 @@ diff -aur src/mutt/hdrline.c new/mutt/hdrline.c
 +  if (buflen < 2)
 +    return 0;
 +
-+  buf[0] = M_SPECIAL_INDEX;
++  buf[0] = MUTT_SPECIAL_INDEX;
 +  buf[1] = color;
 +  buf[2] = '\0';
 +
@@ -284,7 +282,7 @@ diff -aur src/mutt/hdrline.c new/mutt/hdrline.c
  static void make_from (ENVELOPE *hdr, char *buf, size_t len, int do_lists)
  {
    int me;
-@@ -253,6 +281,7 @@
+@@ -272,6 +300,7 @@
  #define THREAD_NEW (threads && hdr->collapsed && hdr->num_hidden > 1 && mutt_thread_contains_unread (ctx, hdr) == 1)
  #define THREAD_OLD (threads && hdr->collapsed && hdr->num_hidden > 1 && mutt_thread_contains_unread (ctx, hdr) == 2)
    size_t len;
@@ -292,7 +290,7 @@ diff -aur src/mutt/hdrline.c new/mutt/hdrline.c
  
    hdr = hfi->hdr;
    ctx = hfi->ctx;
-@@ -304,12 +333,17 @@
+@@ -323,12 +352,17 @@
        break;
      
      case 'c':
@@ -312,9 +310,9 @@ diff -aur src/mutt/hdrline.c new/mutt/hdrline.c
        snprintf (dest, destlen, fmt, hdr->msgno + 1);
        break;
  
-@@ -408,7 +442,10 @@
- 	if (do_locales)
- 	  setlocale (LC_TIME, "C");
+@@ -425,7 +459,10 @@
+         if (!do_locales)
+           setlocale (LC_TIME, "");
  
 -	mutt_format_s (dest, destlen, prefix, buf2);
 +	colorlen = add_index_color(dest, destlen, flags, MT_COLOR_INDEX_DATE);
@@ -324,7 +322,7 @@ diff -aur src/mutt/hdrline.c new/mutt/hdrline.c
  	if (len > 0 && op != 'd' && op != 'D') /* Skip ending op */
  	  src = cp + 1;
        }
-@@ -438,8 +475,10 @@
+@@ -455,8 +492,10 @@
      case 'F':
        if (!optional)
        {
@@ -336,7 +334,7 @@ diff -aur src/mutt/hdrline.c new/mutt/hdrline.c
        }
        else if (mutt_addr_is_user (hdr->env->from))
          optional = 0;
-@@ -465,7 +504,9 @@
+@@ -482,7 +521,9 @@
        if (!optional)
        {
  	snprintf (fmt, sizeof (fmt), "%%%sd", prefix);
@@ -347,7 +345,7 @@ diff -aur src/mutt/hdrline.c new/mutt/hdrline.c
        }
        else if (hdr->lines <= 0)
          optional = 0;
-@@ -474,8 +515,10 @@
+@@ -491,8 +532,10 @@
      case 'L':
        if (!optional)
        {
@@ -359,7 +357,7 @@ diff -aur src/mutt/hdrline.c new/mutt/hdrline.c
        }
        else if (!check_for_mailing_list (hdr->env->to, NULL, NULL, 0) &&
  	       !check_for_mailing_list (hdr->env->cc, NULL, NULL, 0))
-@@ -530,10 +573,16 @@
+@@ -547,10 +590,16 @@
        snprintf (fmt, sizeof (fmt), "%%%sd", prefix);
        if (!optional)
        {
@@ -380,37 +378,35 @@ diff -aur src/mutt/hdrline.c new/mutt/hdrline.c
  	else
  	  *dest = '\0';
        }
-@@ -554,15 +603,23 @@
-       {
- 	if (flags & M_FORMAT_FORCESUBJ)
+@@ -594,15 +643,21 @@
  	{
--	  mutt_format_s (dest, destlen, "", NONULL (hdr->env->subject));
+ 	  if (flags & MUTT_FORMAT_FORCESUBJ)
+ 	  {
+-	    mutt_format_s (dest, destlen, "", NONULL (subj));
 +	  colorlen = add_index_color(dest, destlen, flags, MT_COLOR_INDEX_SUBJECT);
-+	  mutt_format_s (dest+colorlen, destlen-colorlen, "", 
-+	      NONULL (hdr->env->subject));
++	  mutt_format_s(dest+colorlen, destlen-colorlen, "", NONULL (subj));
 +	  add_index_color(dest+colorlen, destlen-colorlen, flags, MT_COLOR_INDEX);
 +
- 	  snprintf (buf2, sizeof (buf2), "%s%s", hdr->tree, dest);
- 	  mutt_format_s_tree (dest, destlen, prefix, buf2);
+ 	    snprintf (buf2, sizeof (buf2), "%s%s", hdr->tree, dest);
+ 	    mutt_format_s_tree (dest, destlen, prefix, buf2);
+ 	  }
+ 	  else
+ 	    mutt_format_s_tree (dest, destlen, prefix, hdr->tree);
  	}
- 	else
- 	  mutt_format_s_tree (dest, destlen, prefix, hdr->tree);
+-	else
+-	  mutt_format_s (dest, destlen, prefix, NONULL (subj));
++        else {
++          colorlen = add_index_color(dest, destlen, flags, MT_COLOR_INDEX_SUBJECT);
++          mutt_format_s (dest+colorlen, destlen-colorlen, prefix, NONULL (subj));
++          add_index_color(dest+colorlen, destlen-colorlen, flags, MT_COLOR_INDEX);
++        }
        }
--      else
--	mutt_format_s (dest, destlen, prefix, NONULL (hdr->env->subject));
-+      else {
-+	colorlen = add_index_color(dest, destlen, flags, MT_COLOR_INDEX_SUBJECT);
-+	mutt_format_s (dest+colorlen, destlen-colorlen, prefix, 
-+	    NONULL (hdr->env->subject));
-+	add_index_color(dest+colorlen, destlen-colorlen, flags, MT_COLOR_INDEX);
-+      }
        break;
  
-     case 'S':
-@@ -658,7 +715,9 @@
- 		hdr->tagged ? '*' :
- 		(hdr->flagged ? '!' :
- 		 (Tochars && ((i = mutt_user_is_recipient (hdr)) < mutt_strlen (Tochars)) ? Tochars[i] : ' ')));
+@@ -699,7 +754,9 @@
+ 		hdr->tagged ? "*" :
+ 		(hdr->flagged ? "!" :
+ 		 (Tochars && ((i = mutt_user_is_recipient (hdr)) < Tochars->len) ? Tochars->chars[i] : " ")));
 -      mutt_format_s (dest, destlen, prefix, buf2);
 +      colorlen = add_index_color(dest, destlen, flags, MT_COLOR_INDEX_FLAGS);
 +      mutt_format_s (dest+colorlen, destlen-colorlen, prefix, buf2);
@@ -418,7 +414,7 @@ diff -aur src/mutt/hdrline.c new/mutt/hdrline.c
        break;
  
      case 'X':
-@@ -678,7 +737,9 @@
+@@ -719,7 +776,9 @@
         if (optional)
  	 optional = hdr->env->x_label ? 1 : 0;
  
@@ -429,7 +425,7 @@ diff -aur src/mutt/hdrline.c new/mutt/hdrline.c
         break;
   
      case 'Y':
-@@ -704,10 +765,12 @@
+@@ -745,10 +804,12 @@
        if (optional)
  	optional = i;
  
@@ -444,10 +440,10 @@ diff -aur src/mutt/hdrline.c new/mutt/hdrline.c
  
        break;
  
-diff -aur src/mutt/menu.c new/mutt/menu.c
---- src/mutt/menu.c	2015-07-10 22:59:35.646726749 +0300
-+++ new/mutt/menu.c	2015-07-10 22:49:35.176704812 +0300
-@@ -29,7 +29,30 @@
+diff -aur src/mutt-1.8.3/menu.c mutt-color/menu.c
+--- src/mutt-1.8.3/menu.c	2017-05-30 22:27:53.000000000 +0300
++++ mutt-color/menu.c	2017-06-25 23:44:34.872930489 +0300
+@@ -30,7 +30,32 @@
  
  char* SearchBuffers[MENU_MAX];
  
@@ -455,6 +451,8 @@ diff -aur src/mutt/menu.c new/mutt/menu.c
 +static int get_color(int index, int type) {
 +  COLOR_LINE *color;
 +  HEADER *hdr = Context->hdrs[index];
++  pattern_cache_t cache;
++  memset (&cache, 0, sizeof (cache));
 +
 +  switch (type) {
 +    case MT_COLOR_INDEX_SUBJECT:
@@ -468,8 +466,8 @@ diff -aur src/mutt/menu.c new/mutt/menu.c
 +  }
 +
 +  for (; color; color = color->next)
-+    if (mutt_pattern_exec (color->color_pattern, M_MATCH_FULL_ADDRESS, 
-+	Context, hdr))
++    if (mutt_pattern_exec (color->color_pattern, MUTT_MATCH_FULL_ADDRESS, 
++	Context, hdr, &cache))
 +      return color->pair;
 +
 +  return 0;
@@ -479,11 +477,11 @@ diff -aur src/mutt/menu.c new/mutt/menu.c
  {
    wchar_t wc;
    size_t k;
-@@ -161,6 +184,18 @@
+@@ -162,6 +187,18 @@
        }
        if (do_color) ATTRSET(attr);
      }
-+    else if(*s == M_SPECIAL_INDEX)
++    else if(*s == MUTT_SPECIAL_INDEX)
 +    {
 +      s++;
 +      if (do_color) {
@@ -498,7 +496,7 @@ diff -aur src/mutt/menu.c new/mutt/menu.c
      else if ((k = mbrtowc (&wc, (char *)s, n, &mbstate)) > 0)
      {
        addnstr ((char *)s, k);
-@@ -267,7 +302,7 @@
+@@ -277,7 +314,7 @@
        else if (option(OPTARROWCURSOR))
  	addstr("   ");
  
@@ -507,36 +505,36 @@ diff -aur src/mutt/menu.c new/mutt/menu.c
      }
      else
      {
-@@ -302,7 +337,7 @@
+@@ -312,7 +349,7 @@
        menu_make_entry (buf, sizeof (buf), menu, menu->oldcurrent);
-       menu_pad_string (buf, sizeof (buf));
-       move (menu->oldcurrent + menu->offset - menu->top, 3);
+       menu_pad_string (menu, buf, sizeof (buf));
+       mutt_window_move (menu->indexwin, menu->oldcurrent + menu->offset - menu->top, 3);
 -      print_enriched_string (menu->color(menu->oldcurrent), (unsigned char *) buf, 1);
 +      print_enriched_string (menu->oldcurrent, menu->color(menu->oldcurrent), (unsigned char *) buf, 1);
      }
  
      /* now draw it in the new location */
-@@ -314,14 +349,14 @@
+@@ -324,14 +361,14 @@
      /* erase the current indicator */
      menu_make_entry (buf, sizeof (buf), menu, menu->oldcurrent);
-     menu_pad_string (buf, sizeof (buf));
+     menu_pad_string (menu, buf, sizeof (buf));
 -    print_enriched_string (menu->color(menu->oldcurrent), (unsigned char *) buf, 1);
 +    print_enriched_string (menu->oldcurrent, menu->color(menu->oldcurrent), (unsigned char *) buf, 1);
  
      /* now draw the new one to reflect the change */
      menu_make_entry (buf, sizeof (buf), menu, menu->current);
-     menu_pad_string (buf, sizeof (buf));
+     menu_pad_string (menu, buf, sizeof (buf));
      SETCOLOR(MT_COLOR_INDICATOR);
-     move(menu->current - menu->top + menu->offset, 0);
+     mutt_window_move (menu->indexwin, menu->current + menu->offset - menu->top, 0);
 -    print_enriched_string (menu->color(menu->current), (unsigned char *) buf, 0);
 +    print_enriched_string (menu->current, menu->color(menu->current), (unsigned char *) buf, 0);
    }
    menu->redraw &= REDRAW_STATUS;
    NORMAL_COLOR;
-@@ -343,10 +378,10 @@
+@@ -353,10 +390,10 @@
      ATTRSET(attr);
      addch (' ');
-     menu_pad_string (buf, sizeof (buf));
+     menu_pad_string (menu, buf, sizeof (buf));
 -    print_enriched_string (attr, (unsigned char *) buf, 1);
 +    print_enriched_string (menu->current, attr, (unsigned char *) buf, 1);
    }
@@ -546,13 +544,13 @@ diff -aur src/mutt/menu.c new/mutt/menu.c
    menu->redraw &= REDRAW_STATUS;
    NORMAL_COLOR;
  }
-diff -aur src/mutt/mutt_curses.h new/mutt/mutt_curses.h
---- src/mutt/mutt_curses.h	2015-07-10 22:59:35.656726749 +0300
-+++ new/mutt/mutt_curses.h	2015-07-10 22:58:14.120057103 +0300
-@@ -121,6 +121,16 @@
-   MT_COLOR_UNDERLINE,
-   MT_COLOR_INDEX,
-   MT_COLOR_PROMPT,
+diff -aur src/mutt-1.8.3/mutt_curses.h mutt-color/mutt_curses.h
+--- src/mutt-1.8.3/mutt_curses.h	2017-05-30 22:27:53.000000000 +0300
++++ mutt-color/mutt_curses.h	2017-06-25 23:44:34.882930489 +0300
+@@ -132,6 +132,16 @@
+   MT_COLOR_SB_INDICATOR,
+   MT_COLOR_SB_SPOOLFILE,
+ #endif
 +  /* please no non-MT_COLOR_INDEX objects after this point */
 +  MT_COLOR_INDEX_SUBJECT,
 +  MT_COLOR_INDEX_AUTHOR,
@@ -566,7 +564,7 @@ diff -aur src/mutt/mutt_curses.h new/mutt/mutt_curses.h
    MT_COLOR_MAX
  };
  
-@@ -174,6 +184,8 @@
+@@ -214,6 +224,8 @@
  extern COLOR_LINE *ColorHdrList;
  extern COLOR_LINE *ColorBodyList;
  extern COLOR_LINE *ColorIndexList;
@@ -575,20 +573,20 @@ diff -aur src/mutt/mutt_curses.h new/mutt/mutt_curses.h
  
  void ci_init_color (void);
  void ci_start_color (void);
-diff -aur src/mutt/mutt.h new/mutt/mutt.h
---- src/mutt/mutt.h	2015-07-10 22:59:35.653393416 +0300
-+++ new/mutt/mutt.h	2015-07-10 22:49:35.180038146 +0300
-@@ -161,6 +161,8 @@
- #define M_TREE_MISSING		13
- #define M_TREE_MAX		14
+diff -aur src/mutt-1.8.3/mutt.h mutt-color/mutt.h
+--- src/mutt-1.8.3/mutt.h	2017-05-30 22:27:53.000000000 +0300
++++ mutt-color/mutt.h	2017-06-25 23:44:34.882930489 +0300
+@@ -169,6 +169,8 @@
+ #define MUTT_TREE_MISSING       13
+ #define MUTT_TREE_MAX           14
  
-+#define M_SPECIAL_INDEX		M_TREE_MAX
++#define MUTT_SPECIAL_INDEX	MUTT_TREE_MAX
 +
- #define M_THREAD_COLLAPSE	(1<<0)
- #define M_THREAD_UNCOLLAPSE	(1<<1)
- #define M_THREAD_GET_HIDDEN	(1<<2)
-diff -aur src/mutt/PATCHES new/mutt/PATCHES
---- src/mutt/PATCHES	2015-07-10 22:59:35.640060082 +0300
-+++ new/mutt/PATCHES	2015-07-10 22:49:35.180038146 +0300
+ #define MUTT_THREAD_COLLAPSE    (1<<0)
+ #define MUTT_THREAD_UNCOLLAPSE  (1<<1)
+ #define MUTT_THREAD_GET_HIDDEN  (1<<2)
+diff -aur src/mutt-1.8.3/PATCHES mutt-color/PATCHES
+--- src/mutt-1.8.3/PATCHES	2017-05-30 22:26:40.000000000 +0300
++++ mutt-color/PATCHES	2017-06-25 23:51:12.292928727 +0300
 @@ -0,0 +1 @@
-+mutt-1.5.8-indexcolor-3
++mutt-1.8.3-indexcolor-3
