@@ -1,7 +1,9 @@
 fullscreen=yes
 # ao=alsa:device=hw=0.0
-ao=alsa
-af=format=s16le
+ao=alsa:device=asymed
+af=format=s32le
+# ao=alsa
+# af=format=s16le
 channels=2
 softvol=yes
 softvol-max=300

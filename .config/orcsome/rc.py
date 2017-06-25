@@ -94,6 +94,9 @@ def app_rules(w):
         otaskbar = False
     elif w.matches(name='Navigator', cls='Firefox'):
         decorate = False
+    elif w.matches(name='Opera', cls='Opera'):
+        decorate = False
+        maximize = True
     elif w.matches(cls='URxvt'):
         desktop = 1
         decorate = False
