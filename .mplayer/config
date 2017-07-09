@@ -11,3 +11,4 @@ utf8=yes
 vo=gl
 subfont-text-scale=2.4
 subcp=enca:__:cp1251
+use-filedir-conf=yes

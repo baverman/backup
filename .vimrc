@@ -34,6 +34,7 @@ Plug 'wavded/vim-stylus'
 Plug 'wellle/targets.vim'
 Plug 'Wolfy87/vim-enmasse'
 Plug 'dhruvasagar/vim-table-mode'
+Plug 'stefandtw/quickfix-reflector.vim'
 call plug#end()
 
 filetype plugin on
@@ -151,7 +152,7 @@ nnoremap ,si :echom synIDattr(synID(line("."), col("."), 0), "name")<cr>
 nnoremap <leader>bw :bw<cr>
 nnoremap <leader>bd :bd<cr>
 vnoremap <leader>. :norm .<cr>
-nnoremap <leader>ee O<c-a> = <c-r>"<esc>
+nnoremap <leader>ee O<c-a> = <c-r><c-o>"<esc>
 nnoremap <leader>z :setlocal invspell<cr>
 
 nnoremap ,cc ciw<c-r>=system('/usr/bin/python2 ~/bin/colorpicker "<c-r>-" 2> /dev/null')<cr><esc>
@@ -247,6 +248,7 @@ nmap <c-j> <Plug>VialBufHistNext
 let g:AutoPairsMapCR = 0
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:qf_modifiable = 1
 nnoremap <leader>v :Bufferlist<cr>
 vnoremap <leader>ld :Linediff<cr>
 nnoremap <leader>lr :LinediffReset<cr>
