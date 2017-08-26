@@ -3,4 +3,4 @@ export MYROLE=dell
 export OB_TOP_MARGIN=29
 export BMPANEL_THEME=awesome-hi
 export DMENU_FONT=InputUISansCompressed-17
-export OPERA_OPTS='--system-dpi-setting=130'
+export OPERA_OPTS='--system-dpi-setting=130 --force-device-scale-factor=1.3'

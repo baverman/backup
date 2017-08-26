@@ -35,6 +35,7 @@ Plug 'wellle/targets.vim'
 Plug 'Wolfy87/vim-enmasse'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'stefandtw/quickfix-reflector.vim'
+Plug '~/.vim/bundle/vial-draw'
 call plug#end()
 
 filetype plugin on
@@ -154,6 +155,10 @@ nnoremap <leader>bd :bd<cr>
 vnoremap <leader>. :norm .<cr>
 nnoremap <leader>ee O<c-a> = <c-r><c-o>"<esc>
 nnoremap <leader>z :setlocal invspell<cr>
+vmap <leader>d ygpr 
+nnoremap <leader>r 1v"0p
+nnoremap <silent> <leader>ed :setlocal virtualedit=all cursorcolumn cursorline<cr>
+nnoremap <silent> <leader>eD :setlocal virtualedit= nocursorcolumn nocursorline<cr>
 
 nnoremap ,cc ciw<c-r>=system('/usr/bin/python2 ~/bin/colorpicker "<c-r>-" 2> /dev/null')<cr><esc>
 inoremap <c-x>c <c-r>=system('/usr/bin/python2 ~/bin/colorpicker "#fff" 2> /dev/null')<cr>
@@ -249,6 +254,7 @@ let g:AutoPairsMapCR = 0
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:qf_modifiable = 1
+let g:table_mode_map_prefix = '<leader>b'
 nnoremap <leader>v :Bufferlist<cr>
 vnoremap <leader>ld :Linediff<cr>
 nnoremap <leader>lr :LinediffReset<cr>
