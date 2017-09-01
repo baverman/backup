@@ -1,36 +1,5 @@
 Xcursor*theme:	Neutral
 
-URxvt*background:	gray6
-URxvt*foreground:	#dddddd
-
-! URxvt*color12:	RoyalBlue
-! URxvt*color4:	RoyalBlue
-
-! BLACK
-URxvt*color0: gray6
-URxvt*color8: #aaaaaa
-! RED
-URxvt*color1: #dd5858
-URxvt*color9: #dd6f6f
-! GREEN
-URxvt*color2: #61dd58
-URxvt*color10: #75dd6f
-! YELLOW
-URxvt*color3: #dddb58
-URxvt*color11: #dddb6f
-! BLUE
-URxvt*color4: #588bdd
-URxvt*color12: #6f99dd
-! MAGENTA
-URxvt*color5: #956fdd
-URxvt*color13: #a485dd
-! CYAN
-URxvt*color6: #64d1b7
-URxvt*color14: #84c2b3
-! WHITE
-URxvt*color7: #dddddd
-URxvt*color15: #F8F8F2
-
 URxvt*font:	xft:Terminus:pixelsize=18,-xos4-terminus-medium-r-normal--16-140-72-72-c-80-koi8-u,xft:Monospace:antialias=false
 !URxvt*font:	xft:Lucida Console:pixelsize=17
 
@@ -52,8 +21,6 @@ URxvt*saveLines:	10000
 URxvt*scrollBar_right:	true
 URxvt*scrollBar:	false
 URxvt*scrollstyle:	plain
-URxvt*shading:	20
-URxvt*transparent:	true
 
 !Xft.rgba:	none
 !Xft.hintstyle:  hintfull
@@ -85,59 +52,4 @@ vial*font: xft:Inconsolata LGC:pixelsize=20
 vial*lineSpace: 0
 vial*transparent: false
 
-! #define S_base03        #002b36
-! #define S_base02        #073642
-! #define S_base01        #586e75
-! #define S_base00        #657b83
-! #define S_base0         #839496
-! #define S_base1         #93a1a1
-! #define S_base2         #eee8d5
-! #define S_base3         #fdf6e3
-!
-! URxvt*background:            S_base3
-! URxvt*foreground:            S_base00
-! URxvt*fadeColor:             S_base3
-! URxvt*cursorColor:           S_base01
-! URxvt*pointerColorBackground:S_base1
-! URxvt*pointerColorForeground:S_base01
-!
-! #define S_yellow        #b58900
-! #define S_orange        #cb4b16
-! #define S_red           #dc322f
-! #define S_magenta       #d33682
-! #define S_violet        #6c71c4
-! #define S_blue          #268bd2
-! #define S_cyan          #2aa198
-! #define S_green         #859900
-!
-! !! black dark/light
-! URxvt*color0:                S_base02
-! URxvt*color8:                S_base03
-!
-! !! red dark/light
-! URxvt*color1:                S_red
-! URxvt*color9:                S_orange
-!
-! !! green dark/light
-! URxvt*color2:                S_green
-! URxvt*color10:               S_base01
-!
-! !! yellow dark/light
-! URxvt*color3:                S_yellow
-! URxvt*color11:               S_base00
-!
-! !! blue dark/light
-! URxvt*color4:                S_blue
-! URxvt*color12:               S_base0
-!
-! !! magenta dark/light
-! URxvt*color5:                S_magenta
-! URxvt*color13:               S_violet
-!
-! !! cyan dark/light
-! URxvt*color6:                S_cyan
-! URxvt*color14:               S_base1
-!
-! !! white dark/light
-! URxvt*color7:                S_base2
-! URxvt*color15:               S_base3
+#include "backup/xrdb/urxvt-light"

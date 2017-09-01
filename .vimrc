@@ -1,5 +1,5 @@
 set nocompatible
-set background=dark
+set background=light
 
 call plug#begin('~/.vim/bundle')
 Plug 'git@github.com:baverman/vial.git'
@@ -47,7 +47,7 @@ hi clear CursorLine
 hi CursorLine ctermbg=darkgrey
 
 if !empty($VIAL)
-    colorscheme babymate256
+    colorscheme solarized
 endif
 
 hi ExtraWhitespace ctermbg=red guibg=red
@@ -218,6 +218,12 @@ function! InitVialHttpBuf()
     nnoremap <buffer> <leader><cr> :VialHttp<cr>
 endfunction
 
+function! InitMongoBuf()
+    setfiletype javascript
+    nmap <buffer> <leader><cr> <Plug>VialPipeExecute
+    vmap <buffer> <leader><cr> <Plug>VialPipeExecute
+endfunction
+
 augroup MyFileTypeSettings
     au!
     au FileType python call InitPythonBuf()
@@ -230,6 +236,7 @@ augroup MyFileTypeSettings
     au BufNewFile __vial_http_req__ nnoremap <buffer> <silent> <c-k> :b __vial_http_hdr__<cr>
     au BufNewFile __vial_http_hdr__ nnoremap <buffer> <silent> <c-k> :b __vial_http__<cr>
     au CursorHold * checktime
+    au BufNewFile,BufRead *.mongo call InitMongoBuf()
 augroup END
 
 

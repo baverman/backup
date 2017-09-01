@@ -42,7 +42,7 @@ password = ${mail.baverman.pwd}
 trash = [Gmail]/Trash
 sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
 
-[account ${mail.getpatch.efrom}]
+[disabled account ${mail.getpatch.efrom}]
 from = ${mail.getpatch.efrom}
 host = imap.gmail.com
 cafile = ~/.mutt/geotrust.pem
@@ -51,7 +51,7 @@ password = ${mail.getpatch.pwd}
 trash = [Gmail]/Trash
 sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
 
-[account ${mail.gost.efrom}]
+[disabled account ${mail.gost.efrom}]
 from = ${mail.gost.efrom}
 host = imap.yandex.ru
 user = ${mail.gost.efrom}

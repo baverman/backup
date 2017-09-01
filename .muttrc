@@ -2,7 +2,7 @@ set ssl_starttls=yes
 set ssl_verify_host=no
 set header_cache=~/tmp/.hcache
 set ssl_force_tls=yes
-set assumed_charset="windows-1251:utf-8"
+set assumed_charset="utf-8:windows-1251"
 set editor=vim
 set mailcap_path=~/.mutt/mailcap
 set index_format="%4C %Z %(%b %d %H:%M) %-25.25L %?l?%4l&%4c? %s"
@@ -15,6 +15,10 @@ set edit_headers = yes
 set autoedit
 set mime_forward=yes
 set mime_forward_rest=yes
+set to_chars="~ TCFL"
+
+set sort=threads
+set sort_aux=last-date
 
 auto_view text/html
 alternative_order text/plain text/html
@@ -25,12 +29,12 @@ set spoolfile=+inbox
 set record=+sent
 set postponed=+draft
 set sendmail=msmtp
-set from=bobrov@vl.ru
+set from=baverman@gmail.com
 set use_from=yes
 set realname='Anton Bobrov'
 set envelope_from=yes
 set reverse_name
-alternates "baverman@gmail.com|anton.bobrov@gost-group.com|anton@getpatch.com"
+alternates "bobrov@vl.ru|anton.bobrov@gost-group.com"
 
 set pager_stop
 bind pager j next-line
@@ -40,10 +44,8 @@ macro index G '<sync-mailbox><shell-escape>norless -NSC<enter><sync-mailbox>'
 send-hook "~f bobrov@dreamindustries.co" set signature=~/.mutt/di.sig
 send-hook "~f a.bobrov@rambler-co.ru" set signature=~/.mutt/rambler.sig
 
-macro generic "<esc>2" ":set from=bobrov@vl.ru"
-macro generic "<esc>3" ":set from=baverman@gmail.com"
-macro generic "<esc>4" ":set from=anton.bobrov@gost-group.com"
-macro generic "<esc>5" ":set from=anton@getpatch.com"
+macro generic "<esc>2" ":set from=baverman@gmail.com"
+macro generic "<esc>3" ":set from=anton.bobrov@gost-group.com"
 
 source ~/.mutt/color
 source /usr/share/doc/mutt/samples/gpg.rc

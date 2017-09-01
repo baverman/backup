@@ -1,11 +1,11 @@
 Xft.hintstyle:  hintslight
 Xft.dpi: 96
 
-URxvt*font: xft:Input:pixelsize=22:Regular
-URxvt*boldFont: xft:Input:pixelsize=22:Bold
+URxvt*font: xft:Input Mono Condensed:pixelsize=23:Regular
+URxvt*boldFont: xft:Input Mono Condensed:pixelsize=23:Medium:Regular
 URxvt*intensityStyles: false
 URxvt*lineSpace: 0
 
-vial*font: xft:Input:pixelsize=25:Regular
-vial*boldFont: xft:Input:pixelsize=25:Bold
+vial*font: xft:Input Mono Condensed:pixelsize=25:Regular
+vial*boldFont: xft:Input Mono Condensed:pixelsize=25:Medium:Regular
 vial*lineSpace: 3
