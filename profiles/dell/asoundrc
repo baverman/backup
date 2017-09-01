@@ -38,4 +38,5 @@ pcm.!default {
     @func getenv
     vars [ ALSAPCM ]
     default "pcm.asymed"
+    # default "pcm.cnvb"
 }

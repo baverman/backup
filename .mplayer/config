@@ -1,9 +1,6 @@
 fullscreen=yes
-# ao=alsa:device=hw=0.0
-ao=alsa:device=asymed
 af=format=s32le
-# ao=alsa
-# af=format=s16le
+ao=alsa
 channels=2
 softvol=yes
 softvol-max=300
@@ -12,3 +9,10 @@ vo=gl
 subfont-text-scale=2.4
 subcp=enca:__:cp1251
 use-filedir-conf=yes
+
+# ao=alsa:device=hw=0.0
+# ao=alsa:device=asymed
+# ao=alsa:device=pcm.cnvb
+# af=format=s16le
+# af=format=s16le
+
