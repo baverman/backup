@@ -35,6 +35,7 @@ Plug 'wellle/targets.vim'
 Plug 'Wolfy87/vim-enmasse'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'stefandtw/quickfix-reflector.vim'
+Plug 'dbmrq/vim-ditto'
 Plug '~/.vim/bundle/vial-draw'
 call plug#end()
 
@@ -52,6 +53,7 @@ endif
 
 hi ExtraWhitespace ctermbg=red guibg=red
 hi RightMargin ctermbg=red guibg=red
+hi SpellBad ctermbg=red ctermfg=white
 call matchadd('RightMargin', '.\%85v')
 call matchadd('ExtraWhitespace', '\s\+$')
 
@@ -69,6 +71,7 @@ set nosmartindent
 set nocindent
 set indentexpr=VialIndent()
 set indentkeys=o
+set display+=lastline
 
 " nnoremap / /\v
 " vnoremap / /\v
@@ -213,11 +216,6 @@ function! InitLsBuf()
     nnoremap <buffer> <leader>l :belowright vnew<cr>:setlocal buftype=nofile<cr>:read !lsc -cp #<cr>
 endfunction
 
-
-function! InitVialHttpBuf()
-    nnoremap <buffer> <leader><cr> :VialHttp<cr>
-endfunction
-
 function! InitMongoBuf()
     setfiletype javascript
     nmap <buffer> <leader><cr> <Plug>VialPipeExecute
@@ -229,12 +227,8 @@ augroup MyFileTypeSettings
     au FileType python call InitPythonBuf()
     au FileType ls call InitLsBuf()
     au FileType qf wincmd J
-    au FileType vial-http call InitVialHttpBuf()
     au FileType sql nmap <buffer> <leader><cr> <Plug>VialPipeExecute
     au FileType sql vmap <buffer> <leader><cr> <Plug>VialPipeExecute
-    au BufNewFile __vial_http__ nnoremap <buffer> <silent> <c-k> :b __vial_http_req__<cr>
-    au BufNewFile __vial_http_req__ nnoremap <buffer> <silent> <c-k> :b __vial_http_hdr__<cr>
-    au BufNewFile __vial_http_hdr__ nnoremap <buffer> <silent> <c-k> :b __vial_http__<cr>
     au CursorHold * checktime
     au BufNewFile,BufRead *.mongo call InitMongoBuf()
 augroup END
