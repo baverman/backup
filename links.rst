@@ -33,6 +33,9 @@ Python
 * | Ned Batchelder - Facts and Myths about Python names and values - PyCon 2015
   | http://www.youtube.com/watch?v=_AEJHKGk9ns
 
+* | Raymond Hettinger - Beyond PEP 8 -- Best practices for beautiful intelligible code
+  | https://www.youtube.com/watch?v=wf-BqAjZb8M
+
 
 DB
 --
