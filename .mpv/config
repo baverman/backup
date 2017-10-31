@@ -1,10 +1,9 @@
-# Write your default config options here!
-
 fullscreen=yes
 use-filedir-conf=yes
 sub-use-margins=yes
-# audio-device=alsa/default:CARD=broadwellrt286
 ao=alsa
-audio-channels=2
-# softvol=yes
-# softvol-max=300
+audio-channels=2.0
+audio-format=s32
+volume-max=300
+sub-codepage=cp1251
+subfont-text-scale=0.8

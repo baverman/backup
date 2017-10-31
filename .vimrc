@@ -195,6 +195,7 @@ function! InitPythonBuf()
     nnoremap <buffer> <leader>lf :call Flake8()<cr>
     nmap <buffer> <leader><cr> <Plug>VialPipeExecuteAll
     setlocal et sts=4 sw=4 tw=80 fo=croq
+    setlocal iskeyword+=-
 
     syntax keyword pythonBuiltin self
     syntax keyword pythonKeyword print None
