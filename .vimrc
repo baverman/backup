@@ -195,7 +195,6 @@ function! InitPythonBuf()
     nnoremap <buffer> <leader>lf :call Flake8()<cr>
     nmap <buffer> <leader><cr> <Plug>VialPipeExecuteAll
     setlocal et sts=4 sw=4 tw=80 fo=croq
-    setlocal iskeyword+=-
 
     syntax keyword pythonBuiltin self
     syntax keyword pythonKeyword print None
@@ -232,6 +231,7 @@ augroup MyFileTypeSettings
     au FileType sql vmap <buffer> <leader><cr> <Plug>VialPipeExecute
     au CursorHold * checktime
     au BufNewFile,BufRead *.mongo call InitMongoBuf()
+    au BufNewFile,BufRead * setlocal iskeyword+=-
 augroup END
 
 
