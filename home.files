@@ -23,6 +23,7 @@ bin/*
 .ncmpcpp/*
 .themes/*
 .vimrc
+.taskrc
 .Xdefaults
 .xinitrc
 .vim/sessions/*/sessionv.vim

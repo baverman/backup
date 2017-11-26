@@ -37,6 +37,7 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'stefandtw/quickfix-reflector.vim'
 Plug 'dbmrq/vim-ditto'
 Plug '~/.vim/bundle/vial-draw'
+Plug 'blindFS/vim-taskwarrior'
 call plug#end()
 
 filetype plugin on

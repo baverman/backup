@@ -1,0 +1,49 @@
+# [Created by task 2.5.1 11/26/2017 15:06:02]
+# Taskwarrior program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-color',
+# 'man task-sync' or 'man taskrc'
+
+# Here is an example of entries that use the default, override and blank values
+#   variable=foo   -- By specifying a value, this overrides the default
+#   variable=      -- By specifying no value, this means no default
+#   #variable=foo  -- By commenting out the line, or deleting it, this uses the default
+
+# Use the command 'task show' to see all defaults and overrides
+
+# Files
+data.location=~/.task
+weekstart=monday
+
+uda.sp.type=numeric
+uda.sp.label=Story points
+
+# Color theme (uncomment one to use)
+#include /usr/share/doc/task/rc/light-16.theme
+include /usr/share/doc/task/rc/light-256.theme
+#include /usr/share/doc/task/rc/dark-16.theme
+#include /usr/share/doc/task/rc/dark-256.theme
+#include /usr/share/doc/task/rc/dark-red-256.theme
+#include /usr/share/doc/task/rc/dark-green-256.theme
+#include /usr/share/doc/task/rc/dark-blue-256.theme
+#include /usr/share/doc/task/rc/dark-violets-256.theme
+#include /usr/share/doc/task/rc/dark-yellow-green.theme
+#include /usr/share/doc/task/rc/dark-gray-256.theme
+#include /usr/share/doc/task/rc/dark-gray-blue-256.theme
+#include /usr/share/doc/task/rc/solarized-dark-256.theme
+#include /usr/share/doc/task/rc/solarized-light-256.theme
+#include /usr/share/doc/task/rc/no-color.theme
+
+taskd.certificate=~/kb/private.certificate.pem
+taskd.key=~/kb/private.key.pem
+taskd.ca=~/kb/ca.cert.pem
+taskd.server=taskwarrior.inthe.am:53589
+taskd.credentials=inthe_am/baverman/4d8bccf0-7917-4968-9d7a-0702a691ad94
+taskd.trust=ignore hostname
+
+urgency.tags.coefficient=0.0
+urgency.user.tag.week.coefficient=5
+urgency.user.tag.nweek.coefficient=3
+urgency.user.tag.today.coefficient=10
+
+report.next.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency,sp
+report.next.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg,Points
