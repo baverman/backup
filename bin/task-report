@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+import sys
+import json
+from subprocess import Popen, PIPE
+from itertools import groupby
+
+
+class Table(list):
+    def group_by(self, *columns):
+        if len(columns) > 1:
+            key = lambda r: tuple(r.get(c) for c in columns)
+        else:
+            cname = columns[0]
+            key = lambda r: r.get(cname)
+
+        return [(k, Table(g)) for k, g in groupby(sorted(self, key=key), key)]
+
+    def filter(self, cond):
+        return Table(filter(cond, self))
+
+    def __getattr__(self, name):
+        return Column(r.get(name) for r in self)
+
+
+class Column(list):
+    @property
+    def sum(self):
+        return sum(r for r in self if r is not None)
+
+
+class adict(dict):
+    def __getattr__(self, name):
+        return self.get(name)
+
+
+is_completed = lambda r: r.status == 'completed'
+is_pending = lambda r: r.status != 'completed'
+
+
+def report_sp(data):
+    result = Table(
+        adict(project=k,
+              pending=g.filter(is_pending).sp.sum,
+              completed=g.filter(is_completed).sp.sum)
+        for k, g in data.group_by('project')
+    )
+
+    result.append(adict(project='Total',
+                        pending=result.pending.sum,
+                        completed=result.completed.sum))
+
+    print_table(result, ('project', '+pending', '+completed'))
+
+
+def print_table(data, columns):
+    columns, just = zip(*[(c.lstrip('+'), str.rjust if c.startswith('+') else str.ljust)
+                          for c in columns])
+
+    lens = [max(len(c), max(len(str(r.get(c, ''))) for r in data)) for c in columns]
+
+    print(' '.join(j(c, m) for c, j, m in zip(columns, just, lens)))
+    print(' '.join('-' * m for _c, _j, m in zip(columns, just, lens)))
+    for r in data:
+        print(' '.join(j(str(r.get(c, '')), m) for c, j, m in zip(columns, just, lens)))
+
+
+def main(report, data):
+    globals()[f'report_{report}'](data)
+
+
+if __name__ == '__main__':
+    report = sys.argv[1]
+    flt = sys.argv[2:]
+    stdout, stderr = Popen(['task', *flt, 'export'], stdout=PIPE).communicate()
+    data = Table(map(adict, json.loads(stdout)))
+    main(report, data)
