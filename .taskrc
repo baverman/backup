@@ -41,9 +41,13 @@ taskd.credentials=inthe_am/baverman/4d8bccf0-7917-4968-9d7a-0702a691ad94
 taskd.trust=ignore hostname
 
 urgency.tags.coefficient=0.0
-urgency.user.tag.week.coefficient=5
-urgency.user.tag.nweek.coefficient=3
-urgency.user.tag.today.coefficient=10
+urgency.age.coefficient=0
+urgency.blocked.coefficient=-1
+urgency.blocking.coefficient=1
+urgency.user.tag.week.coefficient=10
+urgency.user.tag.nweek.coefficient=5
+urgency.user.tag.today.coefficient=20
 
 report.next.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency,sp
 report.next.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg,Points
+report.next.sort=urgency-,project+
