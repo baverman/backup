@@ -6,14 +6,19 @@ from itertools import groupby
 
 
 class Table(list):
-    def group_by(self, *columns):
+    def group_by(self, *columns, map=None):
         if len(columns) > 1:
             key = lambda r: tuple(r.get(c) for c in columns)
         else:
             cname = columns[0]
             key = lambda r: r.get(cname)
 
-        return [(k, Table(g)) for k, g in groupby(sorted(self, key=key), key)]
+        result = [(k, Table(g)) for k, g in groupby(sorted(self, key=key), key)]
+
+        if map:
+            result = Table(filter(None, (map(k, v) for k, v in result)))
+
+        return result
 
     def filter(self, cond):
         return Table(filter(cond, self))
@@ -38,12 +43,11 @@ is_pending = lambda r: r.status != 'completed'
 
 
 def report_sp(data):
-    result = Table(
-        adict(project=k,
-              pending=g.filter(is_pending).sp.sum,
-              completed=g.filter(is_completed).sp.sum)
-        for k, g in data.group_by('project')
-    )
+    result = data.group_by('project', map=(lambda key, group: adict(
+        project=key,
+        pending=group.filter(is_pending).sp.sum,
+        completed=group.filter(is_completed).sp.sum
+    )))
 
     result.append(adict(project='Total',
                         pending=result.pending.sum,
