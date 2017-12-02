@@ -73,8 +73,8 @@ def main(report, data):
 
 
 if __name__ == '__main__':
-    report = sys.argv[1]
-    flt = sys.argv[2:]
+    report = sys.argv[-1]
+    flt = sys.argv[1:-1] + ['-DELETED']
     stdout, stderr = Popen(['task', *flt, 'export'], stdout=PIPE).communicate()
     data = Table(map(adict, json.loads(stdout)))
     main(report, data)
