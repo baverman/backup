@@ -22,7 +22,7 @@ user ${mail.baverman.user}
 password ${mail.baverman.pwd}
 port 587
 tls_certcheck on
-tls_trust_file ~/.mutt/geotrust-ex.pem
+tls_trust_file ~/.mutt/google.pem
 
 account getpatch
 from ${mail.getpatch.efrom}
@@ -32,7 +32,7 @@ user ${mail.getpatch.efrom}
 password ${mail.getpatch.pwd}
 port 587
 tls_certcheck on
-tls_trust_file ~/.mutt/geotrust-ex.pem
+tls_trust_file ~/.mutt/google.pem
 
 account rambler
 from ${mail.rambler.efrom}
@@ -52,7 +52,7 @@ user ${mail.zvooq.user}
 password ${mail.zvooq.pwd}
 port 587
 tls_certcheck on
-tls_trust_file ~/.mutt/geotrust-ex.pem
+tls_trust_file ~/.mutt/google.pem
 
 account gost
 from ${mail.gost.efrom}

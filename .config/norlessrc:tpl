@@ -36,7 +36,7 @@ sync = INBOX -> inbox | Sent Items -> sent
 [account baverman]
 from = ${mail.baverman.efrom}
 host = imap.gmail.com
-cafile = ~/.mutt/geotrust.pem
+cafile = ~/.mutt/google.pem
 user = ${mail.baverman.user}
 password = ${mail.baverman.pwd}
 trash = [Gmail]/Trash
@@ -45,7 +45,7 @@ sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
 [disabled account ${mail.getpatch.efrom}]
 from = ${mail.getpatch.efrom}
 host = imap.gmail.com
-cafile = ~/.mutt/geotrust.pem
+cafile = ~/.mutt/google.pem
 user = ${mail.getpatch.efrom}
 password = ${mail.getpatch.pwd}
 trash = [Gmail]/Trash
@@ -64,7 +64,7 @@ sync = INBOX -> inbox | &BBgEQQRFBD4ENARPBEkEOAQ1- -> sent
 [disabled account zvooq]
 from = ${mail.zvooq.efrom}
 host = imap.gmail.com
-cafile = ~/.mutt/geotrust.pem
+cafile = ~/.mutt/google.pem
 user = ${mail.zvooq.user}
 password = ${mail.zvooq.pwd}
 trash = [Gmail]/Trash
