@@ -60,8 +60,8 @@ complete -F __svial svial
 export SDL_AUDIODRIVER=alsa
 export PULSE_LATENCY_MSEC=60
 
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
-export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv2
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv3
 export PYTHONSTARTUP="$HOME/work/python-shell-enhancement/pythonstartup.py"
 
 export OB_TOP_MARGIN=19
