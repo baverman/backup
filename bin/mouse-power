@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for i in /sys/bus/usb/devices/*/product; do
+    if [ "$(cat $i)" == "USB Receiver" ]; then
+        echo "$1" | sudo tee $(dirname $i)/power/control
+    fi
+done
