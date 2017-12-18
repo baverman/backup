@@ -16,6 +16,8 @@ weekstart=monday
 
 uda.sp.type=numeric
 uda.sp.label=Story points
+uda.remind.type=date
+uda.remind.label=Remind
 
 # Color theme (uncomment one to use)
 #include /usr/share/doc/task/rc/light-16.theme
@@ -48,6 +50,6 @@ urgency.user.tag.week.coefficient=10
 urgency.user.tag.nweek.coefficient=5
 urgency.user.tag.today.coefficient=20
 
-report.next.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency,sp
+report.next.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.relative,due.relative,until.remaining,description,urgency,sp
 report.next.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg,Points
 report.next.sort=urgency-,project+
