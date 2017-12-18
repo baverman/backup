@@ -24,12 +24,12 @@ port 587
 tls_certcheck on
 tls_trust_file ~/.mutt/google.pem
 
-account getpatch
-from ${mail.getpatch.efrom}
+account agima
+from ${mail.agima.efrom}
 auth on
 host smtp.gmail.com
-user ${mail.getpatch.efrom}
-password ${mail.getpatch.pwd}
+user ${mail.agima.efrom}
+password ${mail.agima.pwd}
 port 587
 tls_certcheck on
 tls_trust_file ~/.mutt/google.pem

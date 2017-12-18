@@ -42,6 +42,15 @@ password = ${mail.baverman.pwd}
 trash = [Gmail]/Trash
 sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
 
+[account ${mail.agima.efrom}]
+from = ${mail.agima.efrom}
+host = imap.gmail.com
+cafile = ~/.mutt/google.pem
+user = ${mail.agima.efrom}
+password = ${mail.agima.pwd}
+trash = [Gmail]/Trash
+sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
+
 [disabled account ${mail.getpatch.efrom}]
 from = ${mail.getpatch.efrom}
 host = imap.gmail.com
