@@ -49,7 +49,7 @@ cafile = ~/.mutt/google.pem
 user = ${mail.agima.efrom}
 password = ${mail.agima.pwd}
 trash = [Gmail]/Trash
-sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
+sync = INBOX -> inbox | [Gmail]/&BB4EQgQ,BEAEMAQyBDsENQQ9BD0ESwQ1- -> sent
 
 [disabled account ${mail.getpatch.efrom}]
 from = ${mail.getpatch.efrom}
