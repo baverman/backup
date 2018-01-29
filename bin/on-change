@@ -1,35 +1,56 @@
 #!/usr/bin/env python
 from __future__ import print_function
 
+import signal
 import argparse
 import fcntl
 import os
 import sys
 import errno
 from time import sleep, time
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, TimeoutExpired
 
+
+current_process = None
 
 def oneshot(args, events):
-    Popen(args).wait()
+    global current_process
+
+    current_process = Popen(args)
+    current_process.wait()
     for r in events:
-        Popen(args).wait()
+        current_process = Popen(args)
+        current_process.wait()
 
 
 def longpoll(args, events):
+    global current_process
     start = time()
-    p = Popen(args)
+    current_process = Popen(args)
     for r in events:
         if start + 1 < r:
-            p.terminate()
-            p.wait()
+            current_process.terminate()
+            current_process.wait()
             start = time()
-            p = Popen(args)
+            current_process = Popen(args)
 
 
 def get_events(watch_list, timeout=0.3):
     wp = Popen(['inotifywait', '-m', '-r', '-e', 'create', '-e', 'modify'] + watch_list, stdout=PIPE)
     fcntl.fcntl(wp.stdout, fcntl.F_SETFL, os.O_NONBLOCK)
+
+    def shutdown(signal, frame):
+        if current_process:
+            current_process.terminate()
+            try:
+                current_process.wait(2)
+            except TimeoutExpired:
+                current_process.kill()
+                current_process.wait()
+        sys.exit(0)
+
+    signal.signal(signal.SIGINT, shutdown)
+    signal.signal(signal.SIGTERM, shutdown)
 
     def read():
         try:
