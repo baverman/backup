@@ -90,6 +90,7 @@ def app_rules(w):
     decorate = None
     maximize = None
     otaskbar = None
+    fill = None
 
     if w.matches(name='vial'):
         maximize = True
@@ -100,7 +101,7 @@ def app_rules(w):
         decorate = False
     elif w.matches(name='Opera', cls='Opera'):
         decorate = False
-        maximize = True
+        fill = True
     elif w.matches(cls='URxvt'):
         desktop = 1
         decorate = False
@@ -120,6 +121,9 @@ def app_rules(w):
     if desktop >=0 and desktop != cd:
         wm.focus_and_raise(w)
         wm.activate_desktop(desktop)
+
+    if fill:
+        wm.moveresize_window2(w, 0, 0, 0, 0)
 
 
 #########################

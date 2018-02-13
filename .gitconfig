@@ -22,3 +22,6 @@
 	prompt = false
 [difftool "vimdiff"]
 	path = vial-wait
+
+[pager]
+    branch = false
