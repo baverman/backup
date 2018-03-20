@@ -1,4 +1,4 @@
-fullscreen=yes
+# fullscreen=yes
 af=format=s32le
 ao=alsa
 channels=2

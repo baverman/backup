@@ -13,6 +13,7 @@ pcm.cnv {
     slave {
         pcm hw:0
         rate 48000
+        format S16_LE
     }
 }
 
