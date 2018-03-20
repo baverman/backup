@@ -56,10 +56,10 @@ color index_number default default
 color index_flags brightred default
 
 # work mail
-color index_subject color5 default '~C agima.ru'
+color index_subject color5 default '~C cloudlinux.com'
 
 # legacy box
 color index_subject color4 default '~C bobrov@vl.ru'
 
 # email from myself
-color index_author brightmagenta default '~f bobrov@vl.ru|~f baverman@gmail.com|~f a.bobrov@agima.ru'
+color index_author brightmagenta default '~f bobrov@vl.ru|~f baverman@gmail.com|~f abobrov@cloudlinux.com'
