@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /usr/bin/opera $OPERA_OPTS $@
+exec /usr/bin/opera --proxy-pac-url=file:///home/bobrov/tmp/tlgrm.pac $OPERA_OPTS $@

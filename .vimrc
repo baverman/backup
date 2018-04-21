@@ -17,7 +17,7 @@ Plug 'gkz/vim-ls'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'AndrewRadev/linediff.vim'
 Plug 'garbas/vim-snipmate'
-Plug 'godlygeek/tabular'
+" Plug 'godlygeek/tabular'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/vim-easy-align'
 Plug 'MarcWeber/vim-addon-mw-utils'
@@ -33,11 +33,12 @@ Plug 'vim-scripts/tComment'
 Plug 'wavded/vim-stylus'
 Plug 'wellle/targets.vim'
 Plug 'Wolfy87/vim-enmasse'
-Plug 'dhruvasagar/vim-table-mode'
+" Plug 'dhruvasagar/vim-table-mode'
 Plug 'stefandtw/quickfix-reflector.vim'
 Plug 'dbmrq/vim-ditto'
 Plug '~/.vim/bundle/vial-draw'
 Plug 'blindFS/vim-taskwarrior'
+" Plug 'vim-airline/vim-airline'
 call plug#end()
 
 filetype plugin on
@@ -223,6 +224,11 @@ function! InitMongoBuf()
     vmap <buffer> <leader><cr> <Plug>VialPipeExecute
 endfunction
 
+function! InitPipeBuf()
+    nmap <buffer> <leader><cr> <Plug>VialPipeExecute
+    vmap <buffer> <leader><cr> <Plug>VialPipeExecute
+endfunction
+
 augroup MyFileTypeSettings
     au!
     au FileType python call InitPythonBuf()
@@ -232,7 +238,10 @@ augroup MyFileTypeSettings
     au FileType sql vmap <buffer> <leader><cr> <Plug>VialPipeExecute
     au CursorHold * checktime
     au BufNewFile,BufRead *.mongo call InitMongoBuf()
+    au BufNewFile,BufRead *.clickhouse setfiletype sql
+    au BufNewFile,BufRead *.pipe call InitPipeBuf()
     au BufNewFile,BufRead * setlocal iskeyword+=-
+    au WinEnter,BufWinEnter __vial_* let w:airline_disabled=1
 augroup END
 
 

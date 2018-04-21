@@ -1,0 +1,55 @@
+#!/usr/bin/env python
+
+import time
+import sys
+import socket
+import ssl
+import math
+
+
+def percentile(N, percent, key=lambda x:x):
+    if not N:
+        return None
+    k = (len(N)-1) * percent / 100.0
+    f = math.floor(k)
+    c = math.ceil(k)
+    if f == c:
+        return key(N[int(k)])
+    d0 = key(N[int(f)]) * (c-k)
+    d1 = key(N[int(c)]) * (k-f)
+    return d0+d1
+
+
+def main(name):
+    host, sep, port = name.rpartition(':')
+    if not sep:
+        host, port = port, 443
+    port = int(port)
+
+    for res in socket.getaddrinfo(host, port, 0, socket.SOCK_STREAM):
+        af, socktype, proto, canonname, sa = res
+        if af == socket.AF_INET:
+            break
+    else:
+        assert False, 'Can\'t find IPv4 address'
+
+
+    data = []
+    for _ in range(100):
+        t = time.time()
+        sock = socket.socket(af, socktype, proto)
+        ssock = ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_TLSv1_2)
+        ssock.connect(sa)
+        duration = time.time() - t
+        data.append(duration)
+        print('.', end='', flush=True)
+
+    data.sort()
+
+    print()
+    for p in (50, 75, 95, 99, 100):
+        print(f'{p}: {percentile(data, p)}')
+
+
+if __name__ == '__main__':
+    main(sys.argv[1])

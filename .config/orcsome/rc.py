@@ -64,6 +64,39 @@ def maximize_window():
         wm.set_window_state(w, vmax=True, hmax=True, decorate=False, otaskbar=True)
 
 
+@wm.on_key('Alt+Mod+space')
+def fill_area():
+    wm.moveresize_window2(wm.current_window, 0, 0, 0, 0)
+
+
+def ratio_resize(w, l, m, is_right=False):
+    wm.set_window_state(w, vmax=False, hmax=False,
+        decorate=False, otaskbar=True)
+    _, _, dw, _ = tuple(wm.get_workarea(w.desktop))
+    new_w = dw * l / m
+    if is_right:
+        wm.moveresize_window2(w, dw-new_w, 0, 0, 0)
+    else:
+        wm.moveresize_window2(w, 0, 0, dw-new_w, 0)
+
+
+def w_ratio_resize(l, m, is_right):
+    def inner():
+        ratio_resize(wm.current_window, l, m, is_right)
+    return inner
+
+
+wm.on_key('Mod+1')(w_ratio_resize(1, 1, False))
+wm.on_key('Mod+2')(w_ratio_resize(1, 2, False))
+wm.on_key('Mod+3')(w_ratio_resize(1, 3, False))
+wm.on_key('Mod+4')(w_ratio_resize(1, 4, False))
+wm.on_key('Mod+5')(w_ratio_resize(1, 5, False))
+wm.on_key('Shift+Mod+2')(w_ratio_resize(1, 2, True))
+wm.on_key('Shift+Mod+3')(w_ratio_resize(2, 3, True))
+wm.on_key('Shift+Mod+4')(w_ratio_resize(3, 4, True))
+wm.on_key('Shift+Mod+5')(w_ratio_resize(4, 5, True))
+
+
 ##########################
 # Terminal desktop control
 @wm.on_key('Ctrl+Alt+c')
