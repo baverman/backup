@@ -86,15 +86,21 @@ def w_ratio_resize(l, m, is_right):
     return inner
 
 
+def two_ratio_resize(f):
+    def inner():
+        c1 = wm.window(wm.focus_history[-1])
+        c2 = wm.window(wm.focus_history[-2])
+        ratio_resize(c1, 1, f, False)
+        ratio_resize(c2, f-1, f, True)
+    return inner
+
+
 wm.on_key('Mod+1')(w_ratio_resize(1, 1, False))
-wm.on_key('Mod+2')(w_ratio_resize(1, 2, False))
-wm.on_key('Mod+3')(w_ratio_resize(1, 3, False))
-wm.on_key('Mod+4')(w_ratio_resize(1, 4, False))
-wm.on_key('Mod+5')(w_ratio_resize(1, 5, False))
-wm.on_key('Shift+Mod+2')(w_ratio_resize(1, 2, True))
-wm.on_key('Shift+Mod+3')(w_ratio_resize(2, 3, True))
-wm.on_key('Shift+Mod+4')(w_ratio_resize(3, 4, True))
-wm.on_key('Shift+Mod+5')(w_ratio_resize(4, 5, True))
+wm.on_key('Mod+2')(two_ratio_resize(2))
+wm.on_key('Mod+3')(two_ratio_resize(3))
+wm.on_key('Mod+4')(two_ratio_resize(4))
+wm.on_key('Mod+5')(two_ratio_resize(5))
+
 
 
 ##########################
