@@ -88,8 +88,10 @@ def w_ratio_resize(l, m, is_right):
 
 def two_ratio_resize(f):
     def inner():
-        c1 = wm.window(wm.focus_history[-1])
-        c2 = wm.window(wm.focus_history[-2])
+        clients = wm.find_clients(wm.get_stacked_clients(),
+                        desktop=wm.current_desktop)
+        c1 = clients[-1]
+        c2 = clients[-2]
         ratio_resize(c1, 1, f, False)
         ratio_resize(c2, f-1, f, True)
     return inner
