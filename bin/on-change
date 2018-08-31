@@ -35,8 +35,11 @@ def longpoll(args, events):
             current_process = Popen(args)
 
 
-def get_events(watch_list, timeout=0.3):
-    wp = Popen(['inotifywait', '-m', '-r', '-e', 'create', '-e', 'modify'] + watch_list, stdout=PIPE)
+def get_events(watch_list, exclude, timeout=0.3):
+    cmd = ['inotifywait', '-m', '-r', '-e', 'create', '-e', 'modify']
+    if exclude:
+        cmd += ['--exclude', exclude]
+    wp = Popen(cmd + watch_list, stdout=PIPE)
     fcntl.fcntl(wp.stdout, fcntl.F_SETFL, os.O_NONBLOCK)
 
     def shutdown(signal, frame):
@@ -80,6 +83,7 @@ def get_events(watch_list, timeout=0.3):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-w', dest='watch', action='append')
+    parser.add_argument('-e', dest='exclude')
     parser.add_argument('-d', dest='daemon', action='store_true')
     args, rest = parser.parse_known_args()
 
@@ -93,8 +97,8 @@ if __name__ == '__main__':
     watch_list = args.watch or ['.']
     try:
         if args.daemon:
-            longpoll(rest, get_events(watch_list))
+            longpoll(rest, get_events(watch_list, args.exclude))
         else:
-            oneshot(rest, get_events(watch_list))
+            oneshot(rest, get_events(watch_list, args.exclude))
     except KeyboardInterrupt:
         pass

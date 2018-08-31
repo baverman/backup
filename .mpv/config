@@ -7,3 +7,4 @@ audio-format=s16
 volume-max=300
 sub-codepage=cp1251
 sub-scale=0.8
+#sub-back-color=0/0/0

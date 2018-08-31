@@ -25,3 +25,6 @@
 
 [pager]
     branch = false
+
+[tig]
+    diff-highlight = /usr/share/git/diff-highlight/diff-highlight

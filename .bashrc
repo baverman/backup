@@ -17,8 +17,8 @@ PS1='\[\033[01;34m\]\w\[\033[31m\]$(__git_ps1 "[%s]")\[\033[01;32m\]$(__prompt_s
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 export PROMPT_COMMAND='history -a'
 export HISTCONTROL=ignoredups
-export HISTFILESIZE=5000
-export HISTSIZE=5000
+export HISTFILESIZE=15000
+export HISTSIZE=15000
 shopt -s histappend
 
 export PAGER=most
@@ -57,7 +57,7 @@ __svial() {
 }
 complete -F __svial svial
 
-export SDL_AUDIODRIVER=alsa
+# export SDL_AUDIODRIVER=alsa
 export PULSE_LATENCY_MSEC=60
 
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3

@@ -147,7 +147,9 @@ def app_rules(w):
         desktop = 1
         decorate = False
         maximize = True
-    elif w.matches(name='pinentry', cls='Pinentry'):
+    elif w.matches(name='pinentry-qt'):
+        desktop = -1
+    elif w.matches(name='pinentry-gtk-2'):
         desktop = -1
     elif w.matches(cls='bmpanel'):
         return

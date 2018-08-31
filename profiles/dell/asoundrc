@@ -17,27 +17,32 @@ pcm.cnv {
     }
 }
 
-pcm.bluetooth {
-        type bluealsa
-        interface "hci0"
-        device "88:C6:26:9A:DE:12"
-        profile "a2dp"
-}
-
-pcm.cnvb {
-    type rate
-    slave {
-        pcm bluetooth
-        rate 48000
-    }
-}
+# pcm.bluetooth {
+#         type bluealsa
+#         interface "hci0"
+#         device "88:C6:26:9A:DE:12"
+#         profile "a2dp"
+# }
+#
+# pcm.cnvb {
+#     type rate
+#     slave {
+#         pcm bluetooth
+#         rate 48000
+#     }
+# }
 
 # pcm.!default pcm.asymed
 # pcm.!default pcm.null
 # pcm.!default pcm.cnv
+
 pcm.!default {
     @func getenv
     vars [ ALSAPCM ]
     default "pcm.asymed"
     # default "pcm.cnvb"
 }
+
+# defaults.pcm.!card "Track";
+# defaults.ctl.!card "Track";
+# defaults.pcm.!device 0;

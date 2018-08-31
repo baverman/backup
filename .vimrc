@@ -37,7 +37,7 @@ Plug 'Wolfy87/vim-enmasse'
 Plug 'stefandtw/quickfix-reflector.vim'
 Plug 'dbmrq/vim-ditto'
 Plug '~/.vim/bundle/vial-draw'
-Plug 'blindFS/vim-taskwarrior'
+Plug 'aklt/plantuml-syntax'
 " Plug 'vim-airline/vim-airline'
 call plug#end()
 

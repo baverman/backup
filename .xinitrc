@@ -3,6 +3,7 @@
 profile=~/backup/profiles/$MYROLE
 source $profile/xinit
 KI=$kbd_indicator
+mkdir -p /tmp/opera-index
 
 set_kbd_map() {
     xset r rate 200 40
@@ -18,6 +19,8 @@ urxvtd -q -f -o
 set_kbd_map
 
 devmon &> /tmp/devmon.log &
+
+track-status.sh | dzen2 -fg white -x 1770 -y 4 -w 60 &
 
 killall gpg-agent
 eval $(gpg-agent --daemon) &
