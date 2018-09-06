@@ -4,7 +4,10 @@ kbd_indicator=caps
 xrandr --output eDP1 --gamma 1.0:1.0:1.0
 feh --bg-center wallpapers/story-1080.png
 xbacklight -set 70
+
+# Power settings
 sudo powertop --auto-tune
+sudo rfkill block bluetooth
 
 xinput set-prop "DLL0665:01 06CB:76AD Touchpad" "libinput Tapping Enabled" 1
 xinput set-prop "DLL0665:01 06CB:76AD Touchpad" "libinput Tapping Drag Lock Enabled" 1
