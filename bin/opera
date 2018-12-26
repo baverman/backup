@@ -1,2 +1,3 @@
 #!/bin/sh
 exec /usr/bin/opera --proxy-pac-url=file:///home/bobrov/tmp/tlgrm.pac $OPERA_OPTS $@
+# --disable-gpu-driver-bug-workarounds

@@ -13,10 +13,13 @@ path = ~/mail/inbox
 path = ~/mail/sent
 sync_new = yes
 
+[maildir imp]
+path = ~/mail/imp
+
 [account bobrov@vl.ru]
 from = ${mail.bobrov.efrom}
 host = pop.farpost.ru
-fingerprint = F4:B5:18:3E:E7:58:08:01:C2:0C:3A:30:9F:80:59:9E:97:DB:7B:48
+fingerprint = 0D:26:0A:D2:65:B1:DB:11:A2:CF:A9:DA:A1:E6:F3:DF:F2:8B:A5:EA
 user = ${mail.bobrov.user}
 password = ${mail.bobrov.pwd}
 trash = Trash
@@ -43,7 +46,7 @@ cafile = ~/.mutt/google.pem
 user = ${mail.baverman.user}
 password = ${mail.baverman.pwd}
 trash = [Gmail]/Trash
-sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
+sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent | imp -> imp
 smtp_host = smtp.gmail.com
 smtp_port = 587
 smtp_cafile = ~/.mutt/google.pem
