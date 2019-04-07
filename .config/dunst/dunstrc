@@ -1,5 +1,5 @@
 [global]
-    font = Inconsolata LGC 12
+    font = Roboto 15
 
     # allow a small subset of html markup:
     # <b>bold</b>

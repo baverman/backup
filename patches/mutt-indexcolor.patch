@@ -1,6 +1,6 @@
-diff -aur mutt-1.9.0/color.c mutt.fixed/color.c
---- mutt-1.9.0/color.c	2017-09-02 21:17:12.000000000 +0300
-+++ mutt.fixed/color.c	2017-09-05 11:16:40.823531516 +0300
+diff -aur mutt-1.11.1.orig/color.c mutt-1.11.1.colors/color.c
+--- mutt-1.11.1.orig/color.c	2018-11-25 21:00:40.000000000 +0300
++++ mutt-1.11.1.colors/color.c	2018-12-26 20:58:11.990727915 +0300
 @@ -36,6 +36,8 @@
  COLOR_LINE *ColorHdrList = NULL;
  COLOR_LINE *ColorBodyList = NULL;
@@ -89,9 +89,9 @@ diff -aur mutt-1.9.0/color.c mutt.fixed/color.c
 +  }
 +
    if (mutt_strncmp (buf->data, "index", 5) == 0)
-     list = &ColorIndexList;
-   else if (mutt_strncmp (buf->data, "body", 4) == 0)
-@@ -464,42 +526,12 @@
+   {
+     is_index = 1;
+@@ -467,42 +529,12 @@
      return 0;
    }
  
@@ -139,8 +139,8 @@ diff -aur mutt-1.9.0/color.c mutt.fixed/color.c
 +    mutt_do_uncolor(buf, s, &ColorIndexAuthorList, &do_cache, parse_uncolor);
  
  
-   if (do_cache && !option (OPTNOCURSES))
-@@ -756,7 +788,7 @@
+   if (is_index && do_cache && !option (OPTNOCURSES))
+@@ -763,7 +795,7 @@
  
    /* extract a regular expression if needed */
    
@@ -149,7 +149,7 @@ diff -aur mutt-1.9.0/color.c mutt.fixed/color.c
    {
      if (!MoreArgs (s))
      {
-@@ -800,6 +832,18 @@
+@@ -807,6 +839,18 @@
      r = add_pattern (&ColorIndexList, buf->data, 1, fg, bg, attr, err, 1);
      mutt_set_menu_redraw_full (MENU_MAIN);
    }
@@ -168,7 +168,7 @@ diff -aur mutt-1.9.0/color.c mutt.fixed/color.c
    else if (object == MT_COLOR_QUOTED)
    {
      if (q_level >= ColorQuoteSize)
-@@ -825,7 +869,11 @@
+@@ -832,7 +876,11 @@
        ColorQuote[q_level] = fgbgattr_to_color(fg, bg, attr);
    }
    else
@@ -180,10 +180,10 @@ diff -aur mutt-1.9.0/color.c mutt.fixed/color.c
  
    return (r);
  }
-diff -aur mutt-1.9.0/curs_lib.c mutt.fixed/curs_lib.c
---- mutt-1.9.0/curs_lib.c	2017-09-02 21:17:12.000000000 +0300
-+++ mutt.fixed/curs_lib.c	2017-09-04 19:24:27.091444300 +0300
-@@ -1067,6 +1067,7 @@
+diff -aur mutt-1.11.1.orig/curs_lib.c mutt-1.11.1.colors/curs_lib.c
+--- mutt-1.11.1.orig/curs_lib.c	2018-11-25 21:00:40.000000000 +0300
++++ mutt-1.11.1.colors/curs_lib.c	2018-12-26 20:58:11.990727915 +0300
+@@ -1204,6 +1204,7 @@
    size_t k, k2;
    char scratch[MB_LEN_MAX];
    mbstate_t mbstate1, mbstate2;
@@ -191,7 +191,7 @@ diff -aur mutt-1.9.0/curs_lib.c mutt.fixed/curs_lib.c
  
    memset(&mbstate1, 0, sizeof (mbstate1));
    memset(&mbstate2, 0, sizeof (mbstate2));
-@@ -1082,7 +1083,15 @@
+@@ -1219,7 +1220,15 @@
        k = (k == (size_t)(-1)) ? 1 : n;
        wc = replacement_char ();
      }
@@ -208,10 +208,10 @@ diff -aur mutt-1.9.0/curs_lib.c mutt.fixed/curs_lib.c
        w = 1; /* hack */
      else
      {
-diff -aur mutt-1.9.0/doc/manual.xml.head mutt.fixed/doc/manual.xml.head
---- mutt-1.9.0/doc/manual.xml.head	2017-09-02 21:17:12.000000000 +0300
-+++ mutt.fixed/doc/manual.xml.head	2017-09-04 19:24:27.094777634 +0300
-@@ -2655,7 +2655,7 @@
+diff -aur mutt-1.11.1.orig/doc/manual.xml.head mutt-1.11.1.colors/doc/manual.xml.head
+--- mutt-1.11.1.orig/doc/manual.xml.head	2018-11-25 21:00:40.000000000 +0300
++++ mutt-1.11.1.colors/doc/manual.xml.head	2018-12-26 20:58:11.990727915 +0300
+@@ -2687,7 +2687,7 @@
  
  <command>color</command>
  <arg choice="plain">
@@ -220,7 +220,7 @@ diff -aur mutt-1.9.0/doc/manual.xml.head mutt.fixed/doc/manual.xml.head
  </arg>
  <arg choice="plain">
  <replaceable class="parameter">foreground</replaceable>
-@@ -2684,7 +2684,7 @@
+@@ -2716,7 +2716,7 @@
  <command>uncolor</command>
  <group choice="req">
  <arg choice="plain">
@@ -229,7 +229,7 @@ diff -aur mutt-1.9.0/doc/manual.xml.head mutt.fixed/doc/manual.xml.head
  </arg>
  <arg choice="plain">
  <option>header</option>
-@@ -2737,6 +2737,14 @@
+@@ -2769,6 +2769,14 @@
  <listitem><para>bold (highlighting bold patterns in the body of messages)</para></listitem>
  <listitem><para>error (error messages printed by Mutt)</para></listitem>
  <listitem><para>hdrdefault (default color of the message header in the pager)</para></listitem>
@@ -244,9 +244,10 @@ diff -aur mutt-1.9.0/doc/manual.xml.head mutt.fixed/doc/manual.xml.head
  <listitem><para>indicator (arrow or bar used to indicate the current item in a menu)</para></listitem>
  <listitem><para>markers (the <quote>+</quote> markers at the beginning of wrapped lines in the pager)</para></listitem>
  <listitem><para>message (informational messages)</para></listitem>
-diff -aur mutt-1.9.0/hdrline.c mutt.fixed/hdrline.c
---- mutt-1.9.0/hdrline.c	2017-09-02 21:17:12.000000000 +0300
-+++ mutt.fixed/hdrline.c	2017-09-04 19:24:27.098110967 +0300
+Only in mutt-1.11.1.colors/doc: manual.xml.head.orig
+diff -aur mutt-1.11.1.orig/hdrline.c mutt-1.11.1.colors/hdrline.c
+--- mutt-1.11.1.orig/hdrline.c	2018-11-25 21:00:40.000000000 +0300
++++ mutt-1.11.1.colors/hdrline.c	2018-12-26 20:58:11.990727915 +0300
 @@ -103,6 +103,34 @@
    return 0;
  }
@@ -403,7 +404,7 @@ diff -aur mutt-1.9.0/hdrline.c mutt.fixed/hdrline.c
        }
        break;
  
-@@ -699,7 +754,9 @@
+@@ -700,7 +755,9 @@
  		hdr->tagged ? "*" :
  		(hdr->flagged ? "!" :
  		 (Tochars && ((i = mutt_user_is_recipient (hdr)) < Tochars->len) ? Tochars->chars[i] : " ")));
@@ -414,7 +415,7 @@ diff -aur mutt-1.9.0/hdrline.c mutt.fixed/hdrline.c
        break;
  
      case 'X':
-@@ -719,7 +776,9 @@
+@@ -720,7 +777,9 @@
         if (optional)
  	 optional = hdr->env->x_label ? 1 : 0;
  
@@ -425,7 +426,7 @@ diff -aur mutt-1.9.0/hdrline.c mutt.fixed/hdrline.c
         break;
   
      case 'Y':
-@@ -745,10 +804,12 @@
+@@ -746,10 +805,12 @@
        if (optional)
  	optional = i;
  
@@ -440,9 +441,9 @@ diff -aur mutt-1.9.0/hdrline.c mutt.fixed/hdrline.c
  
        break;
  
-diff -aur mutt-1.9.0/menu.c mutt.fixed/menu.c
---- mutt-1.9.0/menu.c	2017-09-02 21:17:13.000000000 +0300
-+++ mutt.fixed/menu.c	2017-09-05 11:04:10.703504113 +0300
+diff -aur mutt-1.11.1.orig/menu.c mutt-1.11.1.colors/menu.c
+--- mutt-1.11.1.orig/menu.c	2018-11-25 21:00:40.000000000 +0300
++++ mutt-1.11.1.colors/menu.c	2018-12-26 20:58:11.990727915 +0300
 @@ -35,7 +35,32 @@
  static size_t MenuStackLen = 0;
  static MUTTMENU **MenuStack = NULL;
@@ -545,10 +546,10 @@ diff -aur mutt-1.9.0/menu.c mutt.fixed/menu.c
    menu->redraw &= REDRAW_STATUS;
    NORMAL_COLOR;
  }
-diff -aur mutt-1.9.0/mutt_curses.h mutt.fixed/mutt_curses.h
---- mutt-1.9.0/mutt_curses.h	2017-09-02 21:17:13.000000000 +0300
-+++ mutt.fixed/mutt_curses.h	2017-09-05 11:07:38.243511694 +0300
-@@ -137,6 +137,16 @@
+diff -aur mutt-1.11.1.orig/mutt_curses.h mutt-1.11.1.colors/mutt_curses.h
+--- mutt-1.11.1.orig/mutt_curses.h	2018-12-01 22:21:02.000000000 +0300
++++ mutt-1.11.1.colors/mutt_curses.h	2018-12-26 20:58:11.990727915 +0300
+@@ -140,6 +140,16 @@
    MT_COLOR_COMPOSE_SECURITY_SIGN,
    MT_COLOR_COMPOSE_SECURITY_BOTH,
    MT_COLOR_COMPOSE_SECURITY_NONE,
@@ -565,7 +566,7 @@ diff -aur mutt-1.9.0/mutt_curses.h mutt.fixed/mutt_curses.h
    MT_COLOR_MAX
  };
  
-@@ -219,6 +229,8 @@
+@@ -222,6 +232,8 @@
  extern COLOR_LINE *ColorHdrList;
  extern COLOR_LINE *ColorBodyList;
  extern COLOR_LINE *ColorIndexList;
@@ -574,10 +575,10 @@ diff -aur mutt-1.9.0/mutt_curses.h mutt.fixed/mutt_curses.h
  
  void ci_init_color (void);
  void ci_start_color (void);
-diff -aur mutt-1.9.0/mutt.h mutt.fixed/mutt.h
---- mutt-1.9.0/mutt.h	2017-09-02 21:17:13.000000000 +0300
-+++ mutt.fixed/mutt.h	2017-09-04 19:24:27.098110967 +0300
-@@ -169,6 +169,8 @@
+diff -aur mutt-1.11.1.orig/mutt.h mutt-1.11.1.colors/mutt.h
+--- mutt-1.11.1.orig/mutt.h	2018-11-25 21:00:40.000000000 +0300
++++ mutt-1.11.1.colors/mutt.h	2018-12-26 20:58:11.990727915 +0300
+@@ -192,6 +192,8 @@
  #define MUTT_TREE_MISSING       13
  #define MUTT_TREE_MAX           14
  
@@ -586,8 +587,8 @@ diff -aur mutt-1.9.0/mutt.h mutt.fixed/mutt.h
  #define MUTT_THREAD_COLLAPSE    (1<<0)
  #define MUTT_THREAD_UNCOLLAPSE  (1<<1)
  #define MUTT_THREAD_GET_HIDDEN  (1<<2)
-diff -aur mutt-1.9.0/PATCHES mutt.fixed/PATCHES
---- mutt-1.9.0/PATCHES	2017-09-02 21:17:12.000000000 +0300
-+++ mutt.fixed/PATCHES	2017-09-05 11:23:20.196879439 +0300
+diff -aur mutt-1.11.1.orig/PATCHES mutt-1.11.1.colors/PATCHES
+--- mutt-1.11.1.orig/PATCHES	2017-12-03 06:10:17.000000000 +0300
++++ mutt-1.11.1.colors/PATCHES	2018-12-26 20:58:11.990727915 +0300
 @@ -0,0 +1 @@
 +mutt-1.9.0-indexcolor

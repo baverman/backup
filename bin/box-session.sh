@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 bmpanel2 --theme ${BMPANEL_THEME:-awesome} &
 gatotray &
 orcsome -l /tmp/orcsome.log &

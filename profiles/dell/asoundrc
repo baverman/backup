@@ -21,6 +21,10 @@ ctl.equal {
     type equal;
 }
 
+ctl.vol {
+    type softvol;
+}
+
 pcm.plugequal {
     type equal;
     # Modify the line below if you do not
@@ -48,11 +52,25 @@ pcm.plugequal {
 # pcm.!default pcm.asymed
 # pcm.!default pcm.null
 # pcm.!default pcm.cnv
+#
+pcm.softvol {
+        type softvol;
+        slave.pcm "cnv";
+        min_dB -5.0;
+        max_dB 20.0;
+        resolution 6;
+        control {
+          name        "PreAmp"
+          card        0
+        }
+}
 
 pcm.!default {
     @func getenv
     vars [ ALSAPCM ]
     default "pcm.asymed"
+    # type "plug";
+    # slave.pcm "softvol";
     # type "plug";
     # slave.pcm "plugequal";
     # default "pcm.cnvb"
