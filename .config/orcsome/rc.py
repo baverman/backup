@@ -142,7 +142,7 @@ def app_rules(w):
         decorate = False
     elif w.matches(name='Opera', cls='Opera'):
         decorate = False
-        fill = True
+        maximize = True
     elif w.matches(cls='URxvt'):
         desktop = 1
         decorate = False

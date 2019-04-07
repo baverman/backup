@@ -7,7 +7,6 @@ bin/*
 .config/gatotrayrc
 .config/norlessrc:tpl
 .config/openbox/menu.xml
-.config/openbox/rc.xml:tpl
 .config/orcsome
 .config/ranger/*
 .gitconfig
@@ -17,6 +16,7 @@ bin/*
 .local/share/applications/*
 .local/share/bmpanel2
 .mplayer/*
+.mpv/*
 .msmtprc:tpl
 .muttrc
 .mutt/*
@@ -27,3 +27,4 @@ bin/*
 .Xdefaults
 .xinitrc
 .vim/sessions/*/sessionv.vim
+.config/openbox/rc.xml:tpl
