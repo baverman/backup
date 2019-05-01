@@ -1,0 +1,5 @@
+#!/bin/sh
+set -o pipefail
+image=$1
+shift
+docker save $image | gzip | pv | ssh "$@" docker load

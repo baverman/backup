@@ -9,11 +9,12 @@ import sys
 import errno
 from time import sleep, time
 from subprocess import Popen, PIPE, TimeoutExpired
-
+from functools import partial
 
 current_process = None
 
-def oneshot(args, events):
+
+def oneshot(args, events, action):
     global current_process
 
     current_process = Popen(args)
@@ -21,9 +22,10 @@ def oneshot(args, events):
     for r in events:
         current_process = Popen(args)
         current_process.wait()
+        action and action()
 
 
-def longpoll(args, events):
+def longpoll(args, events, action):
     global current_process
     start = time()
     current_process = Popen(args)
@@ -31,6 +33,7 @@ def longpoll(args, events):
         if start + 1 < r:
             current_process.terminate()
             current_process.wait()
+            action and action()
             start = time()
             current_process = Popen(args)
 
@@ -80,11 +83,27 @@ def get_events(watch_list, exclude, timeout=0.3):
         sleep(0.3)
 
 
+def action_touch(filename):
+    from pathlib import Path
+    Path(filename).touch()
+
+
+def action_fifo(filename):
+    if not os.path.exists(filename):
+        os.mkfifo(filename)
+
+    with open(filename, 'wb') as f:
+        f.write(b'1')
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-w', dest='watch', action='append')
     parser.add_argument('-e', dest='exclude')
     parser.add_argument('-d', dest='daemon', action='store_true')
+    parser.add_argument('--touch', dest='touch')
+    parser.add_argument('--fifo', dest='fifo')
+
     args, rest = parser.parse_known_args()
 
     if not rest:
@@ -94,11 +113,17 @@ if __name__ == '__main__':
     if rest[0] == '--':
         rest = rest[1:]
 
+    action = None
+    if args.touch:
+        action = partial(action_touch, args.touch)
+    if args.fifo:
+        action = partial(action_fifo, args.fifo)
+
     watch_list = args.watch or ['.']
     try:
         if args.daemon:
-            longpoll(rest, get_events(watch_list, args.exclude))
+            longpoll(rest, get_events(watch_list, args.exclude), action)
         else:
-            oneshot(rest, get_events(watch_list, args.exclude))
+            oneshot(rest, get_events(watch_list, args.exclude), action)
     except KeyboardInterrupt:
         pass
