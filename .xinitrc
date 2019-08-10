@@ -22,7 +22,7 @@ set_kbd_map
 
 devmon &> /tmp/devmon.log &
 
-# track-status.sh | dzen2 -fg white -x 1750 -y 4 -w 60 &
+track-status.sh | dzen2 -fg white -x 1750 -y 4 -w 60 &
 local-proxy.sh &> /tmp/proxy.log &
 
 # killall gpg-agent

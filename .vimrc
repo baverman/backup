@@ -237,6 +237,7 @@ augroup MyFileTypeSettings
     au FileType sql nmap <buffer> <leader><cr> <Plug>VialPipeExecute
     au FileType sql vmap <buffer> <leader><cr> <Plug>VialPipeExecute
     au CursorHold * checktime
+    au FileType vialcash nmap <buffer> <leader><cr> <Plug>VialPipeExecuteAll
     au BufNewFile,BufRead *.mongo call InitMongoBuf()
     au BufNewFile,BufRead *.clickhouse setfiletype sql
     au BufNewFile,BufRead *.pipe call InitPipeBuf()

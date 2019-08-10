@@ -1,5 +1,4 @@
 #!/bin/sh
-
-fname=$(mktemp).$2
+fname=/tmp/tmp-mutt.file.$2
 cp "$3" "$fname"
 open-and-clean $1 "$fname" &
