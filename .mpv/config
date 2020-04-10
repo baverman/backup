@@ -1,6 +1,7 @@
 fullscreen=yes
 use-filedir-conf=yes
 sub-use-margins=yes
+sub-auto=fuzzy
 ao=alsa
 audio-channels=2.0
 audio-format=s16
@@ -8,3 +9,6 @@ volume-max=300
 sub-codepage=cp1251
 sub-scale=0.8
 #sub-back-color=0/0/0
+
+# 720p
+ytdl-format=(247/136/22)+(140/141/251)

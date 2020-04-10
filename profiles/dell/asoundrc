@@ -1,6 +1,16 @@
 # defaults.namehint.extended on
 # defaults.pcm.dmix.rate = 44100
 # defaults.pcm.dmix.!rate 44100
+# defaults.pcm.dmix.!format S16_LE
+# defaults.pcm.dsnoop.!format S16_LE
+
+pcm.pulse {
+    type pulse
+}
+
+ctl.pulse {
+    type pulse
+}
 
 pcm.asymed {
    type asym
@@ -68,7 +78,8 @@ pcm.softvol {
 pcm.!default {
     @func getenv
     vars [ ALSAPCM ]
-    default "pcm.asymed"
+    default "pcm.pulse"
+    # default "pcm.asymed"
     # type "plug";
     # slave.pcm "softvol";
     # type "plug";

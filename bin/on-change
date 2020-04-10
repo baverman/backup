@@ -1,17 +1,39 @@
 #!/usr/bin/env python3
-from __future__ import print_function
-
+import os
+import sys
+import re
 import signal
 import argparse
 import fcntl
-import os
-import sys
 import errno
+import fnmatch
 from time import sleep, time
 from subprocess import Popen, PIPE, TimeoutExpired
 from functools import partial
 
 current_process = None
+
+
+def compile_exclude(patterns):
+    result = [fnmatch.translate(it) for it in patterns]
+    return re.compile('({})'.format('|'.join(result)).encode('utf-8'))
+
+
+def gather_watch_entries(root):
+    if not os.path.isdir(root):
+        return [root]
+    result = [root] + [os.path.join(r, d)
+                       for r, dirs, _ in os.walk(root)
+                       for d in dirs]
+    return list(filter(is_accessible, result))
+
+
+def is_accessible(entry):
+    try:
+        os.lstat(entry + '/.')
+        return True
+    except OSError:
+        return False
 
 
 def oneshot(args, events, action):
@@ -39,11 +61,18 @@ def longpoll(args, events, action):
 
 
 def get_events(watch_list, exclude, timeout=0.3):
-    cmd = ['inotifywait', '-m', '-r', '-e', 'create', '-e', 'modify']
-    if exclude:
-        cmd += ['--exclude', exclude]
-    wp = Popen(cmd + watch_list, stdout=PIPE)
+    full_list = []
+    for it in watch_list:
+        full_list.extend(gather_watch_entries(it))
+
+    cmd = ['inotifywait', '-m', '-e', 'create', '-e', 'modify']
+    wp = Popen(cmd + full_list, stdout=PIPE)
     fcntl.fcntl(wp.stdout, fcntl.F_SETFL, os.O_NONBLOCK)
+
+    if exclude:
+        exclude_re = compile_exclude(exclude)
+    else:
+        exclude_re = None
 
     def shutdown(signal, frame):
         if current_process:
@@ -59,13 +88,28 @@ def get_events(watch_list, exclude, timeout=0.3):
     signal.signal(signal.SIGTERM, shutdown)
 
     def read():
+        result = None
         try:
-            return wp.stdout.read()
+            while True:
+                line = wp.stdout.readline()
+                if not line:
+                    break
+
+                parts = line.split(None, 3)
+                if len(parts) == 2:
+                    fname = parts[0]
+                else:
+                    fname = parts[0] + parts[2]
+
+                if exclude_re and exclude_re.match(fname):
+                    continue
+
+                result = True
         except IOError as e:
-            if e.errno == errno.EAGAIN:
-                return
-            else:
+            if e.errno != errno.EAGAIN:
                 raise
+
+        return result
 
     start = None
     while True:
@@ -78,7 +122,7 @@ def get_events(watch_list, exclude, timeout=0.3):
         if start and time() - start > timeout:
             start = None
             yield time()
-            read()
+            read()  # Read all possible dirty changes after command invocation
 
         sleep(0.3)
 
@@ -97,14 +141,27 @@ def action_fifo(filename):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-w', dest='watch', action='append')
-    parser.add_argument('-e', dest='exclude')
-    parser.add_argument('-d', dest='daemon', action='store_true')
-    parser.add_argument('--touch', dest='touch')
-    parser.add_argument('--fifo', dest='fifo')
+    if '--' in sys.argv:
+        idx = sys.argv.index('--')
+        rest = sys.argv[idx+1:]
+        sys.argv = sys.argv[:idx]
+    else:
+        rest = []
 
-    args, rest = parser.parse_known_args()
+    parser = argparse.ArgumentParser(usage='on-change [options] [file|dir [file|dir]] -- command [args]')
+    parser.add_argument('-e', dest='exclude', action='append', metavar='pattern',
+                        help='exclude wildcard', default=[])
+    parser.add_argument('-d', dest='daemon', action='store_true',
+                        help='assume command is a long living process')
+    parser.add_argument('--touch', dest='touch', metavar='file',
+                        help='touch file after command execution')
+    parser.add_argument('--fifo', dest='fifo', metavar='file',
+                        help='write 1 into fifo after command execution')
+    parser.add_argument('--timeout', metavar='seconds', type=float, default=0.3,
+                        help='trigger command after last change event')
+    parser.add_argument('watch', nargs='*', metavar='file|dir')
+
+    args = parser.parse_args()
 
     if not rest:
         print('You should provide a command to execute on change', file=sys.stderr)
@@ -122,8 +179,8 @@ if __name__ == '__main__':
     watch_list = args.watch or ['.']
     try:
         if args.daemon:
-            longpoll(rest, get_events(watch_list, args.exclude), action)
+            longpoll(rest, get_events(watch_list, args.exclude, args.timeout), action)
         else:
-            oneshot(rest, get_events(watch_list, args.exclude), action)
+            oneshot(rest, get_events(watch_list, args.exclude, args.timeout), action)
     except KeyboardInterrupt:
         pass

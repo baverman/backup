@@ -59,7 +59,8 @@ __svial() {
 complete -F __svial svial
 
 # export SDL_AUDIODRIVER=alsa
-export PULSE_LATENCY_MSEC=60
+# export PULSE_LATENCY_MSEC=60
+export LIBVA_DRIVER_NAME=iHD
 
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv3

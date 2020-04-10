@@ -42,14 +42,14 @@ sync = INBOX -> inbox | Sent Items -> sent
 [account baverman]
 from = ${mail.baverman.efrom}
 host = imap.gmail.com
-cafile = ~/.mutt/google.pem
+cafile = ~/.mutt/google1.pem
 user = ${mail.baverman.user}
 password = ${mail.baverman.pwd}
 trash = [Gmail]/Trash
 sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent | imp -> imp
 smtp_host = smtp.gmail.com
 smtp_port = 587
-smtp_cafile = ~/.mutt/google.pem
+smtp_cafile = ~/.mutt/google1.pem
 
 <%doc>
 [account ${mail.agima.efrom}]
@@ -65,7 +65,7 @@ sync = INBOX -> inbox | [Gmail]/&BB4EQgQ,BEAEMAQyBDsENQQ9BD0ESwQ1- -> sent
 [account ${mail.cl.efrom}]
 from = ${mail.cl.efrom}
 host = imap.gmail.com
-cafile = ~/.mutt/google.pem
+cafile = ~/.mutt/google1.pem
 user = ${mail.cl.efrom}
 password = ${mail.cl.pwd}
 trash = [Gmail]/Trash
@@ -76,7 +76,7 @@ xoauth2_refresh = ${mail.cl.refresh_token}
 sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent
 smtp_host = smtp.gmail.com
 smtp_port = 587
-smtp_cafile = ~/.mutt/google.pem
+smtp_cafile = ~/.mutt/google1.pem
 
 [disabled account ${mail.getpatch.efrom}]
 from = ${mail.getpatch.efrom}

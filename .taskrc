@@ -39,7 +39,7 @@ taskd.certificate=~/kb/private.certificate.pem
 taskd.key=~/kb/private.key.pem
 taskd.ca=~/kb/ca.cert.pem
 taskd.server=taskwarrior.inthe.am:53589
-taskd.credentials=inthe_am/baverman/4d8bccf0-7917-4968-9d7a-0702a691ad94
+taskd.credentials=inthe_am/baverman/aa42c88e-4e2d-4f0b-af06-72c376fc620f
 taskd.trust=ignore hostname
 
 urgency.tags.coefficient=0.0
@@ -53,3 +53,11 @@ urgency.user.tag.today.coefficient=20
 report.next.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.relative,due.relative,until.remaining,description,urgency,sp
 report.next.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg,Points
 report.next.sort=urgency-,project+
+
+report.due.filter=status:pending due.not:
+report.due.columns=id,start.age,entry.age,depends,priority,project,tags,due,description,urgency,sp
+report.due.labels=ID,Active,Age,Deps,P,Project,Tag,Due,Description,Urg,Points
+report.due.sort=due+
+report.due.dateformat=Y-M-D H:N
+
+

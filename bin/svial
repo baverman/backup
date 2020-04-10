@@ -1,2 +1,4 @@
 #!/bin/sh
-VIAL_SESSION=$1 vial
+session=$1
+shift
+VIAL_SESSION=$session vial "$@"

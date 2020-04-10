@@ -1,5 +1,6 @@
 set nocompatible
 set background=light
+python 1+1
 
 call plug#begin('~/.vim/bundle')
 Plug 'git@github.com:baverman/vial.git'
@@ -38,6 +39,9 @@ Plug 'stefandtw/quickfix-reflector.vim'
 Plug 'dbmrq/vim-ditto'
 Plug '~/.vim/bundle/vial-draw'
 Plug 'aklt/plantuml-syntax'
+Plug 'dleonard0/pony-vim-syntax'
+Plug 'ziglang/zig.vim'
+Plug 'jlanzarotta/bufexplorer'
 " Plug 'vim-airline/vim-airline'
 call plug#end()
 
@@ -74,6 +78,7 @@ set nocindent
 set indentexpr=VialIndent()
 set indentkeys=o
 set display+=lastline
+set fileencodings=utf-8,cp1251
 
 " nnoremap / /\v
 " vnoremap / /\v
@@ -248,6 +253,7 @@ augroup END
 
 " Vial
 let g:vial_plugins = ['vial.plugins.grep', 'vial.plugins.misc', 'vial.plugins.bufhist']
+let g:vial_python = 'python'
 nnoremap <leader>m :VialQuickOpen<cr>
 nnoremap <silent> <leader>t :VialSearchOutline<cr>
 " nnoremap <esc>p :VialPythonShowSignature<cr>
@@ -268,6 +274,7 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:qf_modifiable = 1
 let g:table_mode_map_prefix = '<leader>b'
+let g:zig_fmt_autosave = 0
 nnoremap <leader>v :Bufferlist<cr>
 vnoremap <leader>ld :Linediff<cr>
 nnoremap <leader>lr :LinediffReset<cr>

@@ -1,6 +1,6 @@
 #!/bin/sh
 while true; do
-    ssh -ND 1080 pg.remote
+    ssh -o ServerAliveInterval=10 -o ServerAliveCountMax=1 -ND 1080 pg.remote
     status=$?
     echo status $status
     if [ "$status" != 143 -o "$status" != 0 ]; then
