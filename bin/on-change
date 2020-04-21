@@ -42,9 +42,6 @@ inotify_init = prepare(libc.inotify_init)
 inotify_add_watch = prepare(libc.inotify_add_watch, args=[c_int, c_char_p, c_uint32])
 
 IN_MODIFY	 = 0x00000002
-IN_CLOSE_WRITE	 = 0x00000008
-IN_CLOSE_NOWRITE = 0x00000010
-IN_CLOSE	 = (IN_CLOSE_WRITE | IN_CLOSE_NOWRITE)
 IN_MOVED_FROM	 = 0x00000040
 IN_MOVED_TO      = 0x00000080
 IN_MOVE		 = (IN_MOVED_FROM | IN_MOVED_TO)
@@ -57,7 +54,7 @@ def get_changes(fd, entries, timeout=0.3):
     emap = {}
     for it in entries:
         try:
-            eid = inotify_add_watch(fd, it, IN_CREATE | IN_MODIFY | IN_CLOSE | IN_MOVE | IN_DELETE)
+            eid = inotify_add_watch(fd, it, IN_CREATE | IN_MODIFY | IN_MOVE | IN_DELETE)
         except (PermissionError, FileNotFoundError):
             pass
         else:
@@ -127,6 +124,7 @@ def serve(eset, args):
     FRAME = b'''
     <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             body {
                 margin: 0;
@@ -200,7 +198,7 @@ def serve(eset, args):
                     .then(function (response) {
                         if (response.ok) {
                             if (response.status == 200) {
-                                frame.contentWindow.location.reload();
+                                frame.contentWindow.location.reload(true);
                             }
                             wait();
                         } else {
@@ -234,6 +232,10 @@ def serve(eset, args):
             else:
                 super().do_GET()
 
+        def end_headers(self):
+            self.send_header('Cache-Control', 'no-cache')
+            super().end_headers()
+
         def frame(self):
             self.send_response(HTTPStatus.OK)
             self.send_header("Content-type", 'text/html')
@@ -259,8 +261,11 @@ def serve(eset, args):
 
             for r in list(requests):
                 requests.discard(r)
-                r.reload(status)
-                server.shutdown_request(r)
+                try:
+                    r.reload(status)
+                    server.shutdown_request(r)
+                except OSError as e:
+                    log.error(e)
 
 
     class Server:
