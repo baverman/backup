@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:wght@400;700&family=Alegreya+Sans:wght@400;700&display=swap');
+
+html {
+    font-size: 16px;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-size: 1.4rem;
+    padding: 2rem;
+    max-width: 60rem;
+    /* max-width: 60rem; */
+    margin: 0 auto;
+    color: #333;
+    font-family: 'Alegreya', serif;
+    line-height: 145%;
+    -webkit-text-size-adjust: none;
+}
+
+h1 {
+    font-family: 'Alegreya Sans', serif;
+    font-size: 2.3rem;
+    line-height: 80%;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-family: 'Alegreya Sans', serif;
+    font-size: 1.7rem;
+    margin-top: 2rem;
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid #333;
+}
+
+h3 {
+    font-size: 100%;
+    margin: 1.2rem 0 0.3rem 0;
+}
+
+h1,
+h2,
+h3,
+dt {
+    page-break-after: avoid;
+}
+
+
+h1 p {
+    font-weight: normal;
+    font-size: 76%;
+    /* font-style: italic; */
+}
+
+table,
+dd,
+p {
+    margin-bottom: 0.6rem;
+}
+
+dt {
+    text-align: left;
+    font-weight: bold;
+}
+
+dd {
+    margin-left: 2rem;
+}
+
+.table-compact td {
+    vertical-align: middle;
+    padding-right: 0.8rem;
+}
+
+.table-compact {
+    border-spacing: 0;
+}
+
+ul {
+    padding-left: 1em;
+}
+
+li {
+    margin-bottom: 0.2rem;
+}
+
+@media screen and (max-width: 1024px) {
+  body {
+    max-width: none;
+    padding: 1.5rem;
+  }
+}
+
+@media print {
+  html {
+    font-size: 9pt;
+  }
+
+  body {
+    padding: 0;
+    max-width: none;
+    margin: 0;
+    color: #000;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+    color: #00e;
+  }
+
+  a[pl]:after {
+    content: ' (' attr(href) ')';
+  }
+
+  @page {
+      margin: 1.3cm;
+  }
+}
+

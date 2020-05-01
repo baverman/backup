@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anton Bobrov CV</title>
+  <link href="main.css" rel="stylesheet">
+</head>
+
+<body>
+    <h1>Anton Bobrov<p>Software engineer</p></h1>
+
+    <table class="table-compact">
+        <tr><td>Location:</td><td>Moscow</td></tr>
+        <tr><td>E-mail:</td><td><a href="mailto:baverman@gmail.com">baverman@gmail.com</a></td></tr>
+        <tr><td>GitHub</td><td><a href="https://github.com/baverman">https://github.com/baverman</a></td></tr>
+        <tr><td>Telegram:</td><td><a href="https://t.me/bvrmn">@bvrmn</a></td></tr>
+    </table>
+
+    <h2>Profile</h2>
+    <p>
+        I am a software developer since 2002, a Python backend developer since 2007.
+        I like simple implementations and know a couple of tricks how to investigate and
+        fix performance issues. Also, I have a background with a desktop, web frontend, and
+        mobile development.
+    </p>
+
+    <p>
+        I prefer straightforward code with minimum abstractions, the clean architecture (
+        strict layers without abstraction leaks), and narrow
+        and deep components (isolated highly cohesive pieces with an encapsulated domain model
+        and minimal public interface).
+    </p>
+
+    <p>
+        I'll choose a modular monolith in 99.9% of cases. However, microservices can solve team scaling issues
+        with additional technical complexity.
+    </p>
+
+    <dl>
+        <dt>Some of my projects to look at:</dt>
+        <dd><a pl href="https://github.com/baverman/hisser">Fast TSDB backend for Graphite</a><br>
+            <a pl href="https://github.com/baverman/covador">Python data validation with web in-mind</a><br>
+            <a pl href="https://github.com/baverman/dsq">Dead simple queue</a><br> </dd>
+
+        <dt>Python:</dt>
+        <dd>py2/py3, stdlib, asyncio, Flask/FlaskAdmin, SQLAlchemy, Alembic, Django, aiohttp, requests, Celery,
+            uWSGI, lxml, cryptography, NumPy, Pandas, Cython, CFFI, ctypes, cpu/memory profilers,
+            memory leaks.</dd>
+
+        <dt>DB:</dt>
+        <dd>PostgreSQL, Redis, Mongo, SQLite, LMDB, InfluxDB, Clickhouse, Elasticsearch, MySQL, Hive.</dd>
+
+        <dt>Containers:</dt>
+        <dd>Docker, LXC, systemd-spawn, KVM, qemu-nbd.</dd>
+
+        <dt>Tools:</dt>
+        <dd>Sentry, Grafana, Graphite, Jenkins, Telegraf</dd>
+
+        <dt>Linux administration:</dt>
+        <dd>Ansible, Fabric, systemd, nginx, HAProxy, bash scripting, pipelines, CentOS,
+            Ubuntu, Alpine, networking, LVM.</dd>
+
+        <dt>System programming:</dt>
+        <dd>Process management, sockets, TCP, UDP, non-blocking IO, low-level protocol parsing.</dd>
+
+        <dt>Clouds:</dt>
+        <dd>GCP, AWS, Linode, OpenNebula.</dd>
+
+        <dt>VCS:</dt>
+        <dd>Git/StGit, Mercurial, SVN.</dd>
+
+        <dt>Frontend:</dt>
+        <dd>HTML, CSS, JavaScript, jQuery, React.</dd>
+
+        <dt>Other languages:</dt>
+        <dd>Node, C, Go, Java, Groovy, PHP.</dd>
+    </dl>
+
+    <h2>Notable experience</h2>
+    <h3>Mar 2018 — Feb 2020 (2 years), CloudLinux, Team Lead, remote</h3>
+    <p>
+        A lead of Imunify360 backend team (3 members). The main service
+        takes care of an event stream from all client installations (thousands of events
+        per second, gigabytes of data per day), pushes it through ETL pipeline
+        to Clickhouse datastore, and handles notifications back to clients.
+    </p>
+
+    <p>
+        Stack: python3, asyncio, aiohttp, Redis, Mongo, Clickhouse,
+        HAProxy, TincVPN, Grafana, Sentry, Docker.
+    </p>
+
+    Achievements:
+    <ul>
+        <li>Reworked service architecture to be able to process a growing event stream.</li>
+        <li>Implemented app-level real-time monitoring with in/out metrics on each step of ETL path.
+            Statsd, Telegraf, Hisser, Grafana.</li>
+        <li>100% test coverage of whole ETL path, client proto parsing, queue handling,
+            disk storage, ETL processors. As a result, team can deploy new releases
+            directly to production without manual testing on a stage environment.</li>
+        <li>Speed up functional tests from 30 to 10 minutes.</li>
+        <li>Optimized ansible playbook. Deploy time shortened from 10 to 1 minute.</li>
+        <li>Refactored a private admin site for main service (old unmaintainable code with numerous bugs).</li>
+        <li>Implemented a fast reverse-ip lookup component.</li>
+        <li>20x speedup of event validation code.</li>
+        <li>Reviewed and fix mongo indexes, added partial indexes to fulfill query requirements.</li>
+        <li>Tuned HAProxy timeouts and logging, configured upstream checks.</li>
+        <li>Moved ETL storage from Hadoop to Clickhouse and implemented Clickhouse automatic table migrations.</li>
+        <li>Mesh VPN between production cluster nodes.</li>
+        <li>Implemented geo-distributed RBL.</li>
+    </ul>
+
+    <h3>Aug 2016 — Feb 2017 (7 months), Rambler&Co, Team Lead</h3>
+    <p>
+        A lead of Rambler/News team, 6 members, 4 backend and 2 frontend devs. There were 3 services:
+        desktop website + mobile API, mobile site and admin control panel for the content management team.
+        Load: 800 requests per second. My main duties were: solve performance issues and reduce
+        technical debt.
+    </p>
+
+    <p>Stack: python2, PostgreSQL, Redis, Django, flask, celery, SQLAlchemy, nginx, uWSGI.</p>
+
+    Achievements:
+    <ul>
+        <li>
+            2x codebase reduction from 40k to 20k CLOC. Code was in a messy state, endpoints
+            simultaneously used Django/DjangoORM, Django/SQLAlchemy and Flask/SQLAlchemy with duplicated
+            functionality. I've refactored and implemented all endpoints as Flask/SQLAlchemy views.
+        </li>
+        <li>
+            Performance optimization. CPU load was reduced by 4 times.
+            The average response latency was reduced by 3 times. I tuned DB indexes,
+            replace complex ORM code (hybrid props and multi-level relation joins which can lead to up
+            to 300 db requests per one http request) with straightforward
+            queries and introduced 2-level caching with uWSGI and Redis.
+        </li>
+        <li>Reduced deploy time from 30 to 5 minutes.</li>
+        <li>All services were prepared for migration from FreeBSD to Linux.</li>
+    </ul>
+
+    <h3>May 2014 — Jun 2016 (2 years), Zvooq, Team Lead</h3>
+    <p>
+        A lead of the backend team consisting of 6 members. Zvooq is a music streaming service
+        and our team was taking care of mobile/web API, search, editorial team tools,
+        subscriptions, pushes, billing, 3rd party integrations, and backend code for custom ad campaigns.
+    </p>
+
+    <p>Stack: python2, FlaskAdmin, PostgreSQL, Elasticsearch, LMDB, Redis,
+    Werkzeug, Celery, SQLAlchemy, nginx, uWSGI, Sentry</p>
+
+    Achievements:
+    <ul>
+        <li>Performance optimization and huge architecture rework. The main service couldn't
+            handle 20rps load before and can process 1000rps after on the same hardware.</li>
+        <li>Application real-time monitoring.</li>
+        <li>Reduced deploy time from 20 to 1 minute. Implemented CI/CD</li>
+        <li>Force unit tests and full coverage. The team can deploy releases
+            after automatic tests directly to production servers.</li>
+    </ul>
+</body>
+</html>
