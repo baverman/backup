@@ -82,17 +82,18 @@ def spawn(coro):
 
 
 async def read_until(sock, sentinel, max_size=65536):
-    blist = []
     size = 0
+    read_size = min(max_size, BUF_SIZE)
+    buf = bytearray(max_size + read_size)
+    mv = memoryview(buf)
     while size < max_size:
-        b = await recv(sock, BUF_SIZE)
-        if not b:
+        count = await wait_io(sock, read_events, sock.recv_into, mv[size:], read_size)
+        if not count:
             raise Exception('Sentinel not found')
-        pos = b.find(sentinel)
-        blist.append(b)
+        size += count
+        pos = buf.find(sentinel, 0, size)
         if pos >= 0:
-            return b''.join(blist), size + pos
-        size += len(b)
+            return buf[:size], pos
 
     raise Exception('Sentinel not found')
 
@@ -132,10 +133,10 @@ async def handle_client(client):
     req, pos = await read_until(client, b'\r\n\r\n')
     assert len(req) - pos == 4
     (method, url, _), _ = parse_http_line(req)
-    print(method, url)
 
     fname = get_cache_path(url)
     if os.path.exists(fname):
+        print('HIT', url)
         with open(fname, 'rb') as fd:
             size = os.fstat(fd.fileno()).st_size
             headers = [b'Content-Length: %d' % size,
@@ -147,6 +148,7 @@ async def handle_client(client):
                                       client.fileno(), fd.fileno(), None, size)
                 size -= count
     else:
+        print('MISS', method, url)
         h = await make_request(method, url)
         resp, offset = await read_until(h.sock, b'\r\n\r\n')
         (_, status_code, _), resp_headers = parse_http_line(resp)

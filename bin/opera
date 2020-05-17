@@ -1,3 +1,4 @@
 #!/bin/sh
+export OPERA_AUTOUPDATE_DISABLED=1
 exec /usr/bin/opera --proxy-pac-url='data:application/x-javascript-config;base64,'$(base64 -w0 /home/bobrov/tmp/tlgrm.pac) $OPERA_OPTS $@
 # --disable-gpu-driver-bug-workarounds
