@@ -48,6 +48,10 @@ dt {
     page-break-after: avoid;
 }
 
+dd, ul {
+    page-break-before: avoid;
+}
+
 
 h1 p {
     font-weight: normal;
@@ -86,6 +90,15 @@ ul {
 li {
     margin-bottom: 0.2rem;
 }
+
+.avoid {
+    page-break-inside: avoid !important;
+}
+
+.page-break {
+    page-break-after: always !important;
+}
+
 
 @media screen and (max-width: 1024px) {
   body {
