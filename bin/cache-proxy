@@ -1,101 +1,18 @@
 #!/usr/bin/env python3
 import os
-import types
 import socket
-import select
 import logging
 
 from hashlib import md5
-from collections import deque
 from http.client import HTTPConnection, HTTPSConnection
-from ssl import SSLWantReadError, SSLWantWriteError
 from re import search
 
-TRAP_IO_WAIT = 1
+from nanoio import (
+    run, recv, sendall, recv_until, wait_io, WAIT_WRITE, accept, spawn)
+
+
 BUF_SIZE = 65536
 CACHE_DIR = None
-
-read_events = {}
-write_events = {}
-loop_tasks = deque()
-log = logging.getLogger('cache-proxy')
-
-
-@types.coroutine
-def wait_io(sock, event, fn, *args):
-    # yield TRAP_RESCHEDULE,
-    while True:
-        try:
-            return fn(*args)
-        except SSLWantWriteError:
-            yield TRAP_IO_WAIT, sock, write_events
-        except SSLWantReadError:
-            yield TRAP_IO_WAIT, sock, read_events
-        except (BlockingIOError, InterruptedError):
-            yield TRAP_IO_WAIT, sock, event
-
-
-def recv(sock, size, flags=0):
-    return wait_io(sock, read_events, sock.recv, size, flags)
-
-
-def send(sock, data, flags=0):
-    return wait_io(sock, write_events, sock.send, data, flags)
-
-
-def accept(sock):
-    return wait_io(sock, read_events, sock.accept)
-
-
-async def sendall(sock, data):
-    while data:
-        size = await send(sock, data)
-        data = data[size:]
-
-
-def run_loop():
-    while True:
-        while loop_tasks:
-            current = loop_tasks.popleft()
-            try:
-                t, *args = current.send(None)
-            except StopIteration:
-                pass
-            except Exception:
-                log.exception('Unhandled coro error')
-            else:
-                if t == TRAP_IO_WAIT:
-                    args[1][args[0]] = current
-
-        if not read_events and not write_events:
-            break
-
-        r, w, _ = select.select(read_events, write_events, [])
-        for it in r:
-            loop_tasks.append(read_events.pop(it))
-        for it in w:
-            loop_tasks.append(write_events.pop(it))
-
-
-def spawn(coro):
-    loop_tasks.append(coro)
-
-
-async def read_until(sock, sentinel, max_size=65536):
-    size = 0
-    read_size = min(max_size, BUF_SIZE)
-    buf = bytearray(max_size + read_size)
-    mv = memoryview(buf)
-    while size < max_size:
-        count = await wait_io(sock, read_events, sock.recv_into, mv[size:], read_size)
-        if not count:
-            raise Exception('Sentinel not found')
-        size += count
-        pos = buf.find(sentinel, 0, size)
-        if pos >= 0:
-            return buf[:size], pos
-
-    raise Exception('Sentinel not found')
 
 
 def parse_http_line(data):
@@ -130,7 +47,9 @@ def get_cache_path(url):
 
 
 async def handle_client(client):
-    req, pos = await read_until(client, b'\r\n\r\n')
+    req, pos = await recv_until(client, b'\r\n\r\n')
+    if pos < 0:
+        raise Exception(f'Invalid proto {req}')
     assert len(req) - pos == 4
     (method, url, _), _ = parse_http_line(req)
 
@@ -144,20 +63,25 @@ async def handle_client(client):
                        b'Content-Type: application/octet-stream']
             await sendall(client, b'HTTP/1.1 200 OK\r\n%s\r\n\r\n' % b'\r\n'.join(headers))
             while size > 0:
-                count = await wait_io(client, write_events, os.sendfile,
+                count = await wait_io(client, WAIT_WRITE, os.sendfile,
                                       client.fileno(), fd.fileno(), None, size)
                 size -= count
     else:
         print('MISS', method, url)
         h = await make_request(method, url)
-        resp, offset = await read_until(h.sock, b'\r\n\r\n')
+        resp, offset = await recv_until(h.sock, b'\r\n\r\n')
+        if offset < 0:
+            raise Exception(f'Invalid proto {resp}')
+
         (_, status_code, _), resp_headers = parse_http_line(resp)
 
         if status_code == b'301':
             h.sock.close()
             new_url = get_header_value(resp_headers, b'location')
             h = await make_request(b'GET', new_url)
-            resp, offset = await read_until(h.sock, b'\r\n\r\n')
+            resp, offset = await recv_until(h.sock, b'\r\n\r\n')
+            if offset < 0:
+                raise Exception(f'Invalid proto {resp}')
             (_, status_code, _), _ = parse_http_line(resp)
 
         if status_code == b'200':
@@ -193,10 +117,9 @@ def serve(bind):
         while True:
             s, _ = await accept(sock)
             s.setblocking(False)
-            spawn(handle_client(s))
+            await spawn(handle_client(s))
 
-    spawn(forever())
-    run_loop()
+    run(forever())
 
 
 def main():
