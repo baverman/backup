@@ -46,6 +46,54 @@ def get_cache_path(url):
     return os.path.join(os.fsencode(CACHE_DIR), b'%s.%s.%s' % (host, fname, md5(url).hexdigest()[:10].encode()))
 
 
+class ChunkedWriter:
+    def __init__(self, fd):
+        self.fd = fd
+        self.next_count = 0
+        self.prev = None
+        self.end = False
+        self.need_cut = False
+
+    def close(self):
+        self.fd.close()
+
+    def write(self, data):
+        if self.end:
+            return
+
+        if not self.next_count:
+            if self.prev:
+                data = self.prev + data
+
+            if self.need_cut:
+                if len(data) < 2:
+                    self.prev = data
+                    return
+                data = data[2:]
+                self.need_cut = False
+
+            pos = data.find(b'\r\n')
+            if pos < 0:
+                self.prev = data
+                return
+            assert pos, repr(data)
+            self.next_count = int(data[:pos], 16)
+            if self.next_count == 0:
+                self.end = True
+                return
+            self.prev = None
+            self.need_cut = True
+            data = data[pos+2:]
+
+        data_to_write = data[:self.next_count]
+        rest = data[self.next_count:]
+        self.next_count -= len(data_to_write)
+        self.fd.write(data_to_write)
+        if rest:
+            self.write(rest)
+
+
+
 async def handle_client(client):
     req, pos = await recv_until(client, b'\r\n\r\n')
     if pos < 0:
@@ -75,17 +123,22 @@ async def handle_client(client):
 
         (_, status_code, _), resp_headers = parse_http_line(resp)
 
-        if status_code == b'301':
-            h.sock.close()
-            new_url = get_header_value(resp_headers, b'location')
-            h = await make_request(b'GET', new_url)
-            resp, offset = await recv_until(h.sock, b'\r\n\r\n')
-            if offset < 0:
-                raise Exception(f'Invalid proto {resp}')
-            (_, status_code, _), _ = parse_http_line(resp)
+        for _ in range(5):
+            if status_code in (b'301', b'302'):
+                h.sock.close()
+                new_url = get_header_value(resp_headers, b'location')
+                h = await make_request(b'GET', new_url)
+                resp, offset = await recv_until(h.sock, b'\r\n\r\n')
+                if offset < 0:
+                    raise Exception(f'Invalid proto {resp}')
+                (_, status_code, _), resp_headers = parse_http_line(resp)
+            else:
+                break
 
         if status_code == b'200':
             fd = open(fname + b'.tmp', 'wb')
+            if b'chunked' in get_header_value(resp_headers, b'transfer-encoding', b''):
+                fd = ChunkedWriter(fd)
         else:
             fd = None
 

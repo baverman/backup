@@ -42,6 +42,7 @@ bind pager k previous-line
 macro index G '<sync-mailbox><shell-escape>norless -NSC<enter><sync-mailbox>'
 
 send-hook "~f abobrov@cloudlinux.com" set signature=~/.mutt/cloudlinux.sig
+send-hook "~f baverman@gmail.com" set signature=~/.mutt/my.sig
 
 macro generic "<esc>2" ":set from=baverman@gmail.com"
 macro generic "<esc>3" ":set from=abobrov@cloudlinux.com"
