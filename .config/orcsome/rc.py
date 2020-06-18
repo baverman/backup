@@ -52,7 +52,7 @@ wm.on_key('Ctrl+Alt+m').spawn_or_raise(
     'urxvtc -name alsamixer -e alsamixer', name='alsamixer', **restore_focus)
 
 wm.on_key('Mod+k').spawn_or_raise(
-    'urxvtc -name rtorrent -e transmission-remote-cli', name='rtorrent', **restore_focus)
+    'urxvtc -name rtorrent -e tremc', name='rtorrent', **restore_focus)
 
 
 @wm.on_key('Ctrl+Mod+space')
