@@ -34,19 +34,18 @@ set use_from=yes
 set realname='Anton Bobrov'
 set envelope_from=yes
 set reverse_name
-alternates "bobrov@vl.ru|a.bobrov@big3.ru"
+alternates "bobrov@vl.ru|abobrov@cloudlinux.com"
 
 set pager_stop
 bind pager j next-line
 bind pager k previous-line
 macro index G '<sync-mailbox><shell-escape>norless -NSC<enter><sync-mailbox>'
 
-send-hook "~f abobrov@cloudlinux.com" set signature=~/.mutt/cloudlinux.sig
 send-hook "~f baverman@gmail.com" set signature=~/.mutt/my.sig
-send-hook "~f a.bobrov@big3.ru" set signature=~/.mutt/my.sig
+send-hook "~f abobrov@cloudlinux.com" set signature=~/.mutt/my.sig
 
 macro generic "<esc>2" ":set from=baverman@gmail.com"
-macro generic "<esc>3" ":set from=a.bobrov@big3.ru"
+macro generic "<esc>3" ":set from=abobrov@cloudlinux.com"
 
 source ~/.mutt/color
 source /usr/share/doc/mutt/samples/gpg.rc

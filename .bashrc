@@ -17,7 +17,7 @@ PS1='\[\033[01;34m\]\w\[\033[31m\]$(__git_ps1 "[%s]")\[\033[01;32m\]$(__prompt_s
 
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 export PROMPT_COMMAND='history -a'
-export HISTCONTROL=ignoredups
+export HISTCONTROL=ignoredups:ignorespace
 export HISTFILESIZE=15000
 export HISTSIZE=15000
 shopt -s histappend
@@ -75,3 +75,19 @@ set -o vi
 bind -m vi-insert '"jk": vi-movement-mode'
 bind -m vi-move '"n":"Isudo "'
 bind '"\e.": yank-last-arg'
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/opt/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+#         . "/opt/miniconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/opt/miniconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# <<< conda initialize <<<
+

@@ -16,14 +16,14 @@ export -f set_kbd_map
 xrdb -merge ~/.Xdefaults
 [ -f $profile/xdefaults ] && xrdb -merge $profile/xdefaults
 
-urxvtd -q -o  &
+urxvtd -q -o &>> /tmp/bg.log &
 
 set_kbd_map
 
-devmon &> /tmp/devmon.log &
+devmon &>> /tmp/bg.log &
 
-track-status.sh | dzen2 -fg white -x 1750 -y 4 -w 60 &
-local-proxy.sh &> /tmp/proxy.log &
+( track-status.sh | dzen2 -fg white -x 1750 -y 4 -w 60 ) &>> /tmp/bg.log &
+setsid -f sh -c "exec local-proxy.sh &>> /tmp/bg.log"
 
 # killall gpg-agent
 # gpg-agent --daemon

@@ -21,6 +21,9 @@
     # Markup is allowed
     format = "<b>%s</b>\n%b"
 
+    max_icon_size = 32
+    icon_position = off
+
     # Sort messages by urgency
     sort = yes
 
@@ -59,7 +62,7 @@
     # right side of the screen.  Y is measured from the top and down respectevly.
     # The width can be negative. In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "200x5-0+20"
+    geometry = "300x5-0+20"
 
     # The transparency of the window. range: [0; 100]
     # This option will only work if a compositing windowmanager is present (e.g. xcompmgr, compiz, etc..)

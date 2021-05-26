@@ -234,6 +234,15 @@ function! InitPipeBuf()
     vmap <buffer> <leader><cr> <Plug>VialPipeExecute
 endfunction
 
+function! GitDiff()
+    silent keepalt edit __vial__gitdiff__
+    setlocal buftype=nofile noswapfile
+    setfiletype diff
+    norm! ggVGD
+    0read !git diff HEAD^ -p --stat --no-color --abbrev --stat-graph-width=5 --stat-name-width=200
+    norm! gg
+endfunction
+
 augroup MyFileTypeSettings
     au!
     au FileType python call InitPythonBuf()

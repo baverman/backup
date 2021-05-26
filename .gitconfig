@@ -21,10 +21,13 @@
 [difftool]
 	prompt = false
 [difftool "vimdiff"]
-	path = vial-wait
+	;path = vim-term-fix
+        cmd = vim-term-fix -d $LOCAL $REMOTE
 
 [pager]
     branch = false
 
 [tig]
     diff-highlight = /usr/share/git/diff-highlight/diff-highlight
+[pull]
+	ff = only
