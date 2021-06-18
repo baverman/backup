@@ -1,0 +1,1 @@
+/usr/share/stgit/completion/stgit.bash
