@@ -234,6 +234,10 @@ function! InitPipeBuf()
     vmap <buffer> <leader><cr> <Plug>VialPipeExecute
 endfunction
 
+function! InitPipeBufAll()
+    nmap <buffer> <leader><cr> <Plug>VialPipeExecuteAll
+endfunction
+
 function! GitDiff()
     silent keepalt edit __vial__gitdiff__
     setlocal buftype=nofile noswapfile
@@ -250,6 +254,7 @@ augroup MyFileTypeSettings
     au FileType qf wincmd J
     au FileType sql nmap <buffer> <leader><cr> <Plug>VialPipeExecute
     au FileType sql vmap <buffer> <leader><cr> <Plug>VialPipeExecute
+    au FileType c call InitPipeBufAll()
     au CursorHold * checktime
     au FileType vialcash nmap <buffer> <leader><cr> <Plug>VialPipeExecuteAll
     au BufNewFile,BufRead *.mongo call InitMongoBuf()

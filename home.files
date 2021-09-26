@@ -8,6 +8,7 @@ bin/*
 .config/norlessrc:tpl
 .config/openbox/menu.xml
 .config/orcsome
+.config/mpv/*
 .config/ranger/*
 .gitconfig
 .gnupg/*
@@ -16,7 +17,6 @@ bin/*
 .local/share/applications/*
 .local/share/bmpanel2
 .mplayer/*
-.mpv/*
 .muttrc
 .mutt/*
 .ncmpcpp/*

@@ -34,11 +34,6 @@
         and minimal public interface).
     </p>
 
-    <p>
-        I'll choose a modular monolith in 99.9% of cases. However, microservices can solve team scaling issues
-        with additional technical complexity.
-    </p>
-
     <dl>
         <div class="avoid">
         <dt>Some of my projects to look at:</dt>
@@ -102,6 +97,50 @@
     </dl>
 
     <h2>Notable experience</h2>
+    <h3>Nov 2020 — today, CloudLinux, Team Lead, remote</h3>
+    <p>
+        A lead of KernelCare python team (5 members). Product
+        allows to update kernel and userspace processes without
+        reboots and restarts.
+    </p>
+
+    <p>
+        The team maintains:
+        <ul>
+            <li>KernelCare agent: glue logic, packaging
+                for rhel-based (el6, el7, el8, RedHat, centos, RockyLinux, AlmaLinux)
+                and deb-based (Debian &gt;=8, 9, 10, 11, Ubuntu &gt=16.04) distros.</li>
+            <li>Scanner interface: ldpreloadable library written in C, it allows to
+                rewrite package version info to force security scanners report proper patched versions.</li>
+            <li>Patch server: licensing, patches acceess rules, patch release process.</li>
+            <li>ePortal: on-premise solution for patch delivery for enterprise clients.</li>
+            <li>Internal tools for tracking CVE.</li>
+            <li>Framework to test kernel and userland patches.</li>
+        </ul>
+    </p>
+
+    <p>
+        <b>Stack</b>: python3, uWSGI, SQLite, Clickhouse, nginx, HAProxy, TincVPN, Grafana, Sentry, Docker.
+    </p>
+
+    <b>Achievements</b>:
+    <ul>
+        <li>Speed up agent functional tests from 1 hour to 20 minutes.</li>
+        <li>Moved ePortal tests from real VM in cloud to docker containers, speed up: from 30 minutes to 10 minutes.</li>
+        <li>Developed and released a new forward compatible patches meta format for userland patches.
+            A new patchset release doesn't depend from meta from old releases.</li>
+        <li>Fixed kernel test suite bugs to allow green runs.</li>
+        <li>Implemented HA on patch server.</li>
+        <li>Implemented HA on ePortal.</li>
+        <li>Introduced package building in docker containers. This allowed to build packages for non x86-64
+            architectures and reduced build time from 10 minutes to 30s.</li>
+        <li>Developed and released internal SAML2 to OAuth2 proxy to allow internal services to use simple
+            OAuth2 clients to authorize with corporate SSO.</li>
+        <li>Refactored scanner interface with safe C practices, increased tests coverage and fixed numerous
+            segfaults.</li>
+        <li>Documented release process and introduced branch policy for ePortal and Kernelcare Agent packages.</li>
+    </ul>
+
     <h3>Mar 2018 — Feb 2020 (2 years), CloudLinux, Team Lead, remote</h3>
     <p>
         A lead of Imunify360 backend team (3 members). The main service
@@ -111,11 +150,11 @@
     </p>
 
     <p>
-        Stack: python3, asyncio, aiohttp, Redis, Mongo, Clickhouse,
+        <b>Stack:</b> python3, asyncio, aiohttp, Redis, Mongo, Clickhouse,
         HAProxy, TincVPN, Grafana, Sentry, Docker.
     </p>
 
-    Achievements:
+    <b>Achievements:</b>
     <ul>
         <li>Reworked service architecture to be able to process a growing event stream.</li>
         <li>Implemented app-level real-time monitoring with in/out metrics on each step of ETL path.
@@ -143,9 +182,9 @@
         technical debt.
     </p>
 
-    <p>Stack: python2, PostgreSQL, Redis, Django, flask, celery, SQLAlchemy, nginx, uWSGI.</p>
+    <p><b>Stack:</b> python2, PostgreSQL, Redis, Django, flask, celery, SQLAlchemy, nginx, uWSGI.</p>
 
-    Achievements:
+    <b>Achievements:</b>
     <ul>
         <li>
             2x codebase reduction from 40k to 20k SLOC. Code was in a messy state, endpoints
@@ -170,10 +209,10 @@
         subscriptions, pushes, billing, 3rd party integrations, and backend code for custom ad campaigns.
     </p>
 
-    <p>Stack: python2, FlaskAdmin, PostgreSQL, Elasticsearch, LMDB, Redis,
+    <p><b>Stack:</b> python2, FlaskAdmin, PostgreSQL, Elasticsearch, LMDB, Redis,
     Werkzeug, Celery, SQLAlchemy, nginx, uWSGI, Sentry</p>
 
-    Achievements:
+    <b>Achievements:</b>
     <ul>
         <li>Performance optimization and huge architecture rework. The main service couldn't
             handle 20rps load before and can process 1000rps after on the same hardware.</li>

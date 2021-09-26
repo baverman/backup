@@ -100,10 +100,11 @@ def start_proc(cmd):
 def wait_proc(proc):
     proc.wait()
     processes.remove(proc)
+    return proc.returncode == 0
 
 
 def oneshot(cmd):
-    wait_proc(start_proc(cmd))
+    return wait_proc(start_proc(cmd))
 
 
 def daemon(eset, cmd):
@@ -468,7 +469,8 @@ def main():
 
     def on_change():
         for fn, args in run_list:
-            fn(*args)
+            if not fn(*args):
+                break
         eset.set()
 
     signal.signal(signal.SIGINT, lambda s, f: cleanup_processes())
