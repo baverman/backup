@@ -218,3 +218,6 @@
 #    summary = *twitter.com*
 #    urgency = normal
 #
+[telegram]
+  body = *web.telegram.org*
+  script = /home/bobrov/tmp/notify.sh

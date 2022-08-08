@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 current=$(stg top)
-git push -f origin HEAD:$current
+git push -f ${1:-origin} HEAD:$current

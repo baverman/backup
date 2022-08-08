@@ -20,7 +20,7 @@ set to_chars="~ TCFL"
 set sort=threads
 set sort_aux=last-date
 
-auto_view text/html
+auto_view text/html text/calendar application/ics
 alternative_order text/plain text/html
 
 set mbox_type=Maildir

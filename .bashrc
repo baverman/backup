@@ -12,6 +12,7 @@ alias mc='mc -u'
 alias sc='sudo systemctl'
 alias cal='cal -m'
 alias ssh='TERM=xterm ssh'
+alias dr='docker run -it --rm'
 
 PS1='\[\033[01;34m\]\w\[\033[31m\]$(__git_ps1 "[%s]")\[\033[01;32m\]$(__prompt_stgit)\[\033[01;34m\]$\[\033[00m\] '
 
@@ -36,6 +37,8 @@ export GIT_PS1_SHOWUNTRACKEDFILES=1
 for fname in ~/.bash_sources/*; do
     . $fname
 done
+
+. /usr/share/bash-completion/completions/git
 
 _complete_git_co_my() {
     git branch | cut -c 3-

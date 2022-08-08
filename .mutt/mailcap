@@ -1,7 +1,8 @@
 text/html; open-in-browser %s
 text/html; w3m -I %{charset} -T text/html; copiousoutput;
-text/calendar; vcal %s; copiousoutput;
 application/pdf; open-in evince pdf %s
-application/msword; open-in libreoffice doc %s
+application/msword; open-in abiword doc %s
 application/vnd.openxmlformats-officedocument.wordprocessingml.document; open-in abiword docx %s
 image/*; geeqie %s
+text/calendar; mutt-ics; copiousoutput
+application/ics; mutt-ics; copiousoutput

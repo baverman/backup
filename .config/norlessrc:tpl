@@ -16,7 +16,7 @@ sync_new = yes
 [maildir imp]
 path = ~/mail/imp
 
-[account bobrov@vl.ru]
+[_account bobrov@vl.ru]
 from = ${mail.bobrov.efrom}
 host = pop.farpost.ru
 fingerprint = 34:1A:BA:8B:03:EE:04:CE:FE:70:E6:12:F3:A0:51:F1:C3:61:C0:64
@@ -39,6 +39,11 @@ sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent | imp -> imp
 smtp_host = smtp.gmail.com
 smtp_port = 587
 smtp_cafile = ~/.mutt/google1.pem
+
+xoauth2 = yes
+xoauth2_client_id = ${mail.baverman.client_id}
+xoauth2_secret = ${mail.baverman.secret}
+xoauth2_refresh = ${mail.baverman.refresh_token}
 
 [account ${mail.cl.efrom}]
 from = ${mail.cl.efrom}

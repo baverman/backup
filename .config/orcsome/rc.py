@@ -1,4 +1,5 @@
 import sys
+import datetime
 from orcsome import get_wm
 
 sys.modules.pop('rsi', None)
@@ -183,11 +184,12 @@ def on_create():
         app_rules(w)
 
 
-@wm.on_timer(120)
-def reset_dpms_for_fullscreen_windows():
-    w = wm.current_window
-    if w and w.fullscreen:
-        wm.reset_dpms()
+# @wm.on_timer(120)
+# def reset_dpms_for_fullscreen_windows():
+#     w = wm.current_window
+#     if w and w.fullscreen:
+#         print(datetime.datetime.now(), 'RESET DPMS')
+#         wm.reset_dpms()
 
 
 ##########################
