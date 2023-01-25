@@ -79,6 +79,9 @@ bind -m vi-insert '"jk": vi-movement-mode'
 bind -m vi-move '"n":"Isudo "'
 bind '"\e.": yank-last-arg'
 
+#export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+export SSH_AUTH_SOCK=/run/user/1000/gnupg/S.gpg-agent.ssh
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 # __conda_setup="$('/opt/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"

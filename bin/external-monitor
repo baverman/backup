@@ -1,12 +1,59 @@
-#!/bin/bash
+#!/usr/bin/python
+import subprocess
+import os
 
-IN="eDP1"
-EXT="HDMI1"
 
-if [[ "$1" == "off" ]]; then
-    xrandr --output $EXT --off --output $IN --auto --gamma 1.05:0.95:0.74
-    feh --bg-center ~/wallpapers/story.png
-else
-    xrandr --output $IN --off --output $EXT --auto --gamma 1.0:1.0:1.0
-    feh --bg-center ~/wallpapers/story-1080.png
-fi
+def get_connected_outputs():
+    out = subprocess.check_output(['xrandr', '-q']).decode()
+    result = []
+    for line in out.splitlines():
+        if line.startswith(' '):
+            continue
+
+        parts = line.split()
+        if parts[1] == 'connected':
+            result.append(parts[0])
+
+    return result
+
+
+def get_active_outputs():
+    out = subprocess.check_output(['xrandr', '--listactivemonitors']).decode()
+    result = []
+    for line in out.splitlines():
+        if line.startswith('Monitors'):
+            continue
+        parts = line.strip().split()
+        result.append(parts[-1])
+    return result
+
+
+def disable_outputs(outputs):
+    cmd = ['xrandr']
+    for o in outputs:
+        cmd.extend(['--output', o, '--off'])
+
+    subprocess.check_call(cmd)
+
+
+def enable_output(current, output):
+    subprocess.check_call(['xrandr', '--output', output, '--primary', '--mode', '1920x1080', '--above', current])
+
+
+def main():
+    current = os.environ.get('MY_POFILE_MONITOR', 'eDP-1')
+    c = get_connected_outputs()
+    a = get_active_outputs()
+
+    other_active = set(a) - {current}
+    if other_active:
+        disable_outputs(other_active)
+    else:
+        other_available = set(c) - {current}
+        if len(other_available) == 1:
+            enable_output(current, list(other_available)[0])
+
+
+if __name__ == '__main__':
+    main()
+

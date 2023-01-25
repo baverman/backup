@@ -101,7 +101,7 @@ set iconstring=%f%(\ %M%R%H%)
 set clipboard=exclude:cons\|linux
 
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчняж;abcdefghijklmnopqrstuvwxyz:
-set spelllang=en_us,ru_ru
+set spelllang=en_gb,ru_ru
 set spellcapcheck=
 
 syntax sync minlines=256
