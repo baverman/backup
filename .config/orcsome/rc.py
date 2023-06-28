@@ -31,9 +31,15 @@ wm.on_key('Mod+l').spawn_or_raise('urxvtc -g 100x30 -name ranger -e ranger', nam
 
 wm.on_key('XF86_MonBrightnessUp').spawn('sudo xbacklight -inc 10')
 wm.on_key('XF86_MonBrightnessDown').spawn('sudo xbacklight -dec 10')
-wm.on_key('XF86_AudioLowerVolume').spawn('amixer -c PCH sset Master,0 5db-')
-wm.on_key('XF86_AudioRaiseVolume').spawn('amixer -c PCH sset Master,0 5db+')
-wm.on_key('XF86_AudioMute').spawn('notify-send -t 500 "$(amixer -c PCH sset Speaker,0 toggle | tail -1)"')
+
+show_volume = 'notify-send -t 1000 -h string:x-canonical-private-synchronous:volume "$(pactl get-sink-volume @DEFAULT_SINK@ | head -1)"'
+wm.on_key('XF86_AudioLowerVolume').spawn('pactl set-sink-volume @DEFAULT_SINK@ -7%; {}'.format(show_volume))
+wm.on_key('XF86_AudioRaiseVolume').spawn('pactl set-sink-volume @DEFAULT_SINK@ +7%; {}'.format(show_volume))
+wm.on_key('XF86_AudioMute').spawn('pactl set-sink-mute @DEFAULT_SINK@ toggle; {}'.format(show_volume))
+
+show_timew = 'notify-send -t {} "$({})"'
+wm.on_key('Mod+w').spawn(show_timew.format(1000, 'timew start work'))
+wm.on_key('Mod+Shift+w').spawn(show_timew.format(5000, 'timew stop; timew summary | tail -2 | xargs'))
 
 wm.on_key('Mod+j f').spawn_or_raise('firefox', cls='Firefox')
 

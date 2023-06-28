@@ -1,14 +1,23 @@
 #!/usr/bin/python
 import os
 import sys
-import ftplib
+import urllib.request
+import binascii
 
-fname = sys.argv[1]
-f = ftplib.FTP()
-f.set_pasv(0)
-f.connect('127.0.0.1', 4242)
-f.login()
-f.storlines('STOR boo.puml', sys.stdin.buffer)
-f.retrbinary('RETR boo.svg', open(fname + '.tmp', 'wb').write)
-f.quit()
-os.rename(fname + '.tmp', fname)
+address = sys.argv[1]
+fname = sys.argv[2]
+otype = sys.argv[3]
+
+qs = binascii.hexlify(open(fname, 'rb').read()).decode()
+url = f'{address}/plantuml/{otype}/~h{qs}'
+print(url)
+
+try:
+    resp = urllib.request.urlopen(url)
+except Exception as ex:
+    resp = ex
+    # print(ex.read())
+    # raise
+
+with open(f'{fname}.{otype}', 'wb') as fd:
+    fd.write(resp.read())

@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import io
 import sys
 import time
 import os.path
@@ -255,7 +256,11 @@ def serve(eset, args):
     class Handler(SimpleHTTPRequestHandler):
         async_request = False
         def copyfile(self, src, dest):
-            os.sendfile(dest.fileno(), src.fileno(), 0, os.fstat(src.fileno()).st_size)
+            if type(src) is io.BytesIO:
+                dest.write(src.read())
+                dest.flush()
+            else:
+                os.sendfile(dest.fileno(), src.fileno(), 0, os.fstat(src.fileno()).st_size)
 
         def do_GET(self):
             if self.path.startswith('/_reload'):

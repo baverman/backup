@@ -31,3 +31,5 @@
     diff-highlight = /usr/share/git/diff-highlight/diff-highlight
 [pull]
 	ff = only
+[init]
+	defaultBranch = main
