@@ -14,3 +14,4 @@ vo=gpu
 
 # 720p
 ytdl-format=(247/136/22/95)+(140/141/251)
+ytdl_path=yt-dlp

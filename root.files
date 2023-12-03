@@ -1,3 +1,4 @@
 usr/lib/urxvt/perl/clipboard
+usr/lib/urxvt/perl/resize-font
 usr/share/bash-completion/completions/sc
 etc/most.conf

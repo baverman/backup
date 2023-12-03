@@ -8,14 +8,20 @@ URxvt.keysym.Shift-Down:	command:\033]721;6\007
 URxvt.keysym.Shift-Insert:	perl:clipboard:paste
 URxvt.keysym.Shift-Up:	command:\033]720;6\007
 
+URxvt.keysym.C-minus:     resize-font:smaller
+URxvt.keysym.C-plus:      resize-font:bigger
+URxvt.keysym.C-equal:     resize-font:reset
+URxvt.keysym.C-question:  resize-font:show
+
 urxvt*lineSpace:	1
 !urxvt*skipBuiltinGlyphs: true
 
 !URxvt.perl-ext-common:	default,matcher,clipboard,resize-font
-URxvt.perl-ext-common:	default,matcher,clipboard
+URxvt.perl-ext-common:	default,matcher,clipboard,resize-font
 URxvt.matcher.button:	3
 URxvt.matcher.pattern.1:	\\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 URxvt*url-launcher:	opera
+URxvt.geometry: 80x-1
 
 urxvt*meta8:	false
 URxvt*saveLines:	10000

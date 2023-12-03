@@ -153,7 +153,7 @@ nnoremap <leader><space> s<space><c-r>-<space><esc>h
 nnoremap <leader>x *``cgn
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 nnoremap <silent> <leader>W :w !sudo tee > /dev/null %<cr>:e!<cr>
-nnoremap <leader>w :w
+nnoremap <leader>w :w<cr>
 nmap <esc>d viw<esc>bhxysw]lysw'f]
 nmap <esc>p viw<esc>bi.jkds'ds]
 nmap <esc>g cs])i.getjk
