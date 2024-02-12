@@ -33,8 +33,8 @@ wm.on_key('XF86_MonBrightnessUp').spawn('sudo xbacklight -inc 10')
 wm.on_key('XF86_MonBrightnessDown').spawn('sudo xbacklight -dec 10')
 
 show_volume = 'notify-send -t 1000 -h string:x-canonical-private-synchronous:volume "$(pactl get-sink-volume @DEFAULT_SINK@ | head -1)"'
-wm.on_key('XF86_AudioLowerVolume').spawn('pactl set-sink-volume @DEFAULT_SINK@ -7%; {}'.format(show_volume))
-wm.on_key('XF86_AudioRaiseVolume').spawn('pactl set-sink-volume @DEFAULT_SINK@ +7%; {}'.format(show_volume))
+wm.on_key('XF86_AudioLowerVolume').spawn('pactl set-sink-volume @DEFAULT_SINK@ -3dB; {}'.format(show_volume))
+wm.on_key('XF86_AudioRaiseVolume').spawn('pactl set-sink-volume @DEFAULT_SINK@ +3dB; {}'.format(show_volume))
 wm.on_key('XF86_AudioMute').spawn('pactl set-sink-mute @DEFAULT_SINK@ toggle; {}'.format(show_volume))
 
 show_timew = 'notify-send -t {} "$({})"'

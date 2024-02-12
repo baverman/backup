@@ -44,7 +44,7 @@ sub on_init {
      "reset"   => "C-equal",
      "show"    => "C-question",
    };
-   bind_hotkeys($self, $commands);
+   # bind_hotkeys($self, $commands);
 
    ()
 }

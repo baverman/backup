@@ -1,4 +1,15 @@
 #!/bin/sh
 session=$1
 shift
+
+if [ ! -d "$HOME/.vim/sessions/$session" ]; then
+    echo "Create session $session?"
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes) break;;
+            No) exit;;
+        esac
+    done
+fi
+
 VIAL_SESSION=$session vial "$@"
