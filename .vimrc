@@ -1,6 +1,6 @@
 set nocompatible
 set background=light
-python 1+1
+python3 1+1
 
 call plug#begin('~/.vim/bundle')
 Plug 'git@github.com:baverman/vial.git'
@@ -269,7 +269,7 @@ augroup END
 
 " Vial
 let g:vial_plugins = ['vial.plugins.grep', 'vial.plugins.misc', 'vial.plugins.bufhist']
-let g:vial_python = 'python'
+let g:vial_python = 'python3'
 nnoremap <leader>m :VialQuickOpen<cr>
 nnoremap <silent> <leader>t :VialSearchOutline<cr>
 " nnoremap <esc>p :VialPythonShowSignature<cr>

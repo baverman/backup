@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 import re
 import sys
 import filecmp
@@ -31,13 +31,12 @@ def expand_sources(sources):
         if not source:
             continue
 
-        source_names = glob(source)
-        if source_names:
-            result.extend(source_names)
-        else:
-            print 'Non existing source', source
+        if '->' in source:
+            source, _, dest = source.partition('->')
+            yield expanduser(source.strip()), dest.strip()
 
-    return result
+        for name in glob(source):
+            yield name, name
 
 
 def can_be_unrolled(source, dest):
@@ -55,7 +54,7 @@ def can_be_unrolled(source, dest):
         dfiles = dcmp.diff_files
 
         if afiles or dfiles:
-            print 'dirs are different {}: new {}, chg {}'.format(source, afiles, dfiles)
+            print('dirs are different {}: new {}, chg {}'.format(source, afiles, dfiles))
             return False
 
         return True
@@ -63,10 +62,10 @@ def can_be_unrolled(source, dest):
         if filecmp.cmp(source, dest):
             return True
 
-        print 'files are different {} {}'.format(source, dest)
+        print('files are different {} {}'.format(source, dest))
         return False
     else:
-        print 'unknown case {} {}'.format(source, dest)
+        print('unknown case {} {}'.format(source, dest))
 
 
 def chk_makedirs(path, cache=set()):
@@ -75,7 +74,7 @@ def chk_makedirs(path, cache=set()):
 
     cache.add(path)
     if not exists(path):
-        print 'creating', path
+        print('creating', path)
         makedirs(path)
 
 
@@ -84,15 +83,15 @@ def clean_dest(dest):
     chk_makedirs(destdir)
 
     if isfile(dest) or islink(dest):
-        print 'removing', dest
+        print('removing', dest)
         unlink(dest)
     elif isdir(dest):
-        print 'removing', dest
+        print('removing', dest)
         rmtree(dest)
 
 
 def unroll_source(source, dest):
-    print 'link {} -> {}'.format(source, dest)
+    print('link {} -> {}'.format(source, dest))
     source = abspath(source)
     destdir = dirname(dest)
     if len(commonprefix([source, dest])) > 1:
@@ -103,7 +102,7 @@ def unroll_source(source, dest):
 
 def unroll_template(source, dest):
     t = Template(filename=source)
-    print 'template {} -> {}'.format(source, dest)
+    print('template {} -> {}'.format(source, dest))
     with open(dest, 'w') as f:
         f.write(t.render(**get_vars()))
 
@@ -112,14 +111,13 @@ def unroll_template(source, dest):
 
 
 def unroll(sources, root):
-    sources = expand_sources(sources)
-    for source in sources:
-        if source.endswith(':tpl'):
-            dest = join(root, source[:-4])
+    for source, dest in expand_sources(sources):
+        dest = join(root, dest)
+        if dest.endswith(':tpl'):
+            dest = dest[:-4]
             clean_dest(dest)
             unroll_template(source, dest)
         else:
-            dest = join(root, source)
             if can_be_unrolled(source, dest):
                 clean_dest(dest)
                 unroll_source(source, dest)
