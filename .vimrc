@@ -54,7 +54,7 @@ hi clear CursorLine
 hi CursorLine ctermbg=darkgrey
 
 if !empty($VIAL)
-    colorscheme solarized
+colorscheme solarized
 endif
 
 hi ExtraWhitespace ctermbg=red guibg=red
@@ -79,6 +79,7 @@ set indentexpr=VialIndent()
 set indentkeys=o
 set display+=lastline
 set fileencodings=utf-8,cp1251
+set backspace=indent,eol,start
 
 " nnoremap / /\v
 " vnoremap / /\v
@@ -309,6 +310,7 @@ augroup resCur
 augroup END
 
 command! FormatXml silent %!xmllint --encode UTF-8 --format -
+command! Vb normal! <C-v>
 
 " Session
 if !empty($VIAL_SESSION) && !exists('g:session_loaded')

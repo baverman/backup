@@ -16,7 +16,13 @@ alias dr='docker run -it --rm'
 
 PS1='\[\033[01;34m\]\w\[\033[31m\]$(__git_ps1 "[%s]")\[\033[01;32m\]$(__prompt_stgit)\[\033[01;34m\]$\[\033[00m\] '
 
-export PATH=$HOME/bin:$HOME/.local/bin:$PATH
+for fname in ~/.bash_sources/*; do
+    . $fname
+done
+
+python_base=$(python3 -c 'import site; print(site.USER_BASE)')
+
+export PATH=$HOME/bin:$HOME/.local/bin:$PATH:$python_base/bin
 export PROMPT_COMMAND='history -a'
 export HISTCONTROL=ignoredups:ignorespace
 export HISTFILESIZE=15000
@@ -33,12 +39,6 @@ export MPD_HOST=~/.mpd/socket
 
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
-
-for fname in ~/.bash_sources/*; do
-    . $fname
-done
-
-. /usr/share/bash-completion/completions/git
 
 _complete_git_co_my() {
     git branch | cut -c 3-
@@ -65,13 +65,12 @@ complete -F __svial svial
 # export PULSE_LATENCY_MSEC=60
 export LIBVA_DRIVER_NAME=iHD
 
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv3
+# export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+# export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv3
 export PYTHONSTARTUP="$HOME/work/python-shell-enhancement/pythonstartup.py"
+. $(which virtualenvwrapper.sh)
 
 export OB_TOP_MARGIN=19
-
-. /usr/bin/virtualenvwrapper.sh
 
 # bash vi mode
 set -o vi

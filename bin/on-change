@@ -12,44 +12,7 @@ from subprocess import Popen
 from threading import Thread, Event
 
 log = logging.getLogger()
-libc = CDLL('libc.so.6', use_errno=True)
 processes = set()
-
-
-class INotifyEvent(Structure):
-    _fields_ = [
-        ('wd', c_int),
-        ('mask', c_uint32),
-        ('cookie', c_uint32),
-        ('len', c_uint32),
-    ]
-
-
-def handle_error(value):
-    if value == -1:
-        errno = get_errno()
-        raise OSError(errno, os.strerror(errno))
-    return value
-
-
-def prepare(fn, args=None, result=handle_error):
-    if args:
-        fn.argtypes = args
-    if result:
-        fn.restype = result
-    return fn
-
-
-inotify_init = prepare(libc.inotify_init)
-inotify_add_watch = prepare(libc.inotify_add_watch, args=[c_int, c_char_p, c_uint32])
-
-IN_MODIFY	 = 0x00000002
-IN_MOVED_FROM	 = 0x00000040
-IN_MOVED_TO      = 0x00000080
-IN_MOVE		 = (IN_MOVED_FROM | IN_MOVED_TO)
-IN_CREATE	 = 0x00000100
-IN_DELETE	 = 0x00000200
-
 
 class Reader(object):
     def start(self, receiver):
@@ -81,47 +44,105 @@ def protocol(fn):
     return inner
 
 
-def get_changes(fd, entries, timeout=0.3):
+if sys.platform == 'linux':
+    libc = CDLL('libc.so.6', use_errno=True)
 
-    @protocol
-    def inotify_proto(reader):
-        slen = sizeof(INotifyEvent)
-        while True:
-            data = yield reader.read(slen)
-            e = INotifyEvent.from_buffer_copy(data)
-            if e.len:
-                data = yield reader.read(e.len)
-                name = cast(data, c_char_p).value
-                dname = emap[e.wd]
-                if dname != b'.':
-                    name = os.path.join(dname, name)
+
+    class INotifyEvent(Structure):
+        _fields_ = [
+            ('wd', c_int),
+            ('mask', c_uint32),
+            ('cookie', c_uint32),
+            ('len', c_uint32),
+        ]
+
+
+    def handle_error(value):
+        if value == -1:
+            errno = get_errno()
+            raise OSError(errno, os.strerror(errno))
+        return value
+
+
+    def prepare(fn, args=None, result=handle_error):
+        if args:
+            fn.argtypes = args
+        if result:
+            fn.restype = result
+        return fn
+
+
+    inotify_init = prepare(libc.inotify_init)
+    inotify_add_watch = prepare(libc.inotify_add_watch, args=[c_int, c_char_p, c_uint32])
+
+    IN_MODIFY	 = 0x00000002
+    IN_MOVED_FROM	 = 0x00000040
+    IN_MOVED_TO      = 0x00000080
+    IN_MOVE		 = (IN_MOVED_FROM | IN_MOVED_TO)
+    IN_CREATE	 = 0x00000100
+    IN_DELETE	 = 0x00000200
+
+
+    def get_changes(fd, entries, timeout=0.3):
+
+        @protocol
+        def inotify_proto(reader):
+            slen = sizeof(INotifyEvent)
+            while True:
+                data = yield reader.read(slen)
+                e = INotifyEvent.from_buffer_copy(data)
+                if e.len:
+                    data = yield reader.read(e.len)
+                    name = cast(data, c_char_p).value
+                    dname = emap[e.wd]
+                    if dname != b'.':
+                        name = os.path.join(dname, name)
+                else:
+                    name = emap[e.wd]
+
+                changed_names.add(name)
+
+        os.set_blocking(fd, False)
+        emap = {}
+        for it in entries:
+            try:
+                eid = inotify_add_watch(fd, it, IN_CREATE | IN_MODIFY | IN_MOVE | IN_DELETE)
+            except (PermissionError, FileNotFoundError):
+                pass
             else:
-                name = emap[e.wd]
+                emap[eid] = it
 
-            changed_names.add(name)
+        proto = inotify_proto()
+        changed_names = set()
+        while True:
+            try:
+                data = os.read(fd, 4096)
+                proto(data)
+            except BlockingIOError:
+                rd, _, _ = select.select([fd], [], [], timeout)
+                if rd:
+                    continue
+                yield changed_names
+                changed_names.clear()
+else:
+    def inotify_init():
+        return select.kqueue()
 
-    os.set_blocking(fd, False)
-    emap = {}
-    for it in entries:
-        try:
-            eid = inotify_add_watch(fd, it, IN_CREATE | IN_MODIFY | IN_MOVE | IN_DELETE)
-        except (PermissionError, FileNotFoundError):
-            pass
-        else:
-            emap[eid] = it
+    def get_changes(kq, entries, timeout=0.3):
+        clist = []
+        fmap = {}
+        for fname in entries:
+            fd = os.open(fname, os.O_RDONLY)
+            fmap[fd] = fname
+            clist.append(select.kevent(fd, select.KQ_FILTER_VNODE, select.KQ_EV_ADD | select.KQ_EV_CLEAR, select.KQ_NOTE_WRITE))
 
-    proto = inotify_proto()
-    changed_names = set()
-    while True:
-        try:
-            data = os.read(fd, 4096)
-            proto(data)
-        except BlockingIOError:
-            rd, _, _ = select.select([fd], [], [], timeout)
-            if rd:
-                continue
-            yield changed_names
-            changed_names.clear()
+        changed_names = set()
+        while True:
+            events = kq.control(clist, 10, timeout)
+            changed_names.update(fmap[it.ident] for it in events)
+            if not events and changed_names:
+                yield changed_names
+                changed_names.clear()
 
 
 def start_proc(cmd):
