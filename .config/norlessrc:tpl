@@ -45,7 +45,7 @@ xoauth2_client_id = ${mail.baverman.client_id}
 xoauth2_secret = ${mail.baverman.secret}
 xoauth2_refresh = ${mail.baverman.refresh_token}
 
-[account ${mail.cl.efrom}]
+[_account ${mail.cl.efrom}]
 from = ${mail.cl.efrom}
 host = imap.gmail.com
 cafile = ~/.mutt/google1.pem

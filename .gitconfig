@@ -3,6 +3,7 @@
 	co = checkout
 	br = branch
 	ci = commit
+        rrr = rerere
 [color]
 	branch = auto
 	diff = auto
@@ -33,3 +34,5 @@
 	ff = only
 [init]
 	defaultBranch = main
+[rerere]
+	enabled = true

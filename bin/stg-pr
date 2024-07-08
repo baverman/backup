@@ -1,0 +1,31 @@
+#!/bin/bash
+set -e
+origin=${1:-origin}
+current=$(stg top)
+
+if [ -z "$current" ]; then
+    echo "No applied patch"
+    exit 1
+fi
+
+if [ ! -f ".git/refs/remotes/origin/$current" ]; then
+    git push $origin HEAD:$current
+    exit 0
+fi
+
+if [ ! -f ".git/refs/heads/$current" ]; then
+    git branch --track $current $origin/$current
+fi
+
+tmpdiff=/tmp/stg.pr.diff
+git diff --binary refs/heads/$current.. > $tmpdiff
+
+if [ ! -s $tmpdiff ]; then
+    echo "Empty diff"
+    exit 1
+fi
+
+curhsh=$(git rev-parse HEAD)
+git checkout $current
+git apply $tmpdiff
+git commit -eaC $curhsh
