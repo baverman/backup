@@ -27,3 +27,4 @@ bin/*
 .xinitrc
 .vim/sessions/*/sessionv.vim
 .config/openbox/rc.xml:tpl
+/usr/share/git/diff-highlight/diff-highlight -> bin/diff-highlight

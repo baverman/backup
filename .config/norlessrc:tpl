@@ -1,5 +1,5 @@
 <%!
-    file_mode = 0600
+    file_mode = 0o600
 %>
 [norless]
 state_dir = ~/mail

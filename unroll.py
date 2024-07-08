@@ -19,7 +19,7 @@ def get_vars():
     global _vars
     if not _vars:
         _vars = dict(environ)
-        execfile(expanduser('~/.config/vars'), _vars)
+        exec(open(expanduser('~/.config/vars')).read(), _vars)
 
     return _vars
 
