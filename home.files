@@ -28,3 +28,4 @@ bin/*
 .vim/sessions/*/sessionv.vim
 .config/openbox/rc.xml:tpl
 /usr/share/git/diff-highlight/diff-highlight -> bin/diff-highlight
+~/abs/stgit/completion/stgit.bash -> .bash_sources/stgit.bash
