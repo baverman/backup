@@ -31,14 +31,12 @@ smtp_fingerprint = 6F:E5:5A:39:58:5E:07:6F:6B:C5:14:1F:73:06:70:92:9A:A4:86:84
 [account baverman]
 from = ${mail.baverman.efrom}
 host = imap.gmail.com
-cafile = ~/.mutt/google1.pem
 user = ${mail.baverman.user}
 password = ${mail.baverman.pwd}
 trash = [Gmail]/Trash
 sync = INBOX -> inbox | [Gmail]/Sent Mail -> sent | imp -> imp
 smtp_host = smtp.gmail.com
 smtp_port = 587
-smtp_cafile = ~/.mutt/google1.pem
 
 xoauth2 = yes
 xoauth2_client_id = ${mail.baverman.client_id}
