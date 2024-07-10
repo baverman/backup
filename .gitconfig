@@ -36,3 +36,6 @@
 	defaultBranch = main
 [rerere]
 	enabled = true
+
+[include]
+    path = ~/.config/git.host.conf
