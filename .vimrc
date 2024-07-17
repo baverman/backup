@@ -80,6 +80,7 @@ set indentkeys=o
 set display+=lastline
 set fileencodings=utf-8,cp1251
 set backspace=indent,eol,start
+set ruler
 
 " nnoremap / /\v
 " vnoremap / /\v
