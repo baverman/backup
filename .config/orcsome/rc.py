@@ -158,6 +158,8 @@ def app_rules(w):
         desktop = -1
     elif w.matches(name='pinentry-gtk-2'):
         desktop = -1
+    elif w.matches(name='pinentry-gtk'):
+        desktop = -1
     elif w.matches(cls='bmpanel'):
         return
 

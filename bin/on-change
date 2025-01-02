@@ -468,11 +468,9 @@ def main():
     subparsers = parser.add_subparsers(dest='sname')
     p = subparsers.add_parser('run')
     p.add_argument('command')
-    p.add_argument('arg', nargs='*')
 
     p = subparsers.add_parser('daemon')
     p.add_argument('command')
-    p.add_argument('arg', nargs='*')
 
     p = subparsers.add_parser('serve')
     p.add_argument('-b', '--bind', default='127.0.0.1:8080',
@@ -483,6 +481,7 @@ def main():
     p.add_argument('watch', nargs='*', metavar='file|dir')
     p.add_argument('-e', dest='exclude', action='append', metavar='pattern',
                    help='exclude wildcard', default=[])
+    p.add_argument('-n', dest='newline', action='count', help='add a separator line', default=0)
 
     rest = sys.argv[1:]
     arg_parts = []
@@ -505,16 +504,18 @@ def main():
     watch_list = []
     exclude_list = []
     eset = EventSet()
+    newline = 0
 
     for part in arg_parts:
         args, rest = parser.parse_known_args(part)
         if args.sname == 'run':
-            run_list.append((oneshot, ([args.command] + args.arg + rest,)))
+            run_list.append((oneshot, ([args.command] + rest,)))
         elif args.sname == 'daemon':
-            daemon_list.append((daemon, (eset, [args.command] + args.arg + rest)))
+            daemon_list.append((daemon, (eset, [args.command] + rest)))
         elif args.sname == 'serve':
             daemon_list.append((serve, [eset, args]))
         elif args.sname == 'on-change':
+            newline = args.newline
             exclude_list.extend(args.exclude)
             if args.watch:
                 watch_list.extend(args.watch)
@@ -526,6 +527,8 @@ def main():
         sys.exit(1)
 
     def on_change():
+        if newline:
+            print('\n'*newline, end='')
         for fn, args in run_list:
             if not fn(*args):
                 break

@@ -43,6 +43,7 @@ Plug 'dleonard0/pony-vim-syntax'
 Plug 'ziglang/zig.vim'
 Plug 'jlanzarotta/bufexplorer'
 " Plug 'vim-airline/vim-airline'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 filetype plugin on
@@ -285,6 +286,8 @@ nnoremap <leader>om :VialPythonOpenModule
 nnoremap <leader>cm :VialPythonCreateModule 
 nmap <c-k> <Plug>VialBufHistPrev
 nmap <c-j> <Plug>VialBufHistNext
+
+let g:coc_global_extensions = ['coc-tsserver', 'coc-vetur']
 
 " Other plugs
 let g:AutoPairsMapCR = 0
