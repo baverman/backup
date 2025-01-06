@@ -1,0 +1,5 @@
+#!/bin/sh
+pass -c "$1"
+echo "password was copied"
+read -n1 -s
+pass-totp "$1"

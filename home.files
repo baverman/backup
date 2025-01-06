@@ -17,6 +17,7 @@ bin/*
 .gtkrc-2.0.mine
 .local/share/applications/*
 .local/share/bmpanel2
+.local/share/bash-completion
 .mplayer/*
 .muttrc
 .mutt/*

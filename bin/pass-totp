@@ -1,0 +1,6 @@
+#!/bin/sh
+if [ -f ~/.password-store/"$1-totp".gpg ]; then
+    pass "$1-totp" | mintotp | xsel -b
+else
+    pass "$1" | grep "^totp:" | cut -d: -f2 | mintotp | xsel -b
+fi
