@@ -11,38 +11,11 @@ from ctypes import c_int, CDLL, get_errno, c_uint32, c_char_p, Structure, sizeof
 from subprocess import Popen
 from threading import Thread, Event
 
+sys.path.append(os.path.expanduser('~/work/keinio'))
+from keinio import Reader
+
 log = logging.getLogger()
 processes = set()
-
-class Reader(object):
-    def start(self, receiver):
-        self.receiver = receiver
-        receiver.send(None)
-        gen = self.feeder()
-        gen.send(None)
-        return gen.send
-
-    def read(self, size):
-        self.size = size
-
-    def feeder(self):
-        buf = b''
-        while True:
-            data = yield
-            buf += data
-            while len(buf) >= self.size:
-                sz = self.size
-                self.receiver.send(buf[:sz])
-                buf = buf[sz:]
-
-
-def protocol(fn):
-    def inner(*args, **kwargs):
-        reader = Reader()
-        receiver = fn(reader, *args, **kwargs)
-        return reader.start(receiver)
-    return inner
-
 
 if sys.platform == 'linux':
     libc = CDLL('libc.so.6', use_errno=True)
@@ -85,14 +58,14 @@ if sys.platform == 'linux':
 
     def get_changes(fd, entries, timeout=0.3):
 
-        @protocol
+        @Reader.protocol
         def inotify_proto(reader):
             slen = sizeof(INotifyEvent)
             while True:
-                data = yield reader.read(slen)
+                data = yield from reader.read(slen)
                 e = INotifyEvent.from_buffer_copy(data)
                 if e.len:
-                    data = yield reader.read(e.len)
+                    data = yield from reader.read(e.len)
                     name = cast(data, c_char_p).value
                     dname = emap[e.wd]
                     if dname != b'.':
@@ -117,7 +90,7 @@ if sys.platform == 'linux':
         while True:
             try:
                 data = os.read(fd, 4096)
-                proto(data)
+                proto.push(data)
             except BlockingIOError:
                 rd, _, _ = select.select([fd], [], [], timeout)
                 if rd:
