@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+suffix="${1:?'Fixup suffix is required, i.e "fix"'}"
+
+top="$(stg top)"
+base="${top%--*}"
+if [ -z "$base" ]; then
+    echo "stg-fixup expects an applied patch"
+fi
+
+default_msg="$(git show "$(stg id "$base")" -s --pretty=format:%s)"
+msg="${2:-"$default_msg"}"
+
+stg new -m "$msg" "${base}--${suffix}"

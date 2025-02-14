@@ -1,4 +1,8 @@
 #!/bin/bash
 set -e
-current=$(stg top)
-git push -f ${1:-origin} HEAD:$current
+top=$(stg top)
+base="${top%--*}"
+if [ -z "$base" ]; then
+    echo "stg-update expects an applied patch"
+fi
+git push -f ${1:-origin} HEAD:$base

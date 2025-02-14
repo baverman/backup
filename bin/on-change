@@ -12,7 +12,7 @@ from subprocess import Popen
 from threading import Thread, Event
 
 sys.path.append(os.path.expanduser('~/work/keinio'))
-from keinio import Reader
+from keinio import Reader, receiver
 
 log = logging.getLogger()
 processes = set()
@@ -58,8 +58,9 @@ if sys.platform == 'linux':
 
     def get_changes(fd, entries, timeout=0.3):
 
-        @Reader.protocol
-        def inotify_proto(reader):
+        @receiver
+        def inotify_proto():
+            reader = Reader()
             slen = sizeof(INotifyEvent)
             while True:
                 data = yield from reader.read(slen)
@@ -90,7 +91,7 @@ if sys.platform == 'linux':
         while True:
             try:
                 data = os.read(fd, 4096)
-                proto.push(data)
+                proto(data)
             except BlockingIOError:
                 rd, _, _ = select.select([fd], [], [], timeout)
                 if rd:
