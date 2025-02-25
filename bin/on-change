@@ -11,13 +11,13 @@ from ctypes import c_int, CDLL, get_errno, c_uint32, c_char_p, Structure, sizeof
 from subprocess import Popen
 from threading import Thread, Event
 
-sys.path.append(os.path.expanduser('~/work/keinio'))
-from keinio import Reader, receiver
-
 log = logging.getLogger()
 processes = set()
 
 if sys.platform == 'linux':
+    sys.path.append(os.path.expanduser('~/work/nighio'))
+    from nighio import Reader, receiver
+
     libc = CDLL('libc.so.6', use_errno=True)
 
 
