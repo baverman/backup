@@ -1,0 +1,2 @@
+# Run a program when my wireless keyboard is connected
+ACTION=="add", SUBSYSTEM=="input", ATTRS{name}=="CHERRY KW 7100 MINI Keyboard", RUN+="/usr/bin/sudo -u bobrov /usr/bin/sh -c '/etc/udev/set-kbd.sh &'"
