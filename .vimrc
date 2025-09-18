@@ -115,6 +115,7 @@ set noshowmatch
 set scrolloff=5
 
 set updatetime=2000
+set shortmess-=S
 
 
 " Common mappings
