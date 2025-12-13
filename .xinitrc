@@ -11,6 +11,7 @@ set_kbd_map() {
     setxkbmap -model pc104 -layout us,ru -variant winkeys -option grp:caps_toggle,grp_led:caps,compose:ralt,terminate:ctrl_alt_bksp
     xmodmap -e "keycode 115 = Insert"
     xmodmap -e "keycode 96 = Insert Insert Insert"
+    xmodmap -e "keycode 119 = Delete BackSpace"
 }
 export -f set_kbd_map
 

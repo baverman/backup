@@ -42,8 +42,10 @@ Plug 'aklt/plantuml-syntax'
 Plug 'dleonard0/pony-vim-syntax'
 Plug 'ziglang/zig.vim'
 Plug 'jlanzarotta/bufexplorer'
+Plug 'AndrewRadev/sideways.vim'
 " Plug 'vim-airline/vim-airline'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'andymass/vim-matchup'
 call plug#end()
 
 filetype plugin on
@@ -195,9 +197,13 @@ vnoremap <Left> <nop>
 vnoremap <Down> <nop>
 vnoremap <Right> <nop>
 
+nnoremap <esc>h :SidewaysLeft<cr>
+nnoremap <esc>l :SidewaysRight<cr>
+
 cmap w!! w !sudo tee > /dev/null %
 cmap %/ <c-r>=expand('%:p:h')<cr>/
 
+nmap <silent> <leader>hs <plug>(matchup-hi-surround)
 
 " Filetype settings
 function! InitPythonBuf()
@@ -298,6 +304,9 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:qf_modifiable = 1
 let g:table_mode_map_prefix = '<leader>b'
 let g:zig_fmt_autosave = 0
+
+let g:matchup_matchparen_deferred = 1
+
 nnoremap <leader>v :Bufferlist<cr>
 vnoremap <leader>ld :Linediff<cr>
 nnoremap <leader>lr :LinediffReset<cr>
