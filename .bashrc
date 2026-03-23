@@ -99,3 +99,11 @@ HOMEBREW_NO_AUTO_UPDATE=1
 # unset __conda_setup
 # <<< conda initialize <<<
 
+
+# pnpm
+export PNPM_HOME="/home/bobrov/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

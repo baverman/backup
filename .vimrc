@@ -210,13 +210,18 @@ function! InitPythonBuf()
     nnoremap <buffer> <silent> <leader>d :VialPythonGotoDefinition<cr>
     nnoremap <buffer> <silent> <leader>f :VialPythonOutline<cr>
     nnoremap <buffer> <leader>l :VialPythonLint<cr>
-    nnoremap <buffer> <leader>lf :call Flake8()<cr>
     nmap <buffer> <leader><cr> <Plug>VialPipeExecuteAll
     setlocal et sts=4 sw=4 tw=80 fo=croq
 
     syntax keyword pythonBuiltin self
     syntax keyword pythonKeyword print None
     syntax match pythonDotExpr "\.\w\+" contains=pythonKeyword
+
+    nnoremap <buffer> <leader>ll :VialQFRun mypy --follow-imports=silent %<cr>
+    nnoremap <buffer> <leader>la :VialQFRun mypy<cr>
+    nnoremap <buffer> <leader>lt :VialQFRun py.test -x --ff -vv<cr>
+    nnoremap <buffer> <leader>lf :VialRun ruff format %<cr>
+    nnoremap <buffer> <leader>lc :VialQFRun ruff check --output-format=concise<cr>
 endfunction
 
 function! InitLsBuf()
