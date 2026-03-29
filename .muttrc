@@ -26,8 +26,9 @@ alternative_order text/plain text/html
 set mbox_type=Maildir
 set folder=~/mail/
 set spoolfile=+inbox
-set record=+sent
+set record=+sent-local
 set postponed=+draft
+set trash=+trash
 set sendmail="python3 -m norless.sendmail"
 set from=baverman@gmail.com
 set use_from=yes
