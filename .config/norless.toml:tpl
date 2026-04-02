@@ -1,0 +1,33 @@
+<%!
+    file_mode = 0o600
+%>
+state_dir = "~/mail"
+timeout = 60
+trash_maildir = "trash"
+
+[[maildir]]
+name = "inbox"
+
+[[maildir]]
+name = "sent"
+mark_as_seen = true
+
+[[maildir]]
+name = "imp"
+
+[[account]]
+name = "baverman"
+from = "${mail.baverman.efrom}"
+host = "imap.gmail.com"
+user = "${mail.baverman.user}"
+trash = "[Gmail]/Trash"
+smtp_host = "smtp.gmail.com"
+smtp_port = 587
+
+xoauth2.client_id = "${mail.baverman.client_id}"
+xoauth2.secret = "${mail.baverman.secret}"
+xoauth2.refresh = "${mail.baverman.refresh_token}"
+
+folders."INBOX" = "inbox"
+folders."[Gmail]/Sent Mail" = "sent"
+folders."imp" = "imp"

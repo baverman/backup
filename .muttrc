@@ -40,7 +40,7 @@ alternates "bobrov@vl.ru|abobrov@cloudlinux.com"
 set pager_stop
 bind pager j next-line
 bind pager k previous-line
-macro index G '<sync-mailbox><shell-escape>norless -NSC<enter><sync-mailbox>'
+macro index G '<sync-mailbox><shell-escape>norless -SC<enter><sync-mailbox>'
 
 send-hook "~f baverman@gmail.com" set signature=~/.mutt/my.sig
 send-hook "~f abobrov@cloudlinux.com" set signature=~/.mutt/my.sig

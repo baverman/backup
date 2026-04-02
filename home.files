@@ -5,7 +5,7 @@ bin/*
 .config/bmpanel2
 .config/dunst
 .config/gatotrayrc
-.config/norlessrc:tpl
+.config/norless.toml:tpl
 .config/openbox/menu.xml
 .config/orcsome
 .config/mpv/*
