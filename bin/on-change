@@ -15,8 +15,7 @@ log = logging.getLogger()
 processes = set()
 
 if sys.platform == 'linux':
-    sys.path.append(os.path.expanduser('~/work/nighio'))
-    from nighio import Reader, receiver
+    from sansproto import Reader, stream_receiver
 
     libc = CDLL('libc.so.6', use_errno=True)
 
@@ -58,7 +57,7 @@ if sys.platform == 'linux':
 
     def get_changes(fd, entries, timeout=0.3):
 
-        @receiver
+        @stream_receiver
         def inotify_proto():
             reader = Reader()
             slen = sizeof(INotifyEvent)
