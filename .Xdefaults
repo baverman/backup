@@ -22,7 +22,7 @@ urxvt*lineSpace:	1
 URxvt.perl-ext-common:	default,matcher,clipboard,resize-font
 URxvt.matcher.button:	3
 URxvt.matcher.pattern.1:	\\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
-URxvt*url-launcher:	opera
+URxvt*url-launcher: firefox
 URxvt.geometry: 80x-1
 
 urxvt*meta8:	false

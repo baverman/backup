@@ -15,7 +15,7 @@ log = logging.getLogger()
 processes = set()
 
 if sys.platform == 'linux':
-    from sansproto import Reader, stream_receiver
+    from sansproto import Reader, receiver
 
     libc = CDLL('libc.so.6', use_errno=True)
 
@@ -54,27 +54,26 @@ if sys.platform == 'linux':
     IN_CREATE	 = 0x00000100
     IN_DELETE	 = 0x00000200
 
+    @receiver
+    def inotify_proto(emit, emap):
+        reader = Reader()
+        slen = sizeof(INotifyEvent)
+        while True:
+            reader.begin_event()
+            data = yield from reader.read(slen)
+            e = INotifyEvent.from_buffer_copy(data)
+            if e.len:
+                data = yield from reader.read(e.len)
+                name = cast(data, c_char_p).value
+                dname = emap[e.wd]
+                if dname != b'.':
+                    name = os.path.join(dname, name)
+            else:
+                name = emap[e.wd]
+
+            emit(name)
 
     def get_changes(fd, entries, timeout=0.3):
-
-        @stream_receiver
-        def inotify_proto():
-            reader = Reader()
-            slen = sizeof(INotifyEvent)
-            while True:
-                data = yield from reader.read(slen)
-                e = INotifyEvent.from_buffer_copy(data)
-                if e.len:
-                    data = yield from reader.read(e.len)
-                    name = cast(data, c_char_p).value
-                    dname = emap[e.wd]
-                    if dname != b'.':
-                        name = os.path.join(dname, name)
-                else:
-                    name = emap[e.wd]
-
-                changed_names.add(name)
-
         os.set_blocking(fd, False)
         emap = {}
         for it in entries:
@@ -85,12 +84,12 @@ if sys.platform == 'linux':
             else:
                 emap[eid] = it
 
-        proto = inotify_proto()
         changed_names = set()
-        while True:
+        proto = inotify_proto(changed_names.add, emap)
+        while proto.open:
             try:
                 data = os.read(fd, 4096)
-                proto(data)
+                proto.send(data)
             except BlockingIOError:
                 rd, _, _ = select.select([fd], [], [], timeout)
                 if rd:
