@@ -66,9 +66,9 @@ wm.on_key('Mod+k').spawn_or_raise(
 def maximize_window():
     w = wm.current_window
     if w.maximized_vert and w.maximized_horz:
-        wm.set_window_state(w, vmax=False, hmax=False, decorate=True, otaskbar=False)
+        wm.set_window_state(w, vmax=False, hmax=False, decorate=True, taskbar=False)
     else:
-        wm.set_window_state(w, vmax=True, hmax=True, decorate=False, otaskbar=True)
+        wm.set_window_state(w, vmax=True, hmax=True, decorate=False, taskbar=True)
 
 
 @wm.on_key('Alt+Mod+space')
@@ -78,7 +78,7 @@ def fill_area():
 
 def ratio_resize(w, l, m, is_right=False):
     wm.set_window_state(w, vmax=False, hmax=False,
-        decorate=False, otaskbar=True)
+        decorate=False, taskbar=True)
     _, _, dw, _ = tuple(wm.get_workarea(w.desktop))
     new_w = dw * l / m
     if is_right:
@@ -137,14 +137,14 @@ def app_rules(w):
     desktop = 0
     decorate = None
     maximize = None
-    otaskbar = None
+    taskbar = None
     fill = None
 
     if w.matches(name='vial'):
         maximize = True
         decorate = False
     elif w.matches(name='ranger'):
-        otaskbar = False
+        taskbar = False
     elif w.matches(name='Navigator', cls='Firefox'):
         decorate = False
     elif w.matches(name='Opera', cls='Opera'):
@@ -162,12 +162,14 @@ def app_rules(w):
         desktop = -1
     elif w.matches(cls='bmpanel'):
         return
+    elif w.matches(cls='taskbar'):
+        return
 
     wm.change_window_desktop(w, desktop)
 
-    if decorate is not None or maximize is not None or otaskbar is not None:
+    if decorate is not None or maximize is not None or taskbar is not None:
         wm.set_window_state(w, vmax=maximize, hmax=maximize,
-            decorate=decorate, otaskbar=otaskbar)
+            decorate=decorate, taskbar=taskbar)
 
     cd = wm.current_desktop
     if desktop >=0 and desktop != cd:
@@ -192,12 +194,12 @@ def on_create():
         app_rules(w)
 
 
-# @wm.on_timer(120)
-# def reset_dpms_for_fullscreen_windows():
-#     w = wm.current_window
-#     if w and w.fullscreen:
-#         print(datetime.datetime.now(), 'RESET DPMS')
-#         wm.reset_dpms()
+@wm.on_timer(120)
+def reset_dpms_for_fullscreen_windows():
+    w = wm.current_window
+    if w and w.fullscreen:
+        # print(datetime.datetime.now(), 'RESET DPMS')
+        wm.reset_dpms()
 
 
 ##########################

@@ -24,7 +24,7 @@ set_kbd_map
 
 devmon &>> /tmp/bg.log &
 
-( track-status.sh | dzen2 -fg white -x 1750 -y 4 -w 60 ) &>> /tmp/bg.log &
+# ( track-status.sh | dzen2 -fg white -x 1730 -y 4 -w 60 ) &>> /tmp/bg.log &
 #setsid -f sh -c "exec local-proxy.sh &>> /tmp/bg.log"
 
 # killall gpg-agent

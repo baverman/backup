@@ -263,6 +263,11 @@ function! GitDiff()
     norm! gg
 endfunction
 
+function! InitZigBuf()
+    nnoremap <buffer> <leader>la :VialQFRun zig build<cr>
+    nnoremap <buffer> <leader>lt :VialQFRun zig build test<cr>
+endfunction
+
 augroup MyFileTypeSettings
     au!
     au FileType python call InitPythonBuf()
@@ -278,6 +283,7 @@ augroup MyFileTypeSettings
     au BufNewFile,BufRead *.pipe call InitPipeBuf()
     au BufNewFile,BufRead *.csd nmap <buffer> <leader><cr> <Plug>VialPipeExecuteAll
     au BufNewFile,BufRead *.cir call InitPipeBufAll()
+    au BufNewFile,BufRead *.zig call InitZigBuf()
     au BufNewFile,BufRead * setlocal iskeyword+=-
     au WinEnter,BufWinEnter __vial_* let w:airline_disabled=1
 augroup END

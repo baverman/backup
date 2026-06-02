@@ -48,15 +48,22 @@ def render_icon_text(text: str) -> Image.Image:
     return image
 
 
-def make_icon_image(battery_path: Path) -> Image.Image:
-    percentage = read_capacity(battery_path)
+def make_icon_image(percentage: int) -> Image.Image:
     return render_icon_text(str(percentage))
 
 
-def updater(icon: Any, battery_path: Path) -> None:
-    while icon.visible:
-        icon.icon = make_icon_image(battery_path)
-        time.sleep(REFRESH_SECONDS)
+def updater(stop: threading.Event, icon: Any, battery_path: Path) -> None:
+    prev = -1
+    try:
+        while not stop.is_set():
+            time.sleep(REFRESH_SECONDS)
+            percentage = read_capacity(battery_path)
+            if prev != percentage:
+                icon.icon = make_icon_image(percentage)
+            prev = percentage
+    except:
+        import traceback
+        traceback.print_exc()
 
 
 def stop(icon: Any, item: Any) -> None:
@@ -69,14 +76,17 @@ def main() -> None:
     battery_path = find_battery_path()
     icon = pystray.Icon(
         "battery-tray",
-        icon=make_icon_image(battery_path),
+        icon=make_icon_image(read_capacity(battery_path)),
         title="battery-tray",
         menu=pystray.Menu(pystray.MenuItem("Quit", stop)),
     )
 
-    worker = threading.Thread(target=updater, args=(icon, battery_path), daemon=True)
+    stop_event = threading.Event()
+    worker = threading.Thread(target=updater, args=(stop_event, icon, battery_path))
     worker.start()
     icon.run()
+    stop_event.set()
+    worker.join()
 
 
 if __name__ == "__main__":
