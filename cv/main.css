@@ -91,6 +91,10 @@ li {
     margin-bottom: 0.2rem;
 }
 
+div.p {
+    margin-bottom: 0.6rem;
+}
+
 .avoid {
     page-break-inside: avoid !important;
 }
