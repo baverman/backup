@@ -7,6 +7,7 @@ bin/*
 .config/dunst
 .config/gatotrayrc
 .config/norless.toml:tpl
+.config/stamm.toml
 .config/openbox/menu.xml
 .config/orcsome
 .config/mpv/*

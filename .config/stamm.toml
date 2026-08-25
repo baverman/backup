@@ -1,0 +1,42 @@
+root = "~/mail"
+spool = "inbox"
+sent = "sent-local"
+drafts = "draft"
+trash = "trash"
+editor = "vim"
+sendmail = "python3 -m norless.sendmail"
+identities = ["Anton Bobrov <baverman@gmail.com>"]
+
+auto_view = ["text/html", "text/calendar", "application/ics"]
+alternative_order = ["text/plain", "text/html"]
+
+[hooks]
+pre_refresh = "norless -SC"
+
+[colors]
+indicator = { fg = "black", bg = "white" }
+
+[colors.index]
+column_date = { fg = "blue" }
+column_flags = { fg = "bright-red", attrs = ["bold"] }
+column_from = { fg = "green" }
+
+[colors.message]
+header = { fg = "cyan" }
+header_from = {fg = "magenta"}
+header_subject = {fg = "blue"}
+
+[signatures]
+"baverman@gmail.com" = "my.sig"
+
+[[mime]]
+type = "text/html"
+display = "w3m -dump -T text/html"
+open = "firefox {file}"
+
+[keys.index]
+G = "refresh"
+R = ""
+
+[keys.choose]
+y = "accept"
