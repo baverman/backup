@@ -1,0 +1,5 @@
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+    echo "Script should be sourced"
+fi
+
+export PATH="$(realpath "$(dirname "${BASH_SOURCE[0]}")"):$PATH"

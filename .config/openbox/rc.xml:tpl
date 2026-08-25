@@ -309,7 +309,7 @@
     </position>
   </application>
 
-  <application class="bmpanel">
+  <application class="taskbar">
     <desktop>all</desktop>
   </application>
 </applications>

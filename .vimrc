@@ -38,6 +38,7 @@ Plug 'Wolfy87/vim-enmasse'
 Plug 'stefandtw/quickfix-reflector.vim'
 Plug 'dbmrq/vim-ditto'
 Plug '~/.vim/bundle/vial-draw'
+Plug '~/.vim/bundle/vial-annotate'
 Plug 'aklt/plantuml-syntax'
 Plug 'dleonard0/pony-vim-syntax'
 Plug 'ziglang/zig.vim'
@@ -220,6 +221,7 @@ function! InitPythonBuf()
     nnoremap <buffer> <leader>ll :VialQFRun mypy --follow-imports=silent %<cr>
     nnoremap <buffer> <leader>la :VialQFRun mypy<cr>
     nnoremap <buffer> <leader>lt :VialQFRun py.test -x --ff -vv<cr>
+    nnoremap <buffer> <leader>lv :VialQFRun py.test -x --ff -vv %<cr>
     nnoremap <buffer> <leader>lf :VialRun ruff format %<cr>
     nnoremap <buffer> <leader>lc :VialQFRun ruff check --output-format=concise<cr>
 endfunction
@@ -254,17 +256,20 @@ function! InitPipeBufAll()
     nmap <buffer> <leader><cr> <Plug>VialPipeExecuteAll
 endfunction
 
-function! GitDiff()
+function! GitDiff(args = '')
     silent keepalt edit __vial__gitdiff__
     setlocal buftype=nofile noswapfile
     setfiletype diff
     norm! ggVGD
-    0read !git diff HEAD^ -p --stat --no-color --abbrev --stat-graph-width=5 --stat-name-width=200
+    execute '0read !git diff -p --stat --no-color --abbrev --stat-graph-width=5 --stat-name-width=200 ' . a:args
     norm! gg
 endfunction
 
+command! -nargs=* GitDiff call GitDiff(<q-args>)
+
 function! InitZigBuf()
     nnoremap <buffer> <leader>la :VialQFRun zig build<cr>
+    nnoremap <buffer> <leader>lb :VialRun zig build<cr>
     nnoremap <buffer> <leader>lt :VialQFRun zig build test<cr>
 endfunction
 
@@ -300,11 +305,13 @@ nmap <leader>g <Plug>VialGrep
 vmap <leader>g <Plug>VialGrep
 nnoremap <leader>vg :VialGrep 
 nnoremap <leader>la :VialPythonLintAll<cr>
-nnoremap <leader>lt :VialPytestRun<cr>
 nnoremap <leader>om :VialPythonOpenModule 
 nnoremap <leader>cm :VialPythonCreateModule 
 nmap <c-k> <Plug>VialBufHistPrev
 nmap <c-j> <Plug>VialBufHistNext
+
+nnoremap <leader>n :VialAnnotate 
+vnoremap <leader>n :VialAnnotate 
 
 let g:coc_global_extensions = ['coc-tsserver', 'coc-vetur']
 

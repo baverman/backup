@@ -1,6 +1,7 @@
+import os
 import sys
 import datetime
-from orcsome import get_wm
+from orcsome import get_wm, utils, notify
 
 sys.modules.pop('rsi', None)
 import rsi
@@ -125,6 +126,22 @@ def toggle_console():
             wm.activate_desktop(1)
         else:
             wm.spawn(TERMINAL)
+
+_speech_active = False
+_speech_banner = None
+
+@wm.on_key('Win+d')
+def speech():
+    global _speech_active, _speech_banner
+    if _speech_active:
+        utils.spawn(os.path.expanduser('~/.local/py/nerd-dictation/nerd-dictation end'))
+        if _speech_banner:
+            _speech_banner.close()
+            _speech_banner = None
+    else:
+        utils.spawn(os.path.expanduser('~/.local/py/nerd-dictation/nerd-dictation begin'))
+        _speech_banner = notify.notify('STT active', '', 900)
+    _speech_active = not _speech_active
 
 
 @wm.on_manage(cls='URxvt')

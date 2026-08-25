@@ -4,6 +4,8 @@
 	br = branch
 	ci = commit
         rrr = rerere
+        force-merge = merge --allow-unrelated-histories
+
 [color]
 	branch = auto
 	diff = auto

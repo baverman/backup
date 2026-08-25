@@ -1,3 +1,4 @@
+root:~
 .bash_profile
 .bashrc
 .bash_sources/*

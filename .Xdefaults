@@ -30,6 +30,7 @@ URxvt*saveLines:	10000
 URxvt*scrollBar_right:	true
 URxvt*scrollBar:	false
 URxvt*scrollstyle:	plain
+URxvt.scrollTtyOutput:  false
 
 !Xft.rgba:	none
 !Xft.hintstyle:  hintfull

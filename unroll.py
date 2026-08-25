@@ -2,7 +2,10 @@
 import re
 import sys
 import filecmp
+import os
 
+import argparse
+import difflib
 from os import readlink, makedirs, unlink, symlink, chmod, environ
 from glob import glob
 from shutil import rmtree, copymode
@@ -26,17 +29,24 @@ def get_vars():
 
 def expand_sources(sources):
     result = []
+    root = None
     for source in sources:
         source = source.rstrip()
         if not source:
             continue
 
+        if source.startswith('root:'):
+            root = expanduser(source.partition(':')[2].strip())
+            continue
+
         if '->' in source:
             source, _, dest = source.partition('->')
-            yield expanduser(source.strip()), dest.strip()
+            result.append((expanduser(source.strip()), dest.strip()))
 
         for name in glob(source):
-            yield name, name
+            result.append((name, name))
+
+    return result, root
 
 
 def can_be_unrolled(source, dest):
@@ -90,40 +100,65 @@ def clean_dest(dest):
         rmtree(dest)
 
 
-def unroll_source(source, dest):
-    print('link {} -> {}'.format(source, dest))
-    source = abspath(source)
+def unroll_source(source, dest, is_force):
+    source = osource = abspath(source)
     destdir = dirname(dest)
     if len(commonprefix([source, dest])) > 1:
-        source = relpath(source, destdir)
+        rsource = relpath(source, destdir)
+    else:
+        rsource = source
 
-    symlink(source, dest)
+    if not is_force and islink(dest) and os.readlink(dest) == rsource:
+        return
+
+    clean_dest(dest)
+    print('link {} -> {}'.format(dest, rsource))
+    symlink(rsource, dest)
 
 
-def unroll_template(source, dest):
+def unroll_template(source, dest, is_force):
     t = Template(filename=source)
+    new = t.render(**get_vars())
+
+    old = None
+    if not is_force and exists(dest):
+        old = open(dest).read()
+        if old == new:
+            return
+
     print('template {} -> {}'.format(source, dest))
+    if old is not None:
+        print('  content differs, please review')
+        diff = difflib.unified_diff(old.splitlines(), new.splitlines(), dest, source)
+        for it in diff:
+            print(it)
+        return
+
+    clean_dest(dest)
     with open(dest, 'w') as f:
-        f.write(t.render(**get_vars()))
+        f.write(new)
 
     if hasattr(t.module, 'file_mode'):
         chmod(dest, t.module.file_mode)
 
 
-def unroll(sources, root):
-    for source, dest in expand_sources(sources):
+def unroll(sources, optroot, is_force):
+    rules, sroot = expand_sources(open(sources))
+    root = optroot or sroot
+    for source, dest in rules:
         dest = join(root, dest)
         if dest.endswith(':tpl'):
             dest = dest[:-4]
-            clean_dest(dest)
-            unroll_template(source, dest)
+            unroll_template(source, dest, is_force)
         else:
             if can_be_unrolled(source, dest):
-                clean_dest(dest)
-                unroll_source(source, dest)
+                unroll_source(source, dest, is_force)
 
 
 if __name__ == '__main__':
-    source_list_fname = sys.argv[1]
-    root = sys.argv[2]
-    unroll(open(source_list_fname), root)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('rules')
+    parser.add_argument('-r', '--root')
+    parser.add_argument('-f', '--force', action='store_true')
+    args = parser.parse_args()
+    unroll(args.rules, args.root, args.force)
