@@ -31,6 +31,7 @@ URxvt*scrollBar_right:	true
 URxvt*scrollBar:	false
 URxvt*scrollstyle:	plain
 URxvt.scrollTtyOutput:  false
+URxvt.scrollTtyKeypress: true
 
 !Xft.rgba:	none
 !Xft.hintstyle:  hintfull

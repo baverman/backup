@@ -32,7 +32,7 @@ header_subject = {fg = "blue"}
 [[mime]]
 type = "text/html"
 display = "w3m -dump -T text/html"
-open = "firefox {file}"
+open = "firefox {file}; wmctrl -xa firefox"
 
 [keys.index]
 G = "refresh"
