@@ -1,0 +1,5 @@
+{
+   "tui.editor.cursorRight": ["right"],
+   "app.message.followUp": ["ctrl+f"],
+   "tui.input.newLine": ["shift+enter", "alt+enter"]
+}

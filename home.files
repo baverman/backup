@@ -24,6 +24,7 @@ bin/*
 .muttrc
 .mutt/*
 .ncmpcpp/*
+.pi/agent/*
 .themes/*
 .vimrc
 .taskrc
