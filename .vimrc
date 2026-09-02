@@ -1,3 +1,8 @@
+if $TERM_PROGRAM ==# 'iTerm.app'
+    set t_RV=
+endif
+
+set noxtermcodes
 set nocompatible
 set background=light
 python3 1+1

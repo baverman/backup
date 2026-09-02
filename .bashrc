@@ -68,7 +68,9 @@ export LIBVA_DRIVER_NAME=iHD
 # export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 # export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv3
 export PYTHONSTARTUP="$HOME/work/python-shell-enhancement/pythonstartup.py"
-. $(which virtualenvwrapper.sh)
+if command -v virtualenvwrapper.sh &> /dev/null; then
+  . $(which virtualenvwrapper.sh)
+fi
 
 export OB_TOP_MARGIN=19
 

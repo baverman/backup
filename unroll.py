@@ -3,6 +3,7 @@ import re
 import sys
 import filecmp
 import os
+import site
 
 import argparse
 import difflib
@@ -16,6 +17,11 @@ from mako.template import Template
 
 ignore_regex = re.compile(r'.+\.pyc$')
 
+vars = {
+  'pyver': '{}.{}'.format(*sys.version_info[:2]),
+  'pysite': site.USER_SITE,
+  'pybase': site.USER_BASE,
+}
 
 _vars = None
 def get_vars():
@@ -33,6 +39,9 @@ def expand_sources(sources):
     for source in sources:
         source = source.rstrip()
         if not source:
+            continue
+
+        if source.startswith('#'):
             continue
 
         if source.startswith('root:'):
