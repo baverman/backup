@@ -67,7 +67,7 @@ export LIBVA_DRIVER_NAME=iHD
 
 # export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 # export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv3
-export PYTHONSTARTUP="$HOME/work/python-shell-enhancement/pythonstartup.py"
+# export PYTHONSTARTUP="$HOME/work/python-shell-enhancement/pythonstartup.py"
 if command -v virtualenvwrapper.sh &> /dev/null; then
   . $(which virtualenvwrapper.sh)
 fi

@@ -11,13 +11,15 @@ from os import readlink, makedirs, unlink, symlink, chmod, environ
 from glob import glob
 from shutil import rmtree, copymode
 from os.path import dirname, join, islink, isdir, realpath, abspath, isfile, \
-    exists, relpath, commonprefix, expanduser
+    exists, relpath, commonprefix, expanduser, basename
+
+sys.path.append(expanduser('~/.local/py'))
 
 from mako.template import Template
 
 ignore_regex = re.compile(r'.+\.pyc$')
 
-vars = {
+dest_vars = {
   'pyver': '{}.{}'.format(*sys.version_info[:2]),
   'pysite': site.USER_SITE,
   'pybase': site.USER_BASE,
@@ -28,7 +30,9 @@ def get_vars():
     global _vars
     if not _vars:
         _vars = dict(environ)
-        exec(open(expanduser('~/.config/vars')).read(), _vars)
+        fname = expanduser('~/.config/vars')
+        if exists(fname):
+            exec(open(fname).read(), _vars)
 
     return _vars
 
@@ -50,7 +54,12 @@ def expand_sources(sources):
 
         if '->' in source:
             source, _, dest = source.partition('->')
-            result.append((expanduser(source.strip()), dest.strip()))
+            source = expanduser(source.strip())
+            dest = dest.strip().format(**dest_vars)
+            if dest.endswith('/'):
+                dest += os.path.basename(source)
+            result.append((source, dest))
+            continue
 
         for name in glob(source):
             result.append((name, name))
@@ -125,9 +134,9 @@ def unroll_source(source, dest, is_force):
     symlink(rsource, dest)
 
 
-def unroll_template(source, dest, is_force):
+def unroll_template(root, source, dest, is_force):
     t = Template(filename=source)
-    new = t.render(**get_vars())
+    new = t.render(root=root, **get_vars(), **dest_vars)
 
     old = None
     if not is_force and exists(dest):
@@ -158,7 +167,7 @@ def unroll(sources, optroot, is_force):
         dest = join(root, dest)
         if dest.endswith(':tpl'):
             dest = dest[:-4]
-            unroll_template(source, dest, is_force)
+            unroll_template(root, source, dest, is_force)
         else:
             if can_be_unrolled(source, dest):
                 unroll_source(source, dest, is_force)

@@ -5,7 +5,8 @@ root:~
 bin/*
 .vimrc
 .bash_sources/stgbashprompt.sh
-~/work/stgit/completion/stgit.bash -> .bash_sources/stgit.bash
-/opt/homebrew/etc/bash_completion.d/git-prompt.sh -> .bash_sources/git-prompt.sh
-/opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight -> bin/diff-highlight
+~/work/stgit/completion/stgit.bash -> .bash_sources/
+/opt/homebrew/etc/bash_completion.d/git-prompt.sh -> .bash_sources/
+/opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight -> bin/
 .config/ranger
+osx/local.pth:tpl -> {pysite}/
